@@ -1,0 +1,175 @@
+{{##def.content:
+<style>
+	.class_btnDelete {
+	}
+
+	.class_btnSave {
+	}
+
+	.no-control {
+		border: none;
+		text-align: center;
+	}
+
+	.class_divLine {
+		margin: 1px;
+	}
+
+</style>
+<!-- BEGIN PAGE HEADER-->
+<h1 style="text-align: center; margin-bottom: 30px;">
+	{{=it.translation['admin_menu_login_bonus']}}
+</h1>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+	<div class="col-md-2" ></div>
+	<div class="col-md-8" >
+		<div class="portlet box blue">
+			<div class="portlet-body" style="background-color: #3e3e3e;color: #fff;">
+				<div class = 'row'>
+					<div class='col-md-6 col-xs-6 col-sm-6' align = 'left'>
+						<label>{{=it.translation['admin_login_bonus_bet_multiplier']}}</label>
+						<input type = 'text' id="id_edtLoginBonusBet" class = 'form-control input-inline input-small' placeholder="{{=it.translation['admin_login_bonus_bet_amount']}}" value="{{=it.login_bonus_bet}}"/>
+						<input type = 'button' class = 'btn red input-inline input-small no-control' style = 'width:100px !important;' id='id_btnSet' value = "{{=it.translation['admin_login_bonus_set']}}" />
+					</div>
+					<div class='col-md-6 col-xs-6 col-sm-6'  align = 'right'>
+						<input type = 'button' class = 'btn green input-inline input-small no-control' style = 'width:100px !important;' id='id_btnSave' value = "{{=it.translation['global_save']}}" />
+					</div>
+				</div>
+				<hr style = 'margin: 5px;'/>
+				<div class = 'row' id='id_divContent'>
+
+					{{?it.login_bonus_list.length == 0}}
+					<div class = 'col-md-12 class_divLine' align = 'center'>
+						<input type = 'text' class = 'form-control input-inline input-small class_day' readonly='true' value='1' style='text-align:center;'/>
+						<input type = 'number' class = 'form-control input-inline input-small class_day_bonus' min='0' step='1' placeholder="{{=it.translation['admin_login_bonus_bits']}}" style='text-align:center;'/>
+					</div>
+					{{??}}
+					{{~it.login_bonus_list:login_bonus:index}}
+					<div class = 'col-md-12 class_divLine' align = 'center'>
+						<input type = 'text' class = 'form-control input-inline input-small class_day' readonly='true' value='{{=login_bonus.id}}' style='text-align:center;'/>
+						<input type = 'number' class = 'form-control input-inline input-small class_day_bonus' min='0' step='1' placeholder="{{=it.translation['admin_login_bonus_bits']}}" value="{{=login_bonus.bonus}}" style='text-align:center;'/>
+					</div>
+					{{~}}
+					{{?}}
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-2" ></div>
+</div>
+<div id="handheld-detection"></div>
+
+{{?it.enginehost}}
+<div id="id_divEngineHost" hidden="true">{{=it.enginehost}}</div>
+{{?}}
+
+<!-- BEGIN TOASTR -->
+<script src="/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/pages/scripts/ui-toastr.js" type="text/javascript"></script>
+<!-- END TOASTR -->
+
+<!-- END PAGE CONTENT-->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/metronic/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+<script>
+    jQuery(document).ready(function() {
+        Metronic.init();
+        Layout.init();
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "positionClass": "toast-top-right",
+            "onclick": null,
+            "showDuration": "1000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "2000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        $("#id_btnSave").click(function ()
+		{
+            var data = [];
+            var k = 0;
+            var bShown = false;
+            $(".class_divLine").each(function(index)
+			{
+                data[k]={};
+                var day = $(this).find('.class_day').val();
+                var bonus_bits = $(this).find('.class_day_bonus').val();
+
+                if (day == "" || bonus_bits == "")
+				{
+				    if (!bShown)
+					{
+                        toastr['warning']("Please fill out all bonus fields.");
+                        bShown = true;
+					}
+
+                    return;
+				}
+
+				data[k]['day'] = day;
+				data[k]['bonus_bits'] = bonus_bits;
+				k++;
+            });
+
+            $.post("/saveLoginBonus", {
+                'login_bonus_data' : data
+            }, function(result) {
+                if (result == "success")
+				{
+                    toastr['success']("Login bonus data was saved.");
+				}
+				else
+				{
+                    toastr['warning'](result);
+				}
+            });
+        });
+
+        $("#id_btnSet").click(function() {
+            $.post("/setLoginBonusBet", {
+                'login_bonus_bet' : $("#id_edtLoginBonusBet").val()
+            }, function(data) {
+            });
+        });
+    });
+
+</script>
+<!-- END JAVASCRIPTS -->
+#}}
+{{#def.include('./template/main_admin')}}

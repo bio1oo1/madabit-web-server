@@ -1,0 +1,166 @@
+{{##def.content_profile:
+<div class="portlet light">
+  <div class="portlet-body">
+    <div class = 'row'>
+      <div class = 'col-md-6 col-sm-6'>
+        <h2>{{=it.translation['security_password_title']}}</h2>
+        <form role="form" action="reset-password" method="post" >
+
+          <input type = 'hidden' value = '' name = 'time_zone' id = 'id_time_zone'>
+
+          <div class="form-group">
+            <label class="control-label">{{=it.translation['security_password_oldpassword']}}</label>
+            <input class="form-control" name="old_password" type="password" id="old_password" autocomplete="off" required/>
+          </div>
+          {{?it.user.mfa_secret}}
+          <div class="form-group">
+            <label class="control-label">{{=it.translation['security_password_2facode']}}</label>
+            <input class="form-control" name="otp" type="text" pattern="[0-9]{6}" required />
+          </div>
+          {{?}}
+          <div class="form-group">
+            <label class="control-label">{{=it.translation['security_password_newpassword']}}<small>{{=it.translation['security_password_7characters']}}</small></label>
+            <input class="form-control" name="password" type="password" id="password" pattern=".{7,50}" required/>
+          </div>
+          <div class="form-group">
+            <label class="control-label">{{=it.translation['security_password_confirmpassword']}}</label>
+            <input class="form-control" name="confirmation" type="password" id="confirmation" pattern=".{7,50}" required/>
+          </div>
+          <div class="margiv-top-10">
+            <button class="btn btn-primary" style="width:100px">{{=it.translation['security_password_change']}}</button>
+          </div>
+        </form>
+      </div>
+      <div class = 'col-md-6 col-sm-6'>
+        <h2>{{=it.translation['security_email_title']}}</h2>
+        <form role="form" action="/edit-email" method="post">
+          <input style="display:none" type="text" name="fakeusernameremembered"/>
+          <input style="display:none" type="password" name="fakepasswordremembered"/>
+          <div class="form-group">
+            <label class="control-label">{{=it.translation['security_email_email']}}</label>
+            <input class="form-control" type="email" id="email" name="email" value="{{?it.user.email}}{{=it.user.email}}{{??}}{{?}}"/>
+          </div>
+          <div class="form-group">
+            <label class="control-label">{{=it.translation['security_email_confirmationpassword']}}</label>
+            <input class="form-control" name="password" type="password" id="check_password" autocomplete="off" pattern=".{7,50}" required/>
+          </div>
+          {{?it.user.mfa_secret}}
+          <div class="form-group">
+            <label class="control-label">{{=it.translation['security_email_2facode']}}</label>
+            <input class="form-control" name="otp" type="text" pattern="[0-9]{6}" required />
+          </div>
+          {{?}}
+          <div class="margiv-top-10">
+            <button class="btn btn-primary" style="width:100px">{{=it.translation['global_save']}}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <hr style='margin-top:40px; margin-bottom: 30px;'>
+    <div class='row'>
+      <div class = 'col-md-8'>
+        {{?it.user.mfa_secret}}
+        <h2>{{=it.translation['security_authentication_disable_title']}}</h2>
+        <p style = 'font-size:14px; margin-top:30px;'>{{=it.translation['security_authentication_disable_sentence']}}</p>
+        <div class = 'row'>
+          <div class = 'col-md-12'>
+            <form role="form"  action="/disable-2fa" method="post">
+              <div class="form-group">
+                <label class="control-label">{{=it.translation['security_authentication_disable_2facode']}}</label>
+                <input class="form-control" name="otp" type="text" pattern="[0-9]{6}" required />
+              </div>
+              <div class="form-actions right">
+                <button type="submit" class="btn btn-primary">{{=it.translation['security_authentication_disable_button']}}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        {{??}}
+        <h2>{{=it.translation['security_authentication_enable_title']}}</h2>
+        <p style = 'font-size:14px; margin-top:30px;'>
+          {{=it.translation['security_authentication_enable_sentence_1']}}
+          <br>
+          <b>{{=it.translation['security_authentication_enable_sentence_2']}}</b>
+        </p>
+        <div class = 'row'>
+          <div class="col-md-6 col-sm-6" >
+            <div  style = 'padding:0;background-color: white;'>
+              {{=it.user.qr_svg}}
+            </div>
+          </div>
+        </div>
+        {{?}}
+      </div>
+    </div>
+    <div class = 'row'>
+      <div class= 'col-md-8'>
+        <div class="form-group">
+          <form role="form" class="column medium-6" action="/enable-2fa" method="post">
+            <div class="form-group">
+              <p style="word-wrap: break-word;">
+                {{=it.translation['security_authentication_enable_secret']}}<br>
+                {{=it.user.mfa_potential_secret}}
+              </p>
+              <label class="control-label">{{=it.translation['security_authentication_enable_2facode']}}</label>
+              <input class="form-control" name="otp" type="text" pattern="[0-9]{6}" required />
+              <input type="hidden" name="mfa_potential_secret" value="{{=it.user.mfa_potential_secret}}" />
+              <input type="hidden" name="sig" value="{{=it.user.sig}}" />
+            </div>
+            <div class="form-actions right">
+              <button type="submit" class="btn btn-primary" style="width:100px">{{=it.translation['security_authentication_enable_button']}}</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+
+<!-- END CORE PLUGINS -->
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js" type="text/javascript"></script>
+
+<script>
+$(document).ready(function() {
+    Metronic.init();
+    Layout.init();
+
+    var timezone = jstz.determine();
+    var strTimezoneName = timezone.name();
+    $("#id_time_zone").val(strTimezoneName);
+
+    if (document.getElementById('confirmation') !== null) {
+        document.getElementById('confirmation').onchange = validatePassword;
+        document.getElementById('password').onchange = validatePassword;
+    }
+});
+function validatePassword() {
+    var password = document.getElementById('password').value;
+    var confirm = document.getElementById('confirmation').value;
+    if (password != confirm) {
+        document.getElementById('confirmation').setCustomValidity('{{=it.translation.rule_alert2}}');
+    } else document.getElementById("confirmation").setCustomValidity('');
+}
+</script>
+#}}
+{{#def.include('./template/main_profile')}}

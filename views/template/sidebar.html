@@ -1,0 +1,126 @@
+<style>
+@media screen and (max-width:480px) {
+    #id_brLeaderBoard {
+        display: none;
+    }
+}
+@media screen and (min-width:481px) {
+    #id_brLeaderBoard {
+        display: block;
+    }
+}
+</style>
+    <div class="page-sidebar-wrapper">
+        <div class="page-sidebar navbar-collapse collapse">
+            <!-- BEGIN SIDEBAR MENU -->
+            <ul class="page-sidebar-menu page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+                {{?!it.user}}
+                <li class='class_sidebarMenuForMobile'>
+                    <a href="/login/?clang={{=it.translation['language_for']}}">
+                        <i class="fas fa-sign-in-alt fa-2x"></i>
+                        <span class="title">{{=it.translation['sidebar_login']}}</span>
+                    </a>
+                </li>
+                <li class='class_sidebarMenuForMobile' style='display: none !important;'>
+                    <a href="/register/?clang={{=it.translation['language_for']}}">
+                        <i class="far fa-user fa-2x"></i>
+                        <span class="title">{{=it.translation['sidebar_register']}}</span>
+                    </a>
+                </li>
+                {{?}}
+                <li>
+                    <a href="/play/?clang={{=it.translation['language_for']}}" data-backdrop="false" data-toggle="modal">
+                        <img src='/img/line-chart.svg' style="width: 26px;">
+                        <span class="title">{{=it.translation['sidebar_game']}}</span>
+                    </a>
+                </li>
+                {{?it.user && it.user.admin}}
+                <li>
+                    <a href="/statistics-admin/?clang={{=it.translation['language_for']}}">
+                        <i class="fa fa-cogs fa-2x"></i>
+                        <span class="title">{{=it.translation['sidebar_admin']}}</span>
+                    </a>
+                </li>
+                {{?}}
+                {{?it.user && !it.user.admin && !it.user.staff}}
+                <li>
+                    <a href="/account/?clang={{=it.translation['language_for']}}">
+                        <i class="far fa-user fa-2x"></i>
+                        <span class="title">{{=it.translation['sidebar_account']}}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/agent/?clang={{=it.translation['language_for']}}">
+                        <i class="fas fa-user-secret fa-2x"></i>
+                        <span class="title">{{=it.translation['sidebar_agent']}}</span>
+                    </a>
+                </li>
+                {{?}}
+                <li>
+                    <a href="/leaderboard/?clang={{=it.translation['language_for']}}">
+                        <i class="fas fa-users fa-2x"></i>
+                        <span class="title">{{=it.translation['sidebar_leaderboard_1']}}<br id ='id_brLeaderBoard'>{{=it.translation['sidebar_leaderboard_2']}}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/no_user/?clang={{=it.translation['language_for']}}">
+                        <i class="fas fa-chart-line fa-2x"></i>
+                        <span class="title">{{=it.translation['sidebar_stats']}}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/tutorial/?clang={{=it.translation['language_for']}}">
+                        <i class="fab fa-leanpub fa-2x"></i>
+                        <span class="title">{{=it.translation['sidebar_tutorial']}}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/faq_{{=it.translation['language_for']}}/?clang={{=it.translation['language_for']}}">
+                        <i class="fas fa-question-circle fa-2x"></i>
+                        <span class="title">{{=it.translation['sidebar_faq']}}</span>
+                    </a>
+                </li>
+                <li style='display: none;' id = 'id_btnLanguageSwitch' language_code = '{{?it.translation["language_for"]=="en"}}zh{{??}}en{{?}}' class='class_sidebarMenuForMobile'>
+                    <a>
+                        <i class="fas fa-language fa-2x"></i>
+                        <span class="title">{{=it.translation['sidebar_language']}}</span>
+                    </a>
+                </li>
+
+                {{?it.user}}
+                <li class='class_sidebarMenuForMobile'>
+                    <form action="/logout" method="post" id='id_form_logout'></form>
+                    <a href="javascript:;" onclick='logout();' alt='Logout'>
+                        <i class="fas fa-sign-out-alt fa-2x" data-fa-transform="rotate-180"></i>
+                        <span class="title">{{=it.translation['sidebar_logout']}}</span>
+                    </a>
+                </li>
+                {{?}}
+            </ul>
+            <!-- END SIDEBAR MENU -->
+        </div>
+    </div>
+    <script>
+    $(function() {
+
+      var pathname = window.location.pathname;
+      $(".page-sidebar-wrapper a[href*='"+pathname+"']").parent().addClass('active');
+
+      $.post('/getBalanceSatoshis',
+        function(data) {
+          $("#id_balanceSatoshis").val(data + 'bits');
+        });
+
+      $(document).on('click', '#id_btnLanguageSwitch', function() {
+          var current_url = window.location.href;
+          var language_code = $(this).attr('language_code');
+          $("#id_formSetLanguage").find("[name='current_url']").val(current_url);
+          $("#id_formSetLanguage").find("[name='language_code']").val(language_code);
+          $("#id_formSetLanguage").submit();
+      });
+    });
+
+    function logout() {
+      document.getElementById("id_form_logout").submit();
+    }
+    </script>

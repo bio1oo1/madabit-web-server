@@ -1,0 +1,241 @@
+{{##def.page_title = 'Stats' #}}
+
+{{##def.content:
+<div class='row'>
+	<div class='col-md-12'>
+		<div class="portlet light">
+			<div class="portlet-body">
+				<div class = 'row' style = 'text-align: center;'>
+					<h1 style='margin-top: 0; font-weight: bold;'>{{=it.translation['user_title']}}</h1>
+				</div>
+				<div class = 'row' style= 'margin-top:50px;'>
+					<div class="col-md-12" style ="margin-bottom: 40px;" align = 'center'>
+						<div class="input-group input-large">
+							<input type="text" id = 'id_inputUsername' class="form-control" placeholder="{{=it.translation['user_username']}}" value = '{{=it.stats.username }}'>
+							<div class="input-group-btn">
+								<button class="btn blue" type="button" id='id_btnSearch'>{{=it.translation['user_search']}}</button>
+							</div>
+						</div>
+						<!-- /.input-group -->
+					</div>
+				</div>
+
+				<div class = 'row' >
+					<div class = 'col-md-4'>
+						<a class="dashboard-stat dashboard-stat-light blue-soft" style='margin-bottom: 3px;' href="javascript:;">
+							<div class="visual">
+								<i class="fas fa-play fa-2x"></i>
+							</div>
+							<div class="details">
+								<div class="number">{{=it.statistics.game_count}}</div>
+								<div class="desc">{{=it.translation['user_sentence_part_1']}}</div>
+							</div>
+						</a>
+					</div>
+					<div class = 'col-md-4'>
+						<a class="dashboard-stat dashboard-stat-light blue-soft" style='margin-bottom: 3px;' href="javascript:;">
+							<div class="visual">
+								<i class="fas fa-star fa-2x"></i>
+							</div>
+							<div class="details">
+								<div class="number">{{?it.stats.rank == -1}}Not Played Yet{{??}}{{=it.stats.rank}}{{?}}</div>
+								<div class="desc">{{=it.translation['user_sentence_part_2']}}</div>
+							</div>
+						</a>
+					</div>
+					<div class = 'col-md-4'>
+						<a class="dashboard-stat dashboard-stat-light blue-soft" style='margin-bottom: 3px;' href="javascript:;">
+							<div class="visual">
+								<i class="far fa-chart-bar fa-2x"></i>
+							</div>
+							<div class="details">
+								<div class="number">{{#def.format: { n: it.stats.gross_profit, decimals: 2} }} {{=it.translation.miscellaneous3}}</div>
+								<div class="desc">{{=it.translation['user_grossprofit']}}</div>
+							</div>
+						</a>
+					</div>
+					<!--<div class = 'col-md-3'>-->
+						<!--<a class="dashboard-stat dashboard-stat-light blue-soft" style='margin-bottom: 3px;' href="javascript:;">-->
+							<!--<div class="visual">-->
+								<!--<i class="fab fa-btc fa-2x"></i>-->
+							<!--</div>-->
+							<!--<div class="details">-->
+								<!--<div class="number">{{#def.format: { n: it.stats.net_profit, decimals: 2} }} Bits</div>-->
+								<!--<div class="desc">{{=it.translation['user_netprofit']}}</div>-->
+							<!--</div>-->
+						<!--</a>-->
+					<!--</div>-->
+				</div>
+				<hr>
+				{{? it.showing_last}}
+						<h4>{{=it.translation['user_showinggame']}} {{= it.games_from}} {{=it.translation['user_to']}} {{= it.games_to}}</h4>
+				{{??}}
+						<h4>{{=it.translation['user_showinglast']}} {{= it.games_to - it.games_from + 1}} {{=it.translation['user_games']}}</h4>
+				{{?}}
+				<div class="row" style = 'color:white;'>
+					<div class = 'col-md-12'>
+						<div id = 'id_divStatsChart' class= 'custom-chart' style = 'height: 300px;'></div>
+					</div>
+				</div>
+				<div class = 'row' align = 'center' style = 'font-size: 16px;'>
+				{{? it.pages.pages > 1 && it.pages.current!=1 }}
+					<a href="?p=1" style="margin-right: 10px;">{{=it.translation['user_chart_navigation_first']}}</a>
+				{{?}}
+				{{? it.previous_page}}
+				<a href="{{= it.previous_page }}" style="margin-right: 10px;">{{=it.translation['user_chart_navigation_previous']}}</a>
+				{{?}}
+
+				{{? it.next_page }}
+				<a href="{{= it.next_page }}" style="margin-right: 10px;">{{=it.translation['user_chart_navigation_next']}}</a>
+				{{?}}
+				{{? it.pages.pages>1 && it.pages.current != it.pages.page}}
+					<a href="/user/{{= it.stats.username }}" style="margin-right: 10px;">{{=it.translation['user_chart_navigation_last']}}</a>
+				{{?}}
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<!-- END CORE PLUGINS -->
+
+<script src="/vendor/amcharts/amcharts.js"></script>
+<script src="/vendor/amcharts/serial.js"></script>
+<script src="/vendor/amcharts/plugins/export/export.min.js"></script>
+<script src="/vendor/amcharts/themes/dark.js"></script>
+
+<script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+<script>
+$(document).ready(function() {
+    Metronic.init();
+    Layout.init();
+
+    $("#id_inputUsername").on('keyup', function (e) {
+        if (e.keyCode == 13) {
+            if($("#id_inputUsername").val() != '')
+            	$("#id_btnSearch").click();
+        }
+    });
+
+	$("#id_btnSearch").click(function() {
+		window.location = "/user/" + $("#id_inputUsername").val();
+	});
+
+	CustomChart({{= it.games_from}}, {{= it.net_profit_offset}}, {{=JSON.stringify(it.plays)}});
+});
+
+function CustomChart(startingFrom, cum, chartData) {
+
+    if(chartData == undefined) return;
+	chartData.reverse();
+	chartData.forEach(function(entry, i) {
+			var profit = (entry.cash_out ? entry.cash_out : 0) - entry.bet - entry.extra_bet;
+			cum += profit;
+			entry.cum_profit = (cum/100);
+			entry.n = startingFrom+i;
+			if (profit > 0) {
+				entry.force_color = 'green'
+			} else if (profit < 0) {
+				entry.force_color = 'red'
+			} else {
+				entry.force_color = 'gray'
+			}
+	});
+
+	AmCharts.ready(function () {
+		function frmt(x) {
+			var entry = x.dataContext;
+			var profit = (entry.cash_out ? entry.cash_out : 0) + (entry.bonus ? entry.bonus : 0) - entry.bet;
+
+			var r = "<table>" +
+				"<tr><th>{{=it.translation['user_chart_balloon_gameid']}}:</th><td>" + entry.game_id + "<br><small>(" + entry.timeago + ")</small>" +
+				"</td></tr>" +
+				"<tr><th>{{=it.translation['user_chart_balloon_bet']}}</th><td>" + (entry.bet/100).toFixed() + " bits</td></tr>" +
+				"<tr><th>{{=it.translation['user_chart_balloon_crashat']}}</th><td>" + (typeof entry.game_crash !== 'undefined' ? (entry.game_crash/100).toFixed(2) + 'x' : '?') + "</td></tr>" +
+				"<tr><th>{{=it.translation['user_chart_balloon_cashedout']}}</th><td>" + (entry.cash_out ? (entry.cash_out / entry.bet).toFixed(2) + 'x' : '-') + "</td></tr>" +
+                "<tr><th>{{=it.translation['user_chart_balloon_balance']}}</th><td>" + (entry.balance_satoshis/100).toFixed() + " bits</td></tr>" +
+				"<tr><th>{{=it.translation['user_chart_balloon_profit']}}</th><td><b>" + (profit/100).toFixed(2) + " bits</b></td></tr>" +
+				"</table>";
+			return r;
+		}
+
+		var statsChart = AmCharts.makeChart("id_divStatsChart", {
+			"theme": "dark",
+			"type": "serial",
+			"marginRight": 80,
+			"autoMarginOffset": 20,
+			"marginTop": 20,
+			"dataProvider": chartData,
+			"valueAxes": [{
+				"id": "v1",
+				"axisAlpha": 0.1
+			}],
+			"graphs": [{
+				"useNegativeColorIfDown": true,
+				"balloonFunction": frmt,
+				"bullet": "round",
+				"bulletBorderAlpha": 1,
+				"bulletBorderColor": "#FFFFFF",
+				"hideBulletsCount": 50,
+				"lineThickness": 2,
+				"lineColor": "#578ebe",
+				"negativeLineColor": "#e62121",
+				"valueField": "cum_profit"
+			}],
+			"chartScrollbar": {
+				"scrollbarHeight": 5,
+				"backgroundAlpha": 0.1,
+				"backgroundColor": "#868686",
+				"selectedBackgroundColor": "#67b7dc",
+				"selectedBackgroundAlpha": 1
+			},
+			"chartCursor": {
+				"valueLineEnabled": true,
+				"valueLineBalloonEnabled": true
+			},
+			"categoryField": "game_id",
+            "categoryAxis": {
+                "labelRotation": 45,
+                "axisAlpha": 0,
+                "minHorizontalGap": 60
+            },
+			"export": {
+				"enabled": false
+			}
+		});
+
+		statsChart.addListener("clickGraphItem", function (event) {
+			var gameId = event.item.dataContext.game_id;
+			window.location="/game/" + gameId;
+		});
+	});
+}
+</script>
+<script>
+
+</script>
+<!-- END JAVASCRIPTS -->
+#}}
+
+
+{{#def.include('./template/main')}}

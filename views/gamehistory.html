@@ -1,0 +1,220 @@
+{{##def.content_profile:
+<style>
+@media screen and (max-width: 480px) {
+	.table th, .table td {
+		text-align: center;
+		font-size:10px !important;
+		padding:0;
+	}
+
+	.table-parent-div {
+		padding:0;
+		width:107%;
+		margin-left:-8px;
+	}
+
+	.class_hiddenInMobile {
+		display: none;
+	}
+
+	#id_labelDate {
+		display:block;
+	}
+
+	.form-control.form-control-inline.input-medium.date-picker {
+		width: 87px !important;
+		height: 25px;
+		padding: 5px;
+		display: inline;
+	}
+
+	#id_btnView {
+		background-color: #b92525;
+		width: 57px !important;
+		border-radius: 3px !important;
+		border: none;
+		margin-top: -5px;
+		margin-left: 10px;
+		-webkit-box-shadow: 0 0 6px 0px white;
+		-moz-box-shadow: 0 0 6px 0px white;
+		box-shadow: 0 0 6px 0px white;
+		height: 25px;
+		line-height: 9px;
+	}
+
+	#id_dash {
+		display:inline;
+		margin: 0;
+	}
+}
+
+td {
+	padding : 10px 0;
+}
+@media screen and (min-width: 481px) {
+	#id_labelDate {
+		display: inline;
+		margin: 10px;
+	}
+
+	.form-control.form-control-inline.input-medium.date-picker {
+		width: 150px !important;
+		display: inline;
+	}
+
+	#id_btnView {
+		background-color: #b92525;
+		width: 100px !important;
+		border-radius: 3px !important;
+		border: none;
+		margin-top: -5px;
+		margin-left: 10px;
+		-webkit-box-shadow: 0 0 6px 0px white;
+		-moz-box-shadow: 0 0 6px 0px white;
+		box-shadow: 0 0 6px 0px white;
+	}
+
+	#id_dash {
+		display: inline;
+		margin: 0 10px;
+	}
+}
+</style>
+<link rel="stylesheet" type="text/css" href="/metronic/assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
+<link rel="stylesheet" type="text/css" href="/vendor/datepicker/datepicker.css">
+<div class="portlet light">
+	<div class="portlet-body">
+		<div class = 'row' style="margin-bottom: 20px;">
+			<div class = 'col-md-5'>
+				<h2>{{=it.translation['gamehistory_title']}}</h2>
+			</div>
+			<div class = 'col-md-7'></div>
+		</div>
+		<div class="row" style="margin-bottom : 10px;">
+			<div class = 'col-md-12'>
+				<form action="/gamehistory" method="POST" id="id_formDateRange">
+					<div class="form-group">
+						<div class="col-md-12" style="padding:0;">
+							<label id = "id_labelDate">{{=it.translation.gamehistory_daterange_date}}</label>
+							<input class="form-control form-control-inline input-medium date-picker" size=  "16"
+								   type="text" name='date_from' value="{{=it.date_from}}"/>
+							<label id = 'id_dash' > ~ </label>
+							<input class="form-control form-control-inline input-medium date-picker" size="16"
+								   type="text" name='date_to' value="{{=it.date_to}}"/>
+							<input class="btn btn-primary form-control form-control-inline input-medium"
+								   type="button" value="View" id="id_btnView">
+							<input type = 'hidden' value = '' name = 'time_zone_name' id = 'time_zone_name'>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class = 'row' style="margin-top:60px;">
+			<table  class = 'table' style ='text-align: center; font-size:14px;'>
+				<thead>
+				<tr style="border-bottom: 1px solid #c3c3c3;">
+					<td>
+						{{=it.translation['gamehistory_table_header_gameno']}}
+					</td>
+					<td>{{=it.translation['gamehistory_table_header_gamecrash']}}</td>
+					<td>{{=it.translation['gamehistory_table_header_gamecreated']}}</td>
+					<td>{{=it.translation['gamehistory_table_header_bet']}}</td>
+					<td>{{=it.translation['gamehistory_table_header_rangebet']}}</td>
+					<td>{{=it.translation['gamehistory_table_header_cashedout']}}</td>
+				</tr>
+				</thead>
+				<tbody>
+				{{?it.histories}}
+				{{~it.histories : history:index}}
+				<tr>
+					<td>{{=history.game_id}}</td>
+					<td>{{#def.format: {n: history.game_crash, decimals: 2} }}</td>
+					<td>{{#def.date_format:{created:history.created} }}</td>
+					<td>
+						{{?history.bet!=0}}
+							{{=history.bet / 100}}
+						{{??}}
+							{{=history.range_bet_amount / 100}}
+						{{?}}
+					</td>
+					<td>
+						{{? (history.range_bet_from >= 0 && history.range_bet_amount!=0 && history.range_bet_amount != null)}}
+							{{?history.range_bet_from==history.range_bet_to}}
+								{{=history.range_bet_from/100}}
+							{{??history.range_bet_to < 0}}
+								{{=history.range_bet_from/100}} ~
+							{{??}}
+								{{=history.range_bet_from/100}} ~ {{=history.range_bet_to/100}}
+							{{?}}
+						{{??}}
+							-
+						{{?}}
+					</td>
+					<td>
+						{{? history.cash_out}}
+						{{#def.format: {n: history.cash_out / history.bet * 100, decimals: 2} }}x
+						{{??}}
+						{{=it.translation['gamehistory_table_lose']}}
+						{{?}}
+					</td>
+				</tr>
+				{{~}}
+				{{?}}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/vendor/datepicker/bootstrap-datepicker.js"></script>
+
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+
+<script>
+$(document).ready(function() {
+    Metronic.init();
+    Layout.init();
+
+    if (jQuery().datepicker) {
+        $('.date-picker').datepicker({
+            format: 'yyyy-mm-dd',
+            rtl: Metronic.isRTL(),
+            orientation: "left",
+            autoclose: true
+        });
+    }
+
+    var timezone = jstz.determine();
+    $("#time_zone_name").val(timezone.name());
+
+    $(document).on('click', '#id_btnView', function() {
+        $("#id_formDateRange").submit();
+    });
+});
+</script>
+<!-- END JAVASCRIPTS -->
+#}}
+
+
+{{#def.include('./template/main_profile')}}

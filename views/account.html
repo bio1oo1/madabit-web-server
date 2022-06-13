@@ -1,0 +1,492 @@
+{{##def.content_profile:
+<!--<script src='https://www.google.com/recaptcha/api.js?hl={{=it.translation.language_for}}'></script>-->
+<style>
+@media screen and (max-width: 480px) {
+	.table th, .table td {
+		text-align: center;
+		font-size:10px !important;
+		padding:0;
+	}
+
+	.table-parent-div {
+		padding:0;
+		width:107%;
+		margin-left:-8px;
+	}
+
+	.class_hiddenInMobile {
+		display: none;
+	}
+
+	#id_labelDate {
+		display:block;
+	}
+
+	.form-control.form-control-inline.input-medium.date-picker {
+		width: 87px !important;
+		height: 25px;
+		padding: 5px;
+		display: inline;
+	}
+
+	#id_btnView {
+		background-color: #b92525;
+		width: 57px !important;
+		border-radius: 3px !important;
+		border: none;
+		margin-top: -5px;
+		margin-left: 10px;
+		-webkit-box-shadow: 0 0 6px 0px white;
+		-moz-box-shadow: 0 0 6px 0px white;
+		box-shadow: 0 0 6px 0px white;
+		height: 25px;
+		line-height: 9px;
+	}
+
+	#id_dash {
+		display:inline;
+		margin: 0;
+	}
+
+	#id_introUrl {
+		text-decoration: none;
+		line-height: 1;
+		font-weight: 400;
+		color: #b92525 !important;
+		text-shadow: 0 0 2px #b92525 !important;
+		font-size: 11px;
+		background: #000;
+		padding: 5px 20px;
+		border-radius: 25px !important;
+	}
+}
+
+td {
+	padding : 10px 0;
+}
+@media screen and (min-width: 481px) {
+	#id_labelDate {
+		display: inline;
+		margin: 10px;
+	}
+
+	.form-control.form-control-inline.input-medium.date-picker {
+		width: 150px !important;
+		display: inline;
+	}
+
+	#id_btnView {
+		background-color: #b92525;
+		width: 100px !important;
+		border-radius: 3px !important;
+		border: none;
+		margin-top: -5px;
+		margin-left: 10px;
+		-webkit-box-shadow: 0 0 6px 0px white;
+		-moz-box-shadow: 0 0 6px 0px white;
+		box-shadow: 0 0 6px 0px white;
+	}
+
+	#id_dash {
+		display: inline;
+		margin: 0 10px;
+	}
+
+	#id_introUrl {
+		text-decoration: none;
+		line-height: 1;
+		font-weight: 400;
+		color: #b92525 !important;
+		text-shadow: 0 0 2px #b92525 !important;
+		font-size: 13px;
+		background: #000;
+		padding: 5px 20px;
+		border-radius: 25px !important;
+	}
+}
+</style>
+<link rel="stylesheet" type="text/css" href="/vendor/datepicker/datepicker.css">
+
+<div class="portlet light">
+	<div class="portlet-body">
+
+			<div class = 'row' style="margin-bottom: 20px;">
+				<div class = 'col-md-5'>
+					<h2>{{=it.translation['account_title_publicinformation']}}</h2>
+				</div>
+				<div class = 'col-md-7'></div>
+			</div>
+			<div class="row" style="margin-bottom : 10px;">
+				<div class = 'col-md-12'>
+					<form action="/account" method="GET" id="id_formDateRange">
+						<div class="form-group">
+							<div class="col-md-12" align='left' style="padding:0;">
+								<label style="" id = "id_labelDate">{{=it.translation.gamehistory_daterange_date}}</label>
+								<input class="form-control form-control-inline input-medium date-picker" size=  "16"
+									   type="text" name='date_from' value="{{=it.date_from}}"/>
+								<label id='id_dash' > ~ </label>
+								<input class="form-control form-control-inline input-medium date-picker" size="16"
+									   type="text" name='date_to' value="{{=it.date_to}}"/>
+								<input class="btn btn-primary form-control form-control-inline input-medium"
+									   type="button" value="View" id="id_btnView">
+								<input type = 'hidden' value = '' name = 'time_zone_name' id = 'time_zone_name'>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			{{?it.statistics}}
+			<div class = 'row' >
+				<div class = 'col-md-4'>
+					<a class="dashboard-stat dashboard-stat-light red-intense" style='margin-bottom:5px;'>
+						<div class="visual">
+							<i class="fab fa-btc fa-2x"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								 {{=it.statistics.deposit}} {{=it.translation.miscellaneous3}}
+							</div>
+							<div class="desc">
+								{{=it.translation['account_statistics_deposits']}}
+							</div>
+						</div>
+					</a>
+				</div>
+				<div class = 'col-md-4'>
+					<a class="dashboard-stat dashboard-stat-light blue-soft" style='margin-bottom:5px;'>
+						<div class="visual">
+							<i class="fas fa-exchange-alt fa-2x" data-fa-transform="rotate-90"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								{{=it.statistics.net_profit}} {{=it.translation.miscellaneous3}}
+							</div>
+							<div class="desc">
+								{{=it.translation['account_statistics_netprofit']}}
+							</div>
+						</div>
+					</a>
+				</div>
+				<div class = 'col-md-4'>
+					<a class="dashboard-stat dashboard-stat-light purple-plum" style='margin-bottom:5px;'>
+						<div class="visual">
+							<i class="fas fa-money-bill-alt fa-2x"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								 {{=it.statistics.total_volume}} {{=it.translation.miscellaneous3}}
+							</div>
+							<div class="desc">
+								{{=it.translation['account_statistics_totalvolume']}}
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class = 'row' >
+				<div class = 'col-md-4'>
+					<a class="dashboard-stat dashboard-stat-light red-intense" style='margin-bottom:5px;'>
+						<div class="visual">
+							<i class="fa fa-dollar-sign fa-2x"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								{{=it.statistics.withdrawal}} {{=it.translation.miscellaneous3}}
+							</div>
+							<div class="desc">
+								{{=it.translation['account_statistics_withdrawal']}}
+							</div>
+						</div>
+					</a>
+				</div>
+				<div class = 'col-md-4'>
+					<a class="dashboard-stat dashboard-stat-light blue-soft" style='margin-bottom:5px;'>
+						<div class="visual">
+							<i class="fas fa-angle-double-up fa-2x"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								{{=it.statistics.gross_profit}} {{=it.translation.miscellaneous3}}
+							</div>
+							<div class="desc">
+								{{=it.translation['account_statistics_grossprofit']}}
+							</div>
+						</div>
+					</a>
+				</div>
+				<div class = 'col-md-4'>
+					<a class="dashboard-stat dashboard-stat-light green-haze" style='margin-bottom:5px;'>
+						<div class="visual">
+							<i class="fas fa-gamepad fa-2x"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								{{=it.statistics.game_count}}
+							</div>
+							<div class="desc">
+								{{=it.translation['account_statistics_gamesplayed']}}
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class = 'row' >
+			<div class = 'col-md-4'>
+				<a class="dashboard-stat dashboard-stat-light red-intense" style='margin-bottom:5px;'>
+					<div class="visual">
+						<i class="fas fa-plus fa-2x"></i>
+					</div>
+					<div class="details">
+						<div class="number">
+							{{=it.statistics.play_times_profit}} {{=it.translation.miscellaneous3}}
+						</div>
+						<div class="desc">
+							{{=it.translation['account_statistics_freebitsfromloginplay']}}
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class = 'col-md-4'>
+				<a class="dashboard-stat dashboard-stat-light blue-soft" style='margin-bottom:5px;'>
+					<div class="visual">
+						<i class="fas fa-plus fa-2x"></i>
+					</div>
+					<div class="details">
+						<div class="number">
+							{{=it.statistics.first_deposit_profit}} {{=it.translation.miscellaneous3}}
+						</div>
+						<div class="desc">
+							{{=it.translation['account_statistics_commissionfromfunding']}}
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class = 'col-md-4'>
+				<a class="dashboard-stat dashboard-stat-light green-haze" style='margin-bottom:5px;'>
+					<div class="visual">
+						<i class="fas fa-plus fa-2x"></i>
+					</div>
+					<div class="details">
+						<div class="number">
+							{{=it.statistics.welcome_free_bit}} {{=it.translation.miscellaneous3}}
+						</div>
+						<div class="desc">
+							{{=it.translation['account_statistics_welcomefreebits']}}
+						</div>
+					</div>
+				</a>
+			</div>
+			{{?}}
+		</div>
+      {{?typeof it.user.eligible !== 'number' }}
+          {{?it.user.balance_satoshis > 100}}
+               <div class="success bits" style = 'margin-top:20px; font-size:14px;' hidden = 'true'>{{=it.translation['account_freebit_sentence_1']}} <a href="/giveaway"><small> {{=it.translation['account_freebit_link']}}</small></a></div>
+				<!--<p style = 'margin-top:30px;'>** Every hour you are able to request 2 free bits, just claim them!</p>-->
+				<!--<form class="giveaway-form" action="/request" method="post" id="id_formFaucet">-->
+						<!--<div class="g-recaptcha" data-sitekey="{{=it.recaptchaKey}}" data-callback="submitFormFaucet"></div>-->
+				<!--</form>-->
+          {{?}}
+      {{??}}
+          <div class="success bits" style = 'margin-top:20px; font-size:14px;' hidden = 'true'>{{=it.translation['account_freebit_sentence_2_1']}}{{=it.user.eligible}}{{=it.translation['account_freebit_sentence_2_2']}}</div>
+      {{?}}
+
+			{{?it.warning}}
+			<div class="alert alert-danger alert-dismissable">
+				<button type="button" class="close-alert" data-dismiss="alert" aria-hidden="true"></button>
+				<strong>{{=it.translation['account_warning']}}&nbsp;&nbsp;&nbsp;&nbsp;</strong>{{!it.warning}}
+			</div>
+			{{?}}
+
+			{{?it.success}}
+			<div class="alert alert-success alert-dismissable">
+				<button type="button" class="close-alert" data-dismiss="alert" aria-hidden="true"></button>
+				<strong>{{=it.translation['account_success']}}&nbsp;&nbsp;&nbsp;&nbsp;</strong>{{!it.success}}
+			</div>
+			{{?}}
+
+			{{?it.statistics}}
+			<div class = 'row' style = 'margin: 20px auto;'>
+				<div class = 'col-md-12' style = 'height:365px; text-align:center;'>
+            		<div id="id_divAccountChart" class = 'custom-chart' style="width: 100%; height: 400px;"></div>
+					<div class = 'row' align = 'center' style = 'font-size: 16px;'>
+						{{? it.pages.pages > 1 && it.pages.current!=1 }}
+						<a href="?p=1&date_from={{=it.date_from}}&date_to={{=it.date_to}}&time_zone_name={{=it.time_zone_name}}" style="margin-right: 10px;">{{=it.translation['account_chart_navigation_first']}}</a>
+						{{?}}
+						{{? it.previous_page }}
+						<a href="{{= it.previous_page }}" style="margin-right: 10px;">{{=it.translation['account_chart_navigation_previous']}}</a>
+						{{?}}
+
+						{{? it.next_page }}
+						<a href="{{= it.next_page }}" style="margin-right: 10px;">{{=it.translation['account_chart_navigation_next']}}</a>
+						{{?}}
+						{{? it.pages.pages>1 && it.pages.current != it.pages.page}}
+						<a href="/account?date_from={{=it.date_from}}&date_to={{=it.date_to}}&time_zone_name={{=it.time_zone_name}}" style="margin-right: 10px;">{{=it.translation['account_chart_navigation_last']}}</a>
+						{{?}}
+
+					</div>
+        		</div>
+			</div>
+			{{?}}
+	</div>
+</div>
+
+
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="/vendor/datepicker/bootstrap-datepicker.js"></script>
+
+<script src="/vendor/amcharts/amcharts.js"></script>
+<script src="/vendor/amcharts/serial.js"></script>
+<script src="/vendor/amcharts/plugins/export/export.min.js"></script>
+<script src="/vendor/amcharts/themes/dark.js"></script>
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+
+<script>
+$(document).ready(function() {
+    Metronic.init();
+    Layout.init();
+
+    if (jQuery().datepicker) {
+        $('.date-picker').datepicker({
+            format: 'yyyy-mm-dd',
+            rtl: Metronic.isRTL(),
+            orientation: "left",
+            autoclose: true
+        });
+    }
+
+    var timezone = jstz.determine();
+    $("#time_zone_name").val(timezone.name());
+
+    $('#id_date_from').datepicker({
+        format: 'yyyy-mm-dd'
+    });
+
+    $('#id_date_to').datepicker({
+        format: 'yyyy-mm-dd'
+    });
+
+    $(document).on('click', '#id_btnView', function() {
+        $("#id_formDateRange").submit();
+    });
+
+    CustomChart({{= it.games_from}}, {{= it.net_profit_offset}}, {{=JSON.stringify(it.plays)}});
+});
+
+function submitFormFaucet() {
+	$('#id_formFaucet').submit();
+};
+function CustomChart(startingFrom, cum, chartData) {
+
+    if (chartData == undefined) return;
+
+		chartData.reverse();
+		chartData.forEach(function(entry, i) {
+				var profit = (entry.cash_out ? entry.cash_out : 0) - entry.bet - entry.extra_bet;
+				cum += profit;
+				entry.cum_profit = (cum/100);
+				entry.n = startingFrom+i;
+				if (profit > 0) {
+					entry.force_color = 'green'
+				} else if (profit < 0) {
+					entry.force_color = 'red'
+				} else {
+					entry.force_color = 'gray'
+				}
+		});
+
+    	AmCharts.ready(function () {
+            function frmt(x) {
+                var entry = x.dataContext;
+                var profit = (entry.cash_out ? entry.cash_out : 0) - entry.bet;
+
+                var r = "<table>" +
+						 "<tr><th>{{=it.translation['account_chart_balloon_gameid']}}</th><td>" + entry.game_id + "<br><small>(" + entry.timeago + ")</small>" +
+						"</td></tr>" +
+						"<tr><th>{{=it.translation['account_chart_balloon_bet']}}</th><td>" + (entry.bet / 100).toFixed() + " {{=it.translation.miscellaneous3}}</td></tr>" +
+						"<tr><th>{{=it.translation['account_chart_balloon_crashat']}}</th><td>" + (typeof entry.game_crash !== 'undefined' ? (entry.game_crash / 100).toFixed(2) + 'x' : '?') + "</td></tr>" +
+						"<tr><th>{{=it.translation['account_chart_balloon_cashedout']}}</th><td>" + (entry.cash_out ? (entry.cash_out / entry.bet).toFixed(2) + 'x' : '-') + "</td></tr>" +
+						"<tr><th>{{=it.translation['account_chart_balloon_profit']}}</th><td><b>" + (profit / 100).toFixed(2) + " {{=it.translation.miscellaneous3}}</b></td></tr>" +
+						"</table>";
+                return r;
+            }
+
+            var accountChart = AmCharts.makeChart("id_divAccountChart", {
+                "theme": "dark",
+                "type": "serial",
+                "marginRight": 80,
+                "autoMarginOffset": 20,
+                "marginTop": 20,
+                "dataProvider": chartData,
+                "valueAxes": [{
+                    "id": "v1",
+                    "axisAlpha": 0.1
+                }],
+                "graphs": [{
+                    "useNegativeColorIfDown": true,
+                    "balloonFunction": frmt,
+                    "bullet": "round",
+                    "bulletBorderAlpha": 1,
+                    "bulletBorderColor": "#FFFFFF",
+                    "hideBulletsCount": 50,
+                    "lineThickness": 2,
+                    "lineColor": "#578ebe",
+                    "negativeLineColor": "#e62121",
+                    "valueField": "cum_profit"
+                }],
+                "chartScrollbar": {
+                    "scrollbarHeight": 5,
+                    "backgroundAlpha": 0.1,
+                    "backgroundColor": "#868686",
+                    "selectedBackgroundColor": "#67b7dc",
+                    "selectedBackgroundAlpha": 1
+                },
+                "chartCursor": {
+                    "valueLineEnabled": true,
+                    "valueLineBalloonEnabled": true
+                },
+                "categoryField": "game_id",
+                "categoryAxis": {
+                    "labelRotation": 45,
+                    "axisAlpha": 0,
+                    "minHorizontalGap": 60
+                },
+                "export": {
+                    "enabled": false
+                }
+            });
+
+            accountChart.addListener("clickGraphItem", function (event) {
+                var gameId = event.item.dataContext.game_id;
+                window.location="/game/" + gameId;
+            });
+        });
+
+
+
+}
+</script>
+<!-- END JAVASCRIPTS -->
+#}}
+
+
+{{#def.include('./template/main_profile')}}

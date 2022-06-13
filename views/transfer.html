@@ -1,0 +1,200 @@
+{{##def.page_title = 'Transfer' #}}
+{{##def.content_profile:
+<div class="portlet light">
+    <div class="portlet-body">
+        <form role="form" action="/transfer-request" method="post" id="id_form">
+            <input style="display:none" type="text" name="fakeusernameremembered"/>
+            <input style="display:none" type="password" name="fakepasswordremembered"/>
+            <div class = 'row'>
+                <h2>{{=it.translation['transfer_transfertips_title']}}</h2>
+                <div class = 'col-md-7'>
+                    <div class = 'col-md-4 col-sm-4'>
+                        <div class="form-group">
+                            <label class="control-label">{{=it.translation['transfer_transfertips_totalamount']}}</label>
+                            <input class="form-control" name="all" type="number" min="1" id="all" autocomplete="off" required/>
+                        </div>
+                    </div>
+                    <div class = 'col-md-4 col-sm-4'>
+                        <div class="form-group">
+                            <label class="control-label">{{=it.translation['transfer_transfertips_fee']}}</label>
+                            <input class="form-control" name="fee" type="text" id="fee" readonly
+                                   style="  background: 0 0;
+                            border: none;
+                            cursor: default;
+                            text-align: right;
+                            border-bottom: 1px solid #41495f; " required/>
+                        </div>
+                    </div>
+                    <div class = 'col-md-4 col-sm-4'>
+                        <div class="form-group">
+                            <label class="control-label">{{=it.translation['transfer_transfertips_amount']}}</label>
+                            <input class="form-control" name="amount" type="text" id="amount" readonly
+                                   style="  background: 0 0;
+                            border: none;
+                            cursor: default;
+                            text-align: right;
+                            border-bottom: 1px solid #41495f; " required/>
+                        </div>
+                    </div>
+                </div>
+                <div class = 'col-md-5'></div>
+                <div class = 'col-md-7'>
+                    <div class = 'col-md-6 col-sm-6'>
+                        <div class="form-group">
+                            <label class="control-label">{{=it.translation['transfer_transfertips_touser']}}</label>
+                            <input class="form-control" name="to-user" type="text" id="to-user" required/>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div style="margin-top:22px;"><b>{{=it.translation["transfer_transfertips_note"]}}：</b>{{=it.translation["transfer_transfertips_note_content"]}}</div>
+                    </div>
+                </div>
+                <div class = 'col-md-5'></div>
+                <div class = 'col-md-7'>
+                    <div class = 'col-md-6 col-sm-6'>
+                        <div class="form-group">
+                            <label class="control-label">{{=it.translation['transfer_transfertips_yourpassword']}}</label>
+                            <input class="form-control" name="password" type="password" id="password" autocomplete="off" required/>
+                        </div>
+                    </div>
+                </div>
+                {{?it.user.mfa_secret}}
+                <div class = 'col-md-5'></div>
+                <div class = 'col-md-7'>
+                    <div class = 'col-md-6 col-sm-6'>
+                        <div class="form-group">
+                            <label class="control-label">{{=it.translation['transfer_transfertips_2facode']}}</label>
+                            <input class="form-control" name="password" type="otp" id="otp" autocomplete="off" required/>
+                        </div>
+                    </div>
+                </div>
+                {{?}}
+                <div class='col-md-5'></div>
+                <div class='col-md-7'>
+                    <input class="btn btn-primary" style='margin-left:15px;' type = 'button' value = "{{=it.translation['transfer_transfertips_send']}}" id="id_btnSend"></input>
+                    <input type="hidden" name="transfer-id" value="{{= it.id}}" />
+
+                    {{?it.tipfee}}
+                        <div id="id_hidden_tipfee" hidden="true">
+                            {{=it.tipfee}}
+                        </div>
+                    {{?}}
+
+                </div>
+                <div class='col-md-5'></div>
+            </div>
+        </form>
+
+        {{?it.warning}}
+        <div class="row" style="margin-top:20px;">
+            <div class="col-md-12">
+                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close-alert" data-dismiss="alert" aria-hidden="true"></button>
+                    <strong>{{=it.translation['transfer_transfertips_warning']}}!&nbsp;&nbsp;&nbsp;&nbsp;</strong>{{!it.translation[it.warning]}}
+                    {{?it.extra_param}}{{=it.extra_param}}{{?}}
+                </div>
+            </div>
+        </div>
+        {{?}}
+
+        {{?it.success}}
+        <div class="row" style="margin-top:20px;">
+            <div class="col-md-12">
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close-alert" data-dismiss="alert" aria-hidden="true"></button>
+                    <strong>{{=it.translation['transfer_transfertips_success']}}!&nbsp;&nbsp;&nbsp;&nbsp;</strong>{{!it.translation[it.success]}}
+                </div>
+            </div>
+        </div>
+        {{?}}
+
+        <div class = 'row'>
+            <h2>{{=it.translation['transfer_transferhistory_title']}}</h2>
+            <div class = 'col-md-12'>
+                <table class="table table-hover">
+                    <thead style = 'color:#fefefe;'>
+                    <tr>
+                        <th style="text-align: right;">{{=it.translation['transfer_transferhistory_table_header_from']}}</th>
+                        <th style="text-align: right;">{{=it.translation['transfer_transferhistory_table_header_to']}}</th>
+                        <th style="text-align: center;">{{=it.translation['transfer_transferhistory_table_header_amount']}}</th>
+                        <th style="text-align: center;">{{=it.translation['transfer_transferhistory_table_header_fee']}}</th>
+                        <th style="text-align: center;">{{=it.translation['transfer_transferhistory_table_header_total']}}</th>
+                        <th style="text-align: center;">{{=it.translation['transfer_transferhistory_table_header_time']}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{~it.transfers :transfer:index}}
+                    <tr>
+                        <td style="text-align: right;">{{= transfer.from_username }}</td>
+                        <td style="text-align: right;">{{= transfer.to_username }}</td>
+                        <td style="text-align: center;">{{#def.format: {n: transfer.amount, decimals:2 } }}</td>
+                        <td style="text-align: center;">{{#def.format: {n: transfer.fee, decimals:2 } }}</td>
+                        <td style="text-align: center;">{{#def.format: {n: transfer.amount + transfer.fee, decimals:2 } }}</td>
+                        <td style="text-align: center;">{{#def.date_format:{created:transfer.created} }}</td>
+                    </tr>
+                    {{~}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+
+<!-- END CORE PLUGINS -->
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+<script>
+    $(document).ready(function() {
+        Metronic.init();
+        Layout.init();
+
+        $('#all').keyup(function() {
+            var nAmount = $("#all").val();
+            var tipfee = $('#id_hidden_tipfee').text();
+            tipfee = parseFloat(tipfee);
+            var nFee = parseInt((parseFloat(nAmount) / 100.0) * tipfee);
+            if (nFee > {{=it.max_tipfee_amount}})
+            {
+                nFee = {{=it.max_tipfee_amount}};
+            }
+            var nTotalAmount = parseInt(nAmount) - parseInt(nFee);
+            if (isNaN(nTotalAmount))
+            {
+                $("#fee").val("");
+                $("#amount").val("");
+            }
+            else
+            {
+                $("#fee").val(nFee);
+                $("#amount").val(nTotalAmount);
+            }
+        });
+
+        $('#id_btnSend').click(function() {
+            var nAmount = $("#amount").val();
+            if (nAmount == "") return;
+
+            $("#id_form").submit();
+        });
+    });
+</script>
+#}}
+{{#def.include('./template/main_profile')}}

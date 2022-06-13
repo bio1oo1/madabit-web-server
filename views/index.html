@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Head BEGIN -->
+<head>
+    <meta charset="utf-8">
+    <title>{{=it.translation.site_title}}</title>
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <meta content="MADABIT description" name="description">
+    <meta content="MADABIT keywords" name="keywords">
+    <meta content="wrt_Bio" name="author">
+
+    <meta property="og:site_name" content="madabit">
+    <meta property="og:title" content="-CUSTOMER VALUE-">
+    <meta property="og:description" content="-CUSTOMER VALUE-">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="-CUSTOMER VALUE-"><!-- link to image for socio -->
+    <meta property="og:url" content="-CUSTOMER VALUE-">
+
+
+
+    <!-- Fonts START -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|PT+Sans+Narrow|Source+Sans+Pro:200,300,400,600,700,900&amp;subset=all" rel="stylesheet" type="text/css">
+    <!-- Fonts END -->
+
+    <!-- Global styles START -->
+    <link href="/fonts/font-awesome/web-fonts-with-css/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/metronic/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Global styles END -->
+
+    <!-- Page level plugin styles START -->
+    <link href="/metronic/assets/global/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet">
+
+    <link href="/metronic/assets/global/plugins/slider-revolution-slider/rs-plugin/css/settings.css" rel="stylesheet">
+    <!-- Page level plugin styles END -->
+
+    <link rel="icon" href="/img/favicon/madabit256.ico" type="image/x-icon">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/madabit57.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/img/favicon/madabit72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/img/favicon/madabit114.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/img/favicon/madabit144.png">
+
+    <link rel="apple-touch-icon" sizes="60x60" href="/img/favicon/madabit60.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/madabit76.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/img/favicon/madabit120.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/img/favicon/madabit152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/madabit180.png">
+
+    <!--<link rel="icon" sizes="128×128" href="/img/favicon/madabit128.png">-->
+    <!--<link rel="icon" sizes="128×128" href="/img/favicon/madabit128.png">-->
+
+    <!-- Theme styles START -->
+    <link href="/metronic/assets/global/css/components.css" rel="stylesheet">
+    <link href="/metronic/assets/frontend/layout/css/style.css" rel="stylesheet">
+    <link href="/metronic/assets/frontend/pages/css/style-revolution-slider.css" rel="stylesheet"><!-- metronic revo slider styles -->
+    <link href="/metronic/assets/frontend/layout/css/style-responsive.css" rel="stylesheet">
+    <link href="/metronic/assets/frontend/layout/css/themes/red.css" rel="stylesheet" id="style-color">
+    <link href="/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/vendor/jayflapper/css/flapper.css" />
+
+    <link href="/css/custom.css" rel="stylesheet">
+    <link href="/css/custom-480.css" rel="stylesheet" media="screen and (max-width:480px)">
+    <link href="/css/custom-760.css" rel="stylesheet" media="screen and (max-width:780px) and (min-width: 481px)">
+    <link href="/css/custom-1200.css" rel="stylesheet" media="screen and (max-width:1200px) and (min-width: 781px)">
+
+    <link href="/vendor/intltelinput/css/intlTelInput.css" rel="stylesheet" type="text/css"/>
+    <link href="/metronic/assets/global/plugins/icheck/skins/all.css" rel="stylesheet"/>
+    <script src="/metronic/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <!-- Theme styles END -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+    <style>
+        .rate-element
+        {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        .event-gallery-element
+        {
+            padding-left: 2px;
+            padding-right: 2px;
+        }
+
+        .banner-right.login input[name=username]::placeholder {
+            font-size:12px;
+        }
+        .banner-right.login input[name=username]:-ms-input-placeholder {
+
+            font-size:12px;
+        }
+        .banner-right.login input[name=username]::-ms-input-placeholder {
+
+            font-size:12px;
+        }
+        * {box-sizing: border-box}
+        body {font-family: Verdana, sans-serif; margin:0}
+        .mySlides {display: none}
+        img {vertical-align: middle;}
+
+        /* Slideshow container */
+        .slideshow-container {
+            max-width: 1000px;
+            position: relative;
+            margin: auto;
+        }
+
+        /* Next & previous buttons */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        /* Fading animation */
+        .fade {
+            -webkit-animation-name: fade;
+            -webkit-animation-duration: 1.5s;
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @-webkit-keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
+
+        @keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
+
+        /* On smaller screens, decrease text size */
+        @media only screen and (max-width: 300px) {
+            .prev, .next,.text {font-size: 11px}
+        }
+
+
+    </style>
+</head>
+<!-- Head END -->
+
+<!-- Body BEGIN -->
+
+<body class="">
+
+<!--Begin Comm100 Live Chat Code-->
+<script>
+    (function(a,h,c,b,f,g){a["UdeskApiObject"]=f;a[f]=a[f]||function(){(a[f].d=a[f].d||[]).push(arguments)};g=h.createElement(c);g.async=1;g.charset="utf-8";g.src=b;c=h.getElementsByTagName(c)[0];c.parentNode.insertBefore(g,c)})(window,document,"script","//assets-cli.udesk.cn/im_client/js/udeskApi.js","ud");
+    ud({
+        "code": "2b916c16",
+        "link": "https://madabit.udesk.cn/im_client/?web_plugin_id=48486"
+    });
+</script>
+
+<!--End Comm100 Live Chat Code-->
+
+<div class = 'wrapper'>
+<!-- BEGIN TOP BAR -->
+    <div class="pre-header">
+        <div class="container">
+            <div class="row">
+                <!-- BEGIN TOP BAR LEFT PART -->
+                <div class="col-md-3 col-sm-3 col-xs-3 header-left">
+                    <a class="site-logo" href="/?clang={{=it.translation['language_for']}}" style = 'padding:0; width: 100%'>
+                        <img src="/img/logo.png" class='logo'>
+                        <img src="/img/logo-mini.png" class='logo-mini'>
+
+                    </a>
+                </div>
+                <!-- END TOP BAR LEFT PART -->
+
+                <!-- BEGIN TOP BAR RIGHT PART -->
+                <div class="col-md-9 col-sm-9 col-xs-9 header-right" align = 'right'>
+
+                    <img src="/img/homepage/header1.png" title="{{=it.translation.home_topbar_stats}}" link="/stats/?clang={{=it.translation.language_for}}"/>
+                    <img src="/img/homepage/header2.png" title="{{=it.translation.home_topbar_leaderboard}}" link="/leaderboard/?clang={{=it.translation.language_for}}"/>
+                    <img src="/img/homepage/header3.png" title="{{=it.translation.home_topbar_faq}}" link="/faq_{{=it.translation.language_for}}/?clang={{=it.translation.language_for}}"/>
+                    {{?it.user}}
+                    <input type="button" value="{{=it.translation.sidebar_logout}}" class="logout" style='display:none;'/>
+                    {{?}}
+                    {{?!it.user}}
+                    <input type="button" value="{{=it.translation.login_login}}" class="login" style='display:none;'/>
+                    <input type="button" value="{{=it.translation.home_topbar_register}}" style='display:none' class="register"/>
+                    {{?}}
+                    {{?it.user && !it.user.admin && !it.user.demo}}
+                    <div class="btn-group" id ='id_divDepositBtnGroup'>
+                        <button type="button" class="btn btn-danger" id="id_btnDeposit">{{=it.translation.profile_sidebar_deposit}}</button>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="border:none; background:none;">
+                            <i class="fas fa-caret-down"></i>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li id = 'id_liWithdraw'>
+                                <a href="/withdraw-request/?clang={{=it.translation.language_for}}">|&nbsp;{{=it.translation.profile_sidebar_withdraw}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    {{?}}
+                    <img src="/img/homepage/header4.png" class='class_liLanguage' {{?it.user}}style="margin-left:15px;"{{?}}
+                         title = "" language_code="{{?it.translation.language_for=='en'}}zh{{??}}en{{?}}"/>
+                    <span class='class_imgSpan' language_code="{{?it.translation.language_for=='en'}}zh{{??}}en{{?}}">{{?it.translation.language_for=='en'}}EN{{??}}CN{{?}}</span>
+                    <form method= "post" action="/setLanguage" id='id_formSetLanguage' hidden = 'true'>
+                        <input type="hidden" name='current_url' value = ''>
+                        <input type="hidden" name='language_code' value = ''>
+                    </form>
+                    <form action="/logout" method="post" id='id_formLogout'>
+                    </form>
+                </div>
+                <div style='clear:both'></div>
+                <!-- END TOP BAR RIGHT PART -->
+            </div>
+        </div>
+    </div>
+
+<!-- END TOP BAR -->
+
+<!-- BEGIN BANNER -->
+    <div class = 'banners'>
+        <div class = 'container'>
+            <div class = 'exchangeRatePanel row'>
+                <div class = 'col-md-4 col-xs-4 col-sm-4 col-lg-4 rate-element'>
+                    1 {{=it.translation.miscellaneous0}} = 100 {{=it.translation.miscellaneous3}}
+                </div>
+                <div class = 'col-md-4 col-xs-4 col-sm-4 col-lg-4 rate-element'>
+                    1 {{=it.translation.miscellaneous1}} = 820000 {{=it.translation.miscellaneous3}}
+                </div>
+                <div class = 'col-md-4 col-xs-4 col-sm-4 col-lg-4 rate-element'>
+                    1 {{=it.translation.miscellaneous0}} = 100 {{=it.translation.miscellaneous3}}
+                </div>
+            </div>
+            {{?it.user && !it.user.admin && !it.user.demo}}
+            <div class = 'depositWithdrawButtons' align = 'center' style="display: none;">
+                    <a href="/deposit/?clang={{=it.translation.language_for}}" class="depositButton">{{=it.translation.profile_sidebar_deposit}}</a>
+                    <a href="/withdraw-request/?clang={{=it.translation.language_for}}" class="withdrawButton">{{=it.translation.profile_sidebar_withdraw}}</a>
+            </div>
+            {{?}}
+            <div style='clear:both'></div>
+            <div class = 'playButtonPanel'>
+                <a href="play/?clang={{=it.translation.language_for}}" class="playButton">{{=it.translation.home_revslider_playnow}}</a>
+            </div>
+            <div class ='banner' >
+                <div class = 'col-md-6 banner-left' align = 'center'>
+                    <p>{{=it.translation.home_topbar_leaderboard}}<img src="img/homepage/bannerl1.png" id='id_imgCup'></p>
+                    <table class="banner-table"  cellspacing="0" >
+                        <tbody>
+                            <tr class='table-header'>
+                                <td>{{=it.translation.home_top5member_table_rank}}</td>
+                                <td>{{=it.translation.home_top5member_table_username}}</td>
+                                <td>{{=it.translation.home_top5member_table_profit}}</td>
+                            </tr>
+                            <tr class='gap'></tr>
+                            <tr class='info'>
+                                <td><span>1</span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class='gap'></tr>
+                            <tr class='info'>
+                                <td><span>2</span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class='gap'></tr>
+                            <tr class='info'>
+                                <td><span>3</span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class='gap'></tr>
+                            <tr class='info'>
+                                <td><span>4</span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class='gap'></tr>
+                            <tr class='info'>
+                                <td><span>5</span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                {{?it.user}}
+                <div class = 'col-md-6 banner-right profile' >
+                    <form action="/logout" method="post">
+                        <img src="/img/photos/{{=it.user.username}}.jpg?v={{=new Date()}}" alt="">
+                        <p class='username'>{{=it.user.username}}</p>
+                        <p class='satoshis'>
+                            {{?!it.user.admin && it.user.username != 'ex_to_mt_' && it.user.username != 'fun_to_mt_'}}
+                            {{=it.user.balance_satoshis_format}} {{=it.translation.miscellaneous3}}
+                            {{?}}
+                        </p>
+                        <p class='control' style = 'height: 48px; padding-top: 3px; padding-left: 3px;'>
+                            <input type="submit" value="{{=it.translation.sidebar_logout}}"  class="ti"
+                                   style = '-webkit-box-shadow: 0 0 6px 0 black ;
+                                            -moz-box-shadow: 0 0 6px 0 black;
+                                            box-shadow: 0 0 6px 0 black;
+                                            border-bottom:none;'/>
+                        </p>
+                    </form>
+                </div>
+                {{??}}
+                <div class = 'col-md-6 banner-right register' style= 'display:none;'>
+                    <form class="register-form" action="/register" method="post" lang="{{=it.translation['language_for']}}">
+
+                        <input type = 'hidden' value = '' name = 'time_zone_reg' id = 'id_time_zone_reg' pattern="[A-Za-z0-9_\-]{3,16}" maxlength="50">
+
+                        <div class="row">
+                            <label>{{=it.translation.global_username}}</label>
+                        </div>
+                        <div class="row form-group">
+                            <input type="text" class='placeholder-no-fix form-control reg-control' id="username" autocomplete="off" placeholder="" name="username" value="{{?it.values}}{{!it.values.username}}{{?}}" pattern="[A-Za-z0-9_\-]{3,16}" title="{{=it.translation['register_verify_username_rule']}}" maxlength="50" required/>
+                        </div>
+
+                        <div class="row">
+                            <label>{{=it.translation.register_phone}}</label>
+                        </div>
+
+                        <div class="row form-group">
+                            <input type="tel" id="phone_number" class="form-control reg-control" autocomplete="off" name="phone_number" pattern="[A-Za-z0-9_\-]{3,16}" maxlength="50"/>
+                        </div>
+
+                        <input id="id_phone_dial_code" name="phone_dial_code" hidden="true">
+
+                        <div class="row">
+                            <label>{{=it.translation.global_password}}</label>
+                        </div>
+                        <div class="row form-group">
+                            <input type="password" class='placeholder-no-fix form-control reg-control' autocomplete="off" id="password" value="{{?it.values}}{{!it.values.password}}{{?}}" autocomplete="off" placeholder="" name="password" pattern="[A-Za-z0-9_\-]{3,16}" title="{{=it.translation['register_verify_password_rule']}}" maxlength="50" required />
+                        </div>
+
+                        <div class="row">
+                            <label>{{=it.translation.register_retypeyourpassword}}</label>
+                        </div>
+                        <div class="row form-group">
+                            <input type="password"  class='placeholder-no-fix form-control reg-control' id="confirmation" value="{{?it.values}}{{!it.values.confirm}}{{?}}" name="confirm" data-equal-id="password" autocomplete="off" placeholder="" maxlength="50" pattern="[A-Za-z0-9_\-]{3,16}"/>
+                        </div>
+                        {{?it.ref_id!=undefined}}
+                        <div class="form-group" hidden="true">
+                            <label class="control-label visible-ie8 visible-ie9">{{=it.translation["register_introduced_from"]}}</label>
+                            <div class="input-group">
+                                <span class="input-group-addon" style="background: 0 0;border: none;color: #9babbf;cursor: default;">{{=it.translation["register_introduced_from"]}}</span>
+                                <input class="form-control placeholder-no-fix" type="text" id="ref_id" name="ref_id" {{?it.ref_id!=undefined}}readonly{{?}}
+                                       placeholder="" autocomplete="off" pattern="[A-Za-z0-9_\-]{3,16}"
+                                       value = '{{?it.ref_id!=undefined}}{{=it.ref_id}}{{?}}' maxlength="50" style="border: none; cursor: default;"/>
+                            </div>
+                        </div>
+                        {{?}}
+                        <p class='control' style = 'height: 48px; padding-top: 3px; padding-left: 3px;'>
+                            <input type="button" value="{{=it.translation['register_button_register']}}"
+                                   class="ti" id = 'registerSubmit'
+                                    style = '-webkit-box-shadow: 0 0 6px 0 black ;
+                                            -moz-box-shadow: 0 0 6px 0 black;
+                                            box-shadow: 0 0 6px 0 black;
+                                            border-bottom:none;'/>
+                        </p>
+                    </form>
+                </div>
+                <div class = 'col-md-6 banner-right login' >
+                    <form action="/login" method="post">
+
+                        <input type = 'hidden' value = '' name = 'time_zone_login' id = 'id_time_zone_login'                                   pattern="[A-Za-z0-9_\-]{3,16}" maxlength="50"
+                        >
+
+                        <p class='title'><label>{{=it.translation.login_username}}</label></p>
+                        <p><input type="text"  class='placeholder-no-fix' autocomplete="off"
+                                  pattern="[A-Za-z0-9_\-]{3,16}" maxlength="50"
+                                  placeholder="{{=it.translation.login_username_placeholder}}" name="username" /></p>
+                        <p class='title'><label>{{=it.translation.global_password}}</label></p>
+                        <p><input type="password" class = 'placeholder-no-fix' autocomplete="off"
+                                  pattern="[A-Za-z0-9_\-]{3,16}" maxlength="50" placeholdexr="" name="password" /></p>
+                        <p>
+                            <label class="rememberme">
+                                <input type="checkbox" class="icheck" data-checkbox="icheckbox square-red" name = 'remember' value='1'>
+                                {{=it.translation['login_rememberme']}}
+                            </label>
+                        </p>
+                        <p class='forget-password'>
+                            <a href="/forgot-password" id="forget-password" class="forget-password">{{=it.translation['login_forgotpassword']}}</a>
+                        </p>
+                        <p class='control' style = 'height: 48px; padding-top: 3px; padding-left: 3px;'>
+                            <input type="submit" value="{{=it.translation.login_login}}"  class="ti"
+                                      style = '-webkit-box-shadow: 0 0 6px 0 black ;
+                                                -moz-box-shadow: 0 0 6px 0 black;
+                                                box-shadow: 0 0 6px 0 black;
+                                                border-bottom:none;'/>
+                        </p>
+                    </form>
+                </div>
+                {{?}}
+            </div>
+        </div>
+    </div>
+    <!-- END BANNER -->
+    <div class = 'content container'>
+        <div class = 'row'>
+            <div class = 'col-md-4 col-xs-12 col-sm-12 content-right-mobile'>
+                <span>{{=it.translation.home_news}}</span>
+                <div class="col-md-12 col-xs-6 col-sm-6 event-gallery-element">
+                    <a href='/ads_1' target = '_blank'>
+                        <img src="/img/homepage/ads1.png"  />
+                    </a>
+                </div>
+                <div class="col-md-12 col-xs-6 col-sm-6 event-gallery-element">
+                    <a href='/ads_2' target = '_blank'>
+                        <img src="/img/homepage/ads2.png"  />
+                    </a>
+                </div>
+                <div class="col-md-12 col-xs-6 col-sm-6 event-gallery-element">
+                    <a target = '_blank'>
+                        <img src="/img/homepage/ads3.png"  />
+                    </a>
+                </div>
+                <div class="col-md-12 col-xs-6 col-sm-6 event-gallery-element">
+                    <a target = '_blank'>
+                        <img src="/img/homepage/ads4.png"  />
+                    </a>
+                </div>
+            </div>
+            <div class = 'col-md-8 content-left'>
+                <h3>
+                    <img src="/img/homepage/contentl1.png">
+                    {{=it.translation.home_total_profit}}
+                </h3>
+                <div class="display custom-homepage-totalMemberProfit" style="height:130px;">
+                    <input class="header dark XXL" id="id_edtTotalMemberProfits" />
+                </div>
+                <div align = 'center' style = 'margin-top: 15px; font-size: 18px;'>
+                    <span>{{=it.translation.home_ad_title}}</span>
+                </div>
+                <h3>
+                    {{=it.translation.home_game_rule}}
+                    <img src="/img/homepage/contentl3.png" class="contentl3" />
+                </h3>
+                <div class='li' style='display: none;'>
+                    <img src="/img/homepage/contentl2.png" style='width:100%'/>
+                </div>
+
+
+                <div class="contentl4">
+                    <h4> {{=it.translation.home_faq1_title}} </h4>
+                    <p> {{=it.translation.home_faq1_content}} <br></p>
+                    <h4> {{=it.translation.home_faq2_title}} </h4>
+                    <p> {{=it.translation.home_faq2_content}} </p>
+                    <h4> {{=it.translation.home_faq3_title}} </h4>
+                    <p style = 'border-left:none; padding-left: 35px;'> {{=it.translation.home_faq3_content}} </p>
+                </div>
+            </div>
+            <div class = 'col-md-4 col-xs-12 col-sm-12 content-right'>
+                <span>{{=it.translation.home_news}}</span>
+                <div class="col-md-12 col-xs-6 col-sm-6 event-gallery-element">
+                    <a href='/ads_1' target = '_blank'>
+                        <img src="/img/homepage/ads1.png"  />
+                    </a>
+                </div>
+                <div class="col-md-12 col-xs-6 col-sm-6 event-gallery-element">
+                    <a href='/ads_2' target = '_blank'>
+                        <img src="/img/homepage/ads2.png"  />
+                    </a>
+                </div>
+                <div class="col-md-12 col-xs-6 col-sm-6 event-gallery-element">
+                    <a target = '_blank'>
+                        <img src="/img/homepage/ads3.png"  />
+                    </a>
+                </div>
+                <div class="col-md-12 col-xs-6 col-sm-6 event-gallery-element">
+                    <a target = '_blank'>
+                        <img src="/img/homepage/ads4.png"  />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{?it.enginehost}}
+<div id="id_divEngineHost" hidden="true">{{=it.enginehost}}</div>
+{{?}}
+
+<!-- BEGIN PRE-FOOTER -->
+<div class="pre-footer">
+    <div class="container">
+        <h3> {{=it.translation.home_ad_5_title1}}{{=it.translation.home_ad_5_title2}}</h3>
+        <p>{{=it.translation.home_ad_5_content1}}</p>
+
+
+        <div class="row" style="margin-top: 50px;" id="id_ads_web">
+            <div class = 'col-md-4' style = 'text-align: center;'>
+                <dl>
+                    <dt><img src="img/homepage/bottom2.png" /></dt>
+                    <dd><span>{{=it.translation.home_ad_5_content2}}</span>{{=it.translation.home_ad_5_content3}}</dd>
+                </dl>
+            </div>
+            <div class = 'col-md-4' style = 'text-align: center;'>
+                <dl>
+                    <dt><img src="img/homepage/bottom3.png" /></dt>
+                    <dd><span>{{=it.translation.home_ad_5_content4}}</span>{{=it.translation.home_ad_5_content5}}</dd>
+                </dl>
+            </div>
+            <div class = 'col-md-4' style = 'text-align: center;'>
+                <dl>
+                    <dt><img src="img/homepage/bottom4.png" /></dt>
+                    <dd><span>{{=it.translation.home_ad_5_content6}}</span>{{=it.translation.home_ad_5_content7}}</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="row" id="id_ads_mobile">
+            <div class="slideshow-container">
+
+                <!-- Full-width images with number and caption text -->
+                <div class="mySlides fade">
+                    <div class = 'col-md-4' style = 'text-align: center;'>
+                        <dl>
+                            <dt><img src="img/homepage/bottom2.png" /></dt>
+                            <dd style="text-align: center;"><span>{{=it.translation.home_ad_5_content2}}</span>{{=it.translation.home_ad_5_content3}}</dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <div class="mySlides fade">
+                    <div class = 'col-md-4'>
+                        <dl>
+                            <dt><img src="img/homepage/bottom3.png" /></dt>
+                            <dd style="text-align: center;"><span>{{=it.translation.home_ad_5_content4}}</span>{{=it.translation.home_ad_5_content5}}</dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <div class="mySlides fade">
+                    <div class = 'col-md-4'>
+                        <dl>
+                            <dt><img src="img/homepage/bottom4.png" /></dt>
+                            <dd style="text-align: center;"><span>{{=it.translation.home_ad_5_content6}}</span>{{=it.translation.home_ad_5_content7}}</dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <!-- Next and previous buttons -->
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+{{?!it.user}}
+<input type = 'button' class = 'after-pre-footer register' value = '{{=it.translation.home_topbar_register}}' style = 'display: none !important;'/>
+{{?}}
+<!-- END PRE-FOOTER -->
+
+<!-- BEGIN FOOTER -->
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class='col-md-6 col-lg-6' style="text-align: center">
+                {{=it.translation.home_footer_copyright}}
+            </div>
+            <div class='col-md-6 col-lg-6' style="text-align: center">
+                <a href="/faq_{{=it.translation.language_for}}/?clang={{=it.translation.language_for}}" style="margin:0 5px;text-decoration: none;">{{=it.translation.home_footer_aboutus}}</a>
+                <span>|</span>
+                <a href="/privacypolicy/?clang={{=it.translation.language_for}}" target='_blank' style="margin:0 5px;text-decoration: none;">{{=it.translation.home_footer_privacypolicy}}</a>
+                <span>|</span>
+                <a href="/termsofservice" style="margin:0 5px;text-decoration: none;" target='_blank'>{{=it.translation.home_footer_termsofservice}}</a>
+                <span>|</span>
+                <a href="/contactus/?clang={{=it.translation.language_for}}" style="margin:0 5px;text-decoration: none;">{{=it.translation.home_footer_contactus}}</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END FOOTER -->
+
+<!-- Load javascripts at bottom, this will reduce page load time -->
+<!-- BEGIN CORE PLUGINS (REQUIRED FOR ALL PAGES) -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/frontend/layout/scripts/back-to-top.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+
+<!-- BEGIN PAGE LEVEL JAVASCRIPTS (REQUIRED ONLY FOR CURRENT PAGE) -->
+<script src="/metronic/assets/global/plugins/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script><!-- pop up -->
+<script src="/metronic/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+
+
+<!-- BEGIN RevolutionSlider -->
+<script src="/metronic/assets/global/plugins/slider-revolution-slider/rs-plugin/js/jquery.themepunch.revolution.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/slider-revolution-slider/rs-plugin/js/jquery.themepunch.tools.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/frontend/pages/scripts/revo-slider-init.js" type="text/javascript"></script>
+<!-- END RevolutionSlider -->
+
+<script src="/vendor/jayflapper/jshashtable/jshashtable.js" type="text/javascript"></script>
+<script src="/vendor/jayflapper/src/jquery.flapper.js" type="text/javascript"></script>
+
+<script src="/metronic/assets/frontend/layout/scripts/layout.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/pages/scripts/ui-toastr.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/icheck/icheck.min.js"></script>
+<script src="/vendor/intltelinput/js/intlTelInput.js" type="text/javascript"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+    function isMobileDevice() {
+        return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+    };
+
+    if (screen.width <=480 && isMobileDevice())
+    {
+        $('#id_ads_web').hide();
+        $('#id_ads_mobile').show();
+    }
+    else
+    {
+        $('#id_ads_web').show();
+        $('#id_ads_mobile').hide();
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        if (slides.length < 1) return;
+
+        if (n > slides.length) {slideIndex = 1}
+
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+
+        slides[slideIndex-1].style.display = "inline";
+    }
+
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+
+var edtTotalMemberProfits;
+var totalProfits = 0;
+
+$(document).ready(function(){
+
+    var timezone = jstz.determine();
+    var strTimezoneName = timezone.name();
+    $("#id_time_zone_reg").val(strTimezoneName);
+    $("#id_time_zone_login").val(strTimezoneName);
+
+    $("#phone_number").intlTelInput({
+        initialCountry: "auto",
+        separateDialCode: true,
+        preferredCountries: ['cn','tw'],
+        geoIpLookup: function(callback) {
+            $.get('https://ipinfo.io', function() {}, "jsonp").always(function(resp) {
+                var countryCode = (resp && resp.country) ? resp.country : "";
+                callback(countryCode);
+            });
+        }
+    });
+
+});
+$(document).ready(function(){
+    history.pushState(null, null, '/');
+    Layout.init();
+    RevosliderInit.initRevoSlider();
+
+    setFormValidation_login();
+    setFormValidation_register();
+    setToastr();
+
+    initFlapper();
+
+    var screen_width = $(window).width();
+
+    if(screen_width <= 480) {
+        $(".header-right .register").hide();
+        $(".header-right .login").show();
+        $(".header-right .logout").show();
+        $(".header-right .profile").hide();
+    }
+
+    var checkboxClass = $(this).attr('data-checkbox') ? $(this).attr('data-checkbox') : 'icheckbox_minimal-red';
+    var radioClass = $(this).attr('data-radio') ? $(this).attr('data-radio') : 'iradio_minimal-red';
+    $(".icheck").iCheck({
+        checkboxClass: checkboxClass,
+        radioClass: radioClass
+    });
+    $(".icheck").parent().css('margin-top', '-3px');
+    $(".icheck").parent().css('margin-right', '4px');
+
+    $(document).on("click", ".header-right img", function() {
+        var url = $(this).attr('link');
+        if(url != undefined)
+            window.location = url;
+    });
+
+    $(document).on('click', '.header-right .login', function() {
+        if(screen_width > 480) {
+            $(".banner-right.register").hide();
+            $(".banner-right.login").show();
+            $(".header-right .register").show();
+            $(".header-right .login").hide();
+        } else {
+            window.location = "/login";
+        }
+    });
+
+    $(document).on('click', '.header-right .register', function() {
+        if(screen_width > 480) {
+            $(".banner-right.register").show();
+            $(".banner-right.login").hide();
+            $(".header-right .register").hide();
+            $(".header-right .login").show();
+        }
+    });
+
+    $(document).on('click', "#id_btnDeposit", function() {
+        window.location = '/deposit/?clang={{=it.translation.language_for}}';
+    });
+
+    $(document).on('click', 'input.after-pre-footer.register', function() {
+        window.location = "/register";
+    });
+
+    $(document).on('click', '.class_liLanguage', function() {
+        var current_url = window.location.href;
+        var language_code = $(this).attr('language_code');
+        $("#id_formSetLanguage").find("[name='current_url']").val(current_url);
+        $("#id_formSetLanguage").find("[name='language_code']").val(language_code);
+        $("#id_formSetLanguage").submit();
+    });
+
+    $(document).on('click', '.class_imgSpan', function() {
+        var current_url = window.location.href;
+        var language_code = $(this).attr('language_code');
+        $("#id_formSetLanguage").find("[name='current_url']").val(current_url);
+        $("#id_formSetLanguage").find("[name='language_code']").val(language_code);
+        $("#id_formSetLanguage").submit();
+    });
+
+    $(document).on('click', '.header-right .logout', function() {
+        $("#id_formLogout").submit();
+    });
+
+    getLeaderBoardTop5();
+    getExchangeRate();
+});
+
+function getLeaderBoardTop5() {
+    $.post('/getLeaderBoardTop5', function(data) {
+        var str = '';
+        for(var i = 0; i < data.length; i++) {
+            var username = data[i].username;
+            var score = parseInt(data[i].profit / 100) + '{{=it.translation.miscellaneous3}}';
+            $(".banner-table").children().first().children().eq(2*(i+1)).children().eq(1).text(username);
+            $(".banner-table").children().first().children().eq(2*(i+1)).children().eq(2).text(score);
+        }
+    });
+}
+
+function getExchangeRate() {
+    $.post("/getExchangeRate", function (result) {
+        $(".exchangeRatePanel").children().eq(0).text("1 " + '{{=it.translation.miscellaneous0}}' + " = " + parseInt(result.rate_USD_bit) + " " + '{{=it.translation.miscellaneous3}}');
+        $(".exchangeRatePanel").children().eq(1).text("1 " + '{{=it.translation.miscellaneous1}}' + " = " + parseInt(result.rate_BTC_USD * result.rate_USD_bit) + " " + '{{=it.translation.miscellaneous3}}');
+        $(".exchangeRatePanel").children().eq(2).text("1 " + '{{=it.translation.miscellaneous2}}' + " = " + parseInt(result.rate_ETH_USD * result.rate_USD_bit) + " " + '{{=it.translation.miscellaneous3}}');
+    });
+}
+function initFlapper() {
+    edtTotalMemberProfits = $('#id_edtTotalMemberProfits');
+    edtTotalMemberProfits.flapper({
+        width: 10,
+        chars_preset: 'alpha',
+        chars: ['0','1','2','3','4','5','6','7','8','9']
+    });
+    setInitRandomProfit();
+}
+function setInitRandomProfit() {
+    totalProfits = 240000 + Math.round(Math.random() * 5000);
+    edtTotalMemberProfits.val("00"+totalProfits.toString()).change();
+    setTimeout(setRandomProfit, Math.random() * 5000);
+}
+
+function setRandomProfit() {
+    var flag = (Math.random() > 0.5) ? 1 : -1;
+    var value = Math.round(Math.random() * 1000) + 217;
+    totalProfits += flag * value;
+    edtTotalMemberProfits.val("000000"+totalProfits.toString()).change();
+
+    setTimeout(setRandomProfit, Math.round(Math.random() * 5000) + 54);
+}
+
+function setFormValidation_login() {
+    $(".banner-right.login form").validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+        focusInvalid: false,
+        rules: {
+            username: {
+                required: true,
+                maxlength: 50
+            },
+            password: {
+                required: true,
+                maxlength: 50
+            },
+            remember: {
+                required: false
+            }
+        },
+
+        messages: {
+            username: {
+                required: '{{=it.translation.rule_alert0}}'
+            },
+            password: {
+                required: '{{=it.translation.rule_alert1}}'
+            }
+        },
+
+        invalidHandler: function(event, validator) {
+            $('.alert-danger', $('.login-form')).show();
+        },
+
+        highlight: function(element) {
+            $(element)
+                .closest('.form-group').addClass('has-error');
+        },
+
+        success: function(label) {
+            label.closest('.form-group').removeClass('has-error');
+            label.remove();
+        },
+
+        errorPlacement: function(error, element) {
+            error.insertAfter(element.closest('.input-icon'));
+        },
+
+        submitHandler: function(form) {
+            form.submit();
+        }
+    });
+}
+
+function setFormValidation_register() {
+    $('.register-form').validate({
+        errorElement: 'span',
+        errorClass: 'help-block',
+        focusInvalid: false,
+        ignore: "",
+        rules: {
+            username: {
+                required: true,
+                minlength: 3,
+                maxlength:16,
+            },
+            email: {
+                required: false,
+                email: true
+            },
+            password: {
+                required: true,
+                minlength: 7,
+                maxlength: 50
+            },
+            confirm: {
+                equalTo: "#password",
+                minlength: 7,
+                maxlength: 50
+            }
+        },
+        messages: {
+            username: "{{=it.translation.register_verify_username_rule}}",
+            email: "{{=it.translation.register_verify_email_rule}}",
+            password: "{{=it.translation.register_verify_password_rule}}",
+            confirm: "{{=it.translation.register_verify_password_rule1}}"
+        },
+
+        invalidHandler: function(event, validator) {
+
+        },
+
+        highlight: function(element) {
+            $(element)
+                .closest('.form-group').addClass('has-error');
+        },
+
+        success: function(label) {
+            label.closest('.form-group').removeClass('has-error');
+            label.remove();
+        },
+
+        errorPlacement: function(error, element) {
+            if (element.closest('.input-icon').size() === 1) {
+                error.insertAfter(element.closest('.input-icon'));
+            } else {
+                error.insertAfter(element);
+            }
+        },
+
+        submitHandler: function(form)
+        {
+            var strPhoneCode = $(".selected-dial-code").text();
+            $("#id_phone_dial_code").val(strPhoneCode);
+            form.submit();
+        }
+    });
+
+    $('.banner-right.register input').keypress(function(e) {
+        if (e.which == 13) {
+            if ($('.register-form').validate().form()) {
+                var strPhoneCode = $(".selected-dial-code").text();
+                $("#id_phone_dial_code").val(strPhoneCode);
+                $('.register-form').submit();
+            }
+            return false;
+        }
+    });
+
+    $(document).on('click', '#registerSubmit', function()
+    {
+        var strPhoneCode = $(".selected-dial-code").text();
+        $("#id_phone_dial_code").val(strPhoneCode);
+        $(this).closest('form').submit();
+    });
+}
+
+function setToastr() {
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "positionClass": "toast-top-right",
+        "onclick": null,
+        "showDuration": "1000",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "2000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+
+    {{?it.warning}}
+    toastr['warning']("{{=it.translation[it.warning]}}");
+    {{?}}
+
+    {{?it.success}}
+    toastr['success']("{{=it.success}}", "Password reseted.");
+    {{?}}
+}
+</script>
+
+<!-- END PAGE LEVEL JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

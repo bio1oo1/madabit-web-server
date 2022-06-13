@@ -1,0 +1,1466 @@
+{{##def.content:
+<style>
+	.class_btnDeleteRange {
+	}
+
+	.no-control {
+		border: none;
+		text-align: center;
+	}
+
+	.class_divLineRange {
+		margin: 5px;
+	}
+
+	.class_divLineTutorial {
+		margin: 5px;
+	}
+
+	.class_labelUserclass{
+		color: rgba(255, 255, 255, 0.4);
+		background-color: rgba(53, 152, 220, 0.08);
+	}
+
+	.class_labelUserclass:hover{
+		color: rgba(255, 255, 255, 1);
+		background-color: rgb(34, 103, 150);
+	}
+
+	.class_labelUserclass.active{
+		color: rgba(255, 255, 255, 1);
+		background-color: rgba(53, 152, 220, 1);
+	}
+
+	tbody tr:nth-child(even) {
+		background: #5a5a5a;
+	}
+</style>
+<!-- BEGIN PAGE HEADER-->
+<h1 style="text-align: center; margin-bottom: 30px;">
+	{{=it.translation['admin_setting_title']}}
+</h1>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div id='id_divStatistics'>
+
+</div>
+<div class="row">
+	<div class="col-md-6" >
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					{{=it.translation['admin_setting_crashpointrange_title']}}
+				</div>
+				<div style='float:right;'>
+					<input type = 'button' id='id_btnSaveRange' class = 'btn purple input-inline' style = 'margin-top: 3px;' value = "{{=it.translation['global_save']}}" />
+				</div>
+				<div style='float:right; margin-right : 10px;'  {{?(it.interval_status == 0)}}hidden{{?}}>
+					<input type = 'button' id='id_btnDisableRange' class = 'btn purple input-inline' style = 'margin-top: 3px;'
+						   value = "{{=it.translation['admin_setting_crashpointrange_disable']}}"/>
+				</div>
+				<div style='float:right; margin-right : 10px;' {{?(it.interval_status == 1)}}hidden{{?}}>
+					<input type = 'button' id='id_btnEnableRange' class = 'btn purple input-inline' style = 'margin-top: 3px;'
+						   value = "{{=it.translation['admin_setting_crashpointrange_enable']}}" />
+				</div>
+			</div>
+			<div class="portlet-body" style="background-color: #3e3e3e;color: #fff;">
+				<div class = 'row' align = 'center'>
+					<div class='col-md-12'>
+						<input type = 'text' class = 'form-control input-inline input-small no-control' value = "{{=it.translation['admin_setting_crashpointrange_from']}}"/>
+						<input type = 'text' class = 'form-control input-inline input-small no-control' value = "{{=it.translation['admin_setting_crashpointrange_to']}}"/>
+						<input type = 'text' class = 'form-control input-inline input-small no-control' value = "{{=it.translation['admin_setting_crashpointrange_percent']}}"/>
+						<input type = 'button' class = 'btn blue input-inline input-small no-control' style = 'width:100px !important; margin-left:10px;' id='id_btnAddRange' value = "{{=it.translation['admin_setting_crashpointrange_addrange']}}" />
+					</div>
+				</div>
+				<hr style = 'margin: 5px;'/>
+				<div class = 'row' id='id_divContentRange'>
+					{{?it.intervals.length == 0}}
+						<div class = 'col-md-12 class_divLineRange' align = 'center'>
+							<input type = 'number' class = 'form-control input-inline input-small class_numStart' value = '0' min = '0' step="0.1"/>
+							<input type = 'number' class = 'form-control input-inline input-small class_numEnd' value = '100' min = '0' step="0.1"/>
+							<input type = 'number' class = 'form-control input-inline input-small class_numPercent' value = '100' min = '0' max = '100' step="0.1"/>
+							<input type = 'button' class = 'btn green input-inline input-small class_btnDeleteRange' style = 'width:100px !important;' value = "{{=it.translation['admin_setting_crashpointrange_delete']}}" />
+						</div>
+					{{??}}
+						{{~it.intervals:interval:index}}
+						<div class = 'col-md-12 class_divLineRange' align = 'center'>
+							<input type = 'number' class = 'form-control input-inline input-small class_numStart' value = '{{=parseFloat(interval.interval_start/100.0)}}' min = '0' step="0.1"/>
+							<input type = 'number' class = 'form-control input-inline input-small class_numEnd' value = '{{=parseFloat(interval.interval_end/100.0)}}' min = '0' step="0.1"/>
+							<input type = 'number' class = 'form-control input-inline input-small class_numPercent' value = '{{=parseFloat(interval.percentage/100.0)}}' min = '0' max = '100' step="0.1"/>
+							<input type = 'button' class = 'btn green input-inline input-small class_btnDeleteRange' style = 'width:100px !important;' value = "{{=it.translation['admin_setting_crashpointrange_delete']}}" />
+						</div>
+						{{~}}
+					{{?}}
+				</div>
+			</div>
+		</div>
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					{{=it.translation['admin_setting_rangebet_title']}}
+				</div>
+				<div style='float:right;'>
+					<input type = 'button' id='id_btnSaveRangeBet' class = 'btn purple input-inline' style = 'margin-top: 3px;' value = "{{=it.translation['global_save']}}" />
+				</div>
+			</div>
+			<div class="portlet-body" style="background-color: #3e3e3e;color: #fff;">
+				<div class = 'row' align = 'center'>
+					<div class='col-md-12'>
+						<input type = 'text' class = 'form-control input-inline input-small no-control' value = "{{=it.translation['admin_setting_crashpointrange_from']}}"/>
+						<input type = 'text' class = 'form-control input-inline input-small no-control' value = "{{=it.translation['admin_setting_crashpointrange_to']}}"/>
+						<input type = 'text' class = 'form-control input-inline input-small no-control' value = "{{=it.translation['admin_setting_rangebet_multiplier']}}"/>
+						<input type = 'button' class = 'btn blue input-inline input-small no-control' style = 'width:100px !important; margin-left:10px;' id='id_btnAddBetRange' value = "{{=it.translation['admin_setting_crashpointrange_addrange']}}" />
+					</div>
+				</div>
+				<hr style = 'margin: 5px;'/>
+				<div class = 'row' id='id_divContentBetRange'>
+					{{?it.intervals.length == 0}}
+					<div class = 'col-md-12 class_divLineBetRange' align = 'center' style="margin-bottom: 2px;">
+						<input type = 'number' class = 'form-control input-inline input-small class_rangeStart' />
+						<input type = 'number' class = 'form-control input-inline input-small class_rangeEnd' />
+						<input type = 'number' class = 'form-control input-inline input-small class_rangeMultiplier'>
+						<input type = 'button' class = 'btn green input-inline input-small class_btnDeleteBetRange' style = 'width:100px !important;' value = "{{=it.translation['admin_setting_crashpointrange_delete']}}" />
+					</div>
+					{{??}}
+					{{~it.ranges:range:index}}
+					<div class = 'col-md-12 class_divLineBetRange' align = 'center' style="margin-bottom: 2px;">
+						<input type = 'number' class = 'form-control input-inline input-small class_rangeStart' value = '{{=range.range_from/100.0}}'/>
+						<input type = 'number' class = 'form-control input-inline input-small class_rangeEnd' value = '{{?range.range_to>=0}}{{=range.range_to/100.0}}{{?}}'/>
+						<input type = 'number' class = 'form-control input-inline input-small class_rangeMultiplier' value = '{{=range.range_multiplier}}'/>
+						<input type = 'button' class = 'btn green input-inline input-small class_btnDeleteBetRange' style = 'width:100px !important;' value = "{{=it.translation['admin_setting_crashpointrange_delete']}}" />
+					</div>
+					{{~}}
+					{{?}}
+				</div>
+			</div>
+		</div>
+		<div class="portlet box blue" style ='border-top:1px solid #5faee4'>
+			<div class="portlet-body form"  style="background-color: #3e3e3e;color: #fff;">
+				<form action="#" class="form-horizontal">
+					<div class="form-body">
+						<div class="form-group" style="margin-bottom:0px;">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_tipfee']}}</label>
+							<div class="col-md-4">
+								<input type="text" class="form-control input" id='id_inputTipFee' value = "{{=it.tipfee}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnTipFeeSet'>{{=it.translation['admin_setting_tipfee_set']}}</button>
+						</div>
+					</div>
+				</form>
+
+				<form action="#" class="form-horizontal" style="margin-bottom:0px;">
+					<div class="form-body">
+						<div class="form-group" style="margin-bottom:0px;">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_max_tipfee_amount']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputMaxTipFeeAmount' min="0" value="{{=it.max_tipfee_amount}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveMaxTipFeeAmount'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+					</div>
+				</form>
+
+				<form action="#" class="form-horizontal" style="margin-bottom:0px;">
+					<div class="form-body">
+						<div class="form-group" style="margin-bottom:0px;">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_minimum_tips_amount']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputMinTransferAmount' min="0" value="{{=it.min_transfer_amount}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveMinTransferAmount'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+					</div>
+				</form>
+
+				<form action="#" class="form-horizontal" style="margin-bottom:0px;">
+					<div class="form-body">
+						<div class="form-group" style="margin-bottom:0px;">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_maximum_tips_amount']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputMaxTransferAmount' min="0" value="{{=it.max_transfer_amount}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveMaxTransferAmount'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					{{=it.translation["admin_setting_agent_profit"]}}
+				</div>
+				<div style='float:right;'>
+					<input type = 'button' id='id_btnSaveAgent' class = 'btn purple input-inline' style = 'margin-top: 3px;' value = "{{=it.translation['global_save']}}" />
+				</div>
+			</div>
+			<div class="portlet-body" style="background-color: #3e3e3e;color: #fff;">
+                <div class="row" style = 'margin-top:10px'>
+                    <div class='col-md-12'>
+                        <label class="col-md-3 control-label" align="right">{{=it.translation['admin_setting_company']}}</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control input" placeholder="1" id = 'id_inputAgentCompany'
+                                   value = '{{=it.agentProfitPercents.agent_percent_company}}' style='background-color:#3e3e3e'>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style = 'margin-top:10px'>
+                    <div class='col-md-12'>
+                        <label class="col-md-3 control-label" align="right">{{=it.translation['admin_setting_staff']}}</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control input" placeholder="1" id = 'id_inputAgentStaff'
+                                   value = '{{=it.agentProfitPercents.agent_percent_staff}}' style='background-color:#3e3e3e'>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style = 'margin-top:10px'>
+                    <div class='col-md-12'>
+                        <label class="col-md-3 control-label" align="right">{{=it.translation["admin_setting_masterib"]}}</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control input" placeholder="1" id = 'id_inputAgentMasterIB'
+                                   value = '{{=it.agentProfitPercents.agent_percent_masterib}}' style='background-color:#3e3e3e'>
+                        </div>
+                    </div>
+                </div>
+                <div class = 'row' style = 'margin-top:10px'>
+                    <div class='col-md-12'>
+                        <label class="col-md-3 control-label" align="right">{{=it.translation['admin_setting_agent']}}</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control input" placeholder="1" id = 'id_inputAgentAgent'
+                                   value = '{{=it.agentProfitPercents.agent_percent_agent}}' style='background-color:#3e3e3e'>
+                        </div>
+                    </div>
+                </div>
+				<div class = 'row' style = 'margin-top:10px'>
+					<div class='col-md-12'>
+						<label class="col-md-3 control-label" align="right">{{=it.translation['admin_setting_parent1']}}</label>
+						<div class="col-md-9">
+							<input type="text" class="form-control input" placeholder="1" id = 'id_inputAgentParent1'
+								   value = '{{=it.agentProfitPercents.agent_percent_parent1}}' style='background-color:#3e3e3e; float: right;'>
+						</div>
+					</div>
+				</div>
+				<div class="row" style = 'margin-top:10px'>
+					<div class='col-md-12'>
+						<label class="col-md-3 control-label" align="right">{{=it.translation['admin_setting_parent2']}}</label>
+						<div class="col-md-9">
+							<input type="text" class="form-control input" placeholder="1" id = 'id_inputAgentParent2'
+								   value = '{{=it.agentProfitPercents.agent_percent_parent2}}' style='background-color:#3e3e3e'>
+						</div>
+					</div>
+				</div>
+				<div class="row" style = 'margin-top:10px'>
+					<div class='col-md-12'>
+						<label class="col-md-3 control-label" align="right">{{=it.translation['admin_setting_parent3']}}</label>
+						<div class="col-md-9">
+							<input type="text" class="form-control input" placeholder="1" id = 'id_inputAgentParent3'
+								   value = '{{=it.agentProfitPercents.agent_percent_parent3}}' style='background-color:#3e3e3e'>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					{{=it.translation["admin_setting_no_agent_commission_range_title"]}}
+				</div>
+				<div style='float:right;'>
+					<input type = 'button' id='id_btnSaveNoAgentCommission' class = 'btn purple input-inline' style = 'margin-top: 3px;' value = "{{=it.translation['global_save']}}" />
+				</div>
+			</div>
+			<div class="portlet-body" style="background-color: #3e3e3e;color: #fff;">
+
+				<form action="#" class="form-horizontal">
+					<div class="form-body">
+						<div class="form-group">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_no_agent_commission_range_from']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputNoAgentCommissionFrom' min="0" step="0.1" value="{{=it.no_commission_from}}">
+							</div>
+						</div>
+					</div>
+				</form>
+
+				<form action="#" class="form-horizontal" style="margin-bottom:0px;">
+					<div class="form-body">
+						<div class="form-group" style="margin-bottom:0px;">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_no_agent_commission_range_to']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputNoAgentCommissionTo' min="0" step="0.1" value="{{=it.no_commission_to}}">
+							</div>
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</div>
+
+		<div class="portlet box blue" style ='border-top:1px solid #5faee4'>
+			<div class="portlet-body form"  style="background-color: #3e3e3e;color: #fff;">
+
+				<form action="#" class="form-horizontal">
+					<div class="form-body">
+						<div class="form-group" style="margin-bottom:0px;">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_to_be_agent_deposit_multiplier']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputToBeAgentDepositMultiplier' min="0" value="{{=it.to_be_agent_deposit_multiplier}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveToBeAgentDepositMultiplier'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+					</div>
+				</form>
+
+				<form action="#" class="form-horizontal" style="margin-bottom:0px;">
+					<div class="form-body">
+						<div class="form-group" style="margin-bottom:0px;">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_to_be_agent_client_count']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputToBeAgentClientCount' min="0" value="{{=it.to_be_agent_client_count}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveToBeAgentClientCount'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</div>
+
+		<div class="portlet box blue" style ='border-top:1px solid #5faee4'>
+			<div class="portlet-body form"  style="background-color: #3e3e3e;color: #fff;">
+
+				<form action="#" class="form-horizontal">
+					<div class="form-body">
+						<div class="form-group" style="margin-bottom:0px;">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_withdrawable_bet_amount']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputWithdrawableBetAmount' min="0" value="{{=it.withdrawable_bet_amount}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveWithdrawableBetAmount'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+					</div>
+					<div class="form-body">
+						<div class="form-group" style="margin-bottom:0px;">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_minimum_deposit_amount_for_withdrawal']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputMinimumDepositAmountForWithdrawal' min="0" value="{{=it.minimum_deposit_amount_for_withdrawal}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveMinimumDepositAmountForWithdrawal'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</div>
+
+		<div class="portlet box blue" style ='border-top:1px solid #5faee4'>
+			<div class="portlet-body form"  style="background-color: #3e3e3e;color: #fff;">
+				<form action="#" class="form-horizontal" style="margin-bottom:0px;">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-5">
+								<label class="control-label pull-right">{{=it.translation['admin_setting_bet_mode']}}</label>
+							</div>
+							<div class="col-md-7">
+								<div class="btn-group btn-group" data-toggle="buttons">
+									<label class="btn class_labelUserclass {{?it.bet_mode=='auto_bet'}}active{{?}} class_labelBetMode" style ='width:130px;'>
+										<input type="radio" class="toggle" value="auto_bet">{{=it.translation['admin_setting_enable_auto_bet']}}
+									</label>
+									<label class="btn class_labelUserclass {{?it.bet_mode=='manual_bet'}}active{{?}} class_labelBetMode" style ='width:130px;'>
+										<input type="radio" class="toggle" value="manual_bet">{{=it.translation['admin_setting_manual_bet_only']}}
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="row" style='margin-top: 10px;'>
+							<div class="col-md-5">
+								<label class="control-label pull-right">{{=it.translation['admin_setting_mobile_custom_bet']}}</label>
+							</div>
+							<div class="col-md-7">
+								<div class="btn-group btn-group" data-toggle="buttons">
+									<label class="btn class_labelUserclass {{?it.bet_mode_mobile=='custom_show'}}active{{?}} class_labelMobileCustomBet" style ='width:130px;'>
+										<input type="radio" class="toggle" value="custom_show">{{=it.translation['admin_setting_enable']}}
+									</label>
+									<label class="btn class_labelUserclass {{?it.bet_mode_mobile=='custom_hide'}}active{{?}} class_labelMobileCustomBet" style ='width:130px;'>
+										<input type="radio" class="toggle" value="custom_hide">{{=it.translation['admin_setting_disable']}}
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="row" style='margin-top: 10px;'>
+							<div class="col-md-5">
+								<label class="control-label pull-right">{{=it.translation['admin_setting_show_hash']}}</label>
+							</div>
+							<div class="col-md-7">
+								<div class="btn-group btn-group" data-toggle="buttons">
+									<label class="btn class_labelUserclass {{?it.show_hash=='show_hash'}}active{{?}} class_labelShowHash" style ='width:130px;'>
+										<input type="radio" class="toggle" value="show_hash">{{=it.translation['admin_setting_enable']}}
+									</label>
+									<label class="btn class_labelUserclass {{?it.show_hash=='hide_hash'}}active{{?}} class_labelShowHash" style ='width:130px;'>
+										<input type="radio" class="toggle" value="hide_hash">{{=it.translation['admin_setting_disable']}}
+									</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="portlet box blue" style ='border-top:1px solid #5faee4'>
+			<div class="portlet-body form"  style="background-color: #3e3e3e;color: #fff;">
+				<form action="#" class="form-horizontal">
+					<div class="form-body">
+
+						<div class="form-group">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_first_free']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputWelcomeFreeBits' min="0" value="{{=it.welcome_free_bit}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveWelcomeFreeBits'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_welcome_bit_multiplier']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputWelcomeBitsMultiplier' min="0" value="{{=it.welcome_bits_multiplier}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveWelcomeBitsMultiplier'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+
+						<div class="form-group" style="margin-bottom:0px;">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_collect_free_days']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputCollectFreeDays' min="0" value="{{=it.collect_free_days}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveCollectFreeDays'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+
+					</div>
+				</form>
+			</div>
+		</div>
+
+
+	</div>
+	<div class = 'col-md-6'>
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					{{=it.translation['admin_setting_tutorial']}}
+				</div>
+				<div style='float:right;'>
+					<input type = 'button' id='id_btnSaveTutorial' class = 'btn purple input-inline' style = 'margin-top: 3px;' value = "{{=it.translation['global_save']}}" />
+				</div>
+			</div>
+			<div class="portlet-body" style="background-color: #3e3e3e;color: #fff;">
+				<div class = 'row' align = 'center'>
+					<div class='col-md-12'>
+						<input type = 'text' class = 'form-control input-inline input-medium no-control' value = "{{=it.translation['admin_setting_tutorial_title']}}"/>
+						<input type = 'text' class = 'form-control input-inline input-medium no-control' value = "{{=it.translation['admin_setting_tutorial_url']}}"/>
+						<input type = 'button' class = 'btn blue input-inline input-small no-control' style = 'width:100px !important; margin-left:10px;' id='id_btnAddTutorial' value = "{{=it.translation['admin_setting_tutorial_addurl']}}" />
+					</div>
+				</div>
+				<hr style = 'margin: 5px;'/>
+				<div class = 'row' id='id_divContentTutorial'>
+					{{?it.tutorials.length == 0}}
+					<div class = 'col-md-12 class_divLineTutorial' align = 'center'>
+						<input type = 'text' class = 'form-control input-inline input-medium class_tutorialTitle' placeholder="{{=it.translation['admin_setting_tutorial_title']}}" value = ''/>
+						<input type = 'text' class = 'form-control input-inline input-medium class_tutorialURL' placeholder="{{=it.translation['admin_setting_tutorial_youtubeurl']}}" value = ''/>
+						<input type = 'button' class = 'btn green input-inline input-small class_btnDeleteTutorial' style = 'width:100px !important; margin-top:-1px;' value = "{{=it.translation['admin_setting_tutorial_delete']}}" />
+					</div>
+					{{??}}
+					{{~it.tutorials:tutorial:index}}
+					<div class = 'col-md-12 class_divLineTutorial' align = 'center'>
+						<input type = 'text' class = 'form-control input-inline input-medium class_tutorialTitle' placeholder="{{=it.translation['admin_setting_tutorial_title']}}" value = '{{=tutorial.title}}'/>
+						<input type = 'text' class = 'form-control input-inline input-medium class_tutorialURL' placeholder="{{=it.translation['admin_setting_tutorial_youtubeurl']}}" value = '{{=tutorial.url}}'/>
+						<input type = 'button' class = 'btn green input-inline input-small class_btnDeleteTutorial' style = 'width:100px !important; margin-top:-1px;' value = "{{=it.translation['admin_setting_tutorial_delete']}}" />
+					</div>
+					{{~}}
+					{{?}}
+				</div>
+			</div>
+		</div>
+
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					{{=it.translation['admin_setting_advertisement_title']}}
+				</div>
+			</div>
+			<div class="portlet-body form"  style="background-color: #3e3e3e;color: #fff;">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="row" style="text-align: center;margin-top: 10px;">{{=it.translation['admin_setting_advertisement_image_1']}}</div>
+						<form class="form-horizontal" method='post' action="/uploadAdvertisement" ref='uploadForm' encType="multipart/form-data">
+							<div class="form-body">
+								<div class="form-group" style="margin-bottom: 0px;">
+									<div class="col-md-12">
+										<div class="fileinput fileinput-new" data-provides="fileinput" style= 'width:100%;'>
+											<div class="fileinput-preview" data-trigger="fileinput">
+												<img src="/img/ads_1.png?v={{=new Date()}}" style="width: 100%;">
+											</div>
+											<div hidden = 'true'>
+										<span class="btn default btn-file">
+											<span class="fileinput-new"> Select image </span>
+											<span class="fileinput-exists"> Change </span>
+											<input type="file" name="advertisement" class='class_fileAdvertisement'>
+											<input type="text" name="ads_id" value="1">
+										</span>
+												<a class="btn red fileinput-exists" data-dismiss="fileinput">Remove</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="col-md-6">
+						<div class="row" style="text-align: center;margin-top: 10px;">{{=it.translation['admin_setting_advertisement_image_2']}}</div>
+						<form class="form-horizontal" method='post' action="/uploadAdvertisement" ref='uploadForm' encType="multipart/form-data">
+							<div class="form-body">
+								<div class="form-group" style="margin-bottom: 0px;">
+									<div class="col-md-12">
+										<div class="fileinput fileinput-new" data-provides="fileinput" style= 'width:100%;'>
+											<div class="fileinput-preview" data-trigger="fileinput">
+												<img src="/img/ads_2.png?v={{=new Date()}}" style="width: 100%;">
+											</div>
+											<div hidden = 'true'>
+										<span class="btn default btn-file">
+											<span class="fileinput-new"> Select image </span>
+											<span class="fileinput-exists"> Change </span>
+											<input type="file" name="advertisement" class='class_fileAdvertisement'>
+											<input type="text" name="ads_id" value="2">
+										</span>
+												<a class="btn red fileinput-exists" data-dismiss="fileinput">Remove</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="row" style="text-align: center;margin-top: 10px;">{{=it.translation['admin_setting_advertisement_image_3']}}</div>
+						<form class="form-horizontal" method='post' action="/uploadAdvertisement" ref='uploadForm' encType="multipart/form-data">
+							<div class="form-body">
+								<div class="form-group" style="margin-bottom: 0px;">
+									<div class="col-md-12">
+										<div class="fileinput fileinput-new" data-provides="fileinput" style= 'width:100%;'>
+											<div class="fileinput-preview" data-trigger="fileinput">
+												<img src="/img/ads_3.png?v={{=new Date()}}" style="width: 100%;">
+											</div>
+											<div hidden = 'true'>
+										<span class="btn default btn-file">
+											<span class="fileinput-new"> Select image </span>
+											<span class="fileinput-exists"> Change </span>
+											<input type="file" name="advertisement" class='class_fileAdvertisement'>
+											<input type="text" name="ads_id" value="3">
+										</span>
+												<a class="btn red fileinput-exists" data-dismiss="fileinput">Remove</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="col-md-6">
+						<div class="row" style="text-align: center;margin-top: 10px;">{{=it.translation['admin_setting_advertisement_image_4']}}</div>
+						<form class="form-horizontal" method='post' action="/uploadAdvertisement" ref='uploadForm' encType="multipart/form-data">
+							<div class="form-body">
+								<div class="form-group" style="margin-bottom: 0px;">
+									<div class="col-md-12">
+										<div class="fileinput fileinput-new" data-provides="fileinput" style= 'width:100%;'>
+											<div class="fileinput-preview" data-trigger="fileinput">
+												<img src="/img/ads_4.png?v={{=new Date()}}" style="width: 100%;">
+											</div>
+											<div hidden = 'true'>
+										<span class="btn default btn-file">
+											<span class="fileinput-new"> Select image </span>
+											<span class="fileinput-exists"> Change </span>
+											<input type="file" name="advertisement" class='class_fileAdvertisement'>
+											<input type="text" name="ads_id" value="4">
+										</span>
+												<a class="btn red fileinput-exists" data-dismiss="fileinput">Remove</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					{{=it.translation['admin_setting_company_mail']}}
+				</div>
+			</div>
+			<div class="portlet-body form"  style="background-color: #3e3e3e;color: #fff;">
+				<form class="form-horizontal" id='id_formCompanyMail' ref='changeMail'>
+					<div class="form-body">
+						<div class="form-group">
+							<label class="col-md-3 control-label">{{=it.translation['admin_setting_company_mail']}}</label>
+							<div class="col-md-4">
+								<input type="text" class="form-control input" id='id_textCompanyMail' name='companyMail' value = "{{=it.company_mail}}" disabled>
+							</div>
+                            <button type="button" class="btn blue" data-toggle="modal" data-target="#mail-modal" id="id_btnChangeMail"> {{=it.translation['admin_setting_change_mail']}} </button>
+
+                            <div class="modal fade in" tabindex="-1" role="dialog" id="mail-modal" style="color:black;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <div class="modal-title"> {{=it.translation["admin_setting_change_mail"]}} </div>
+                                        </div>
+                                        <div class="modal-body">
+                                            <style>
+                                                form .col-md-4 {
+                                                    text-align: right;
+                                                }
+                                            </style>
+                                            <form>
+                                                <div class="row"> <strong><p class="notify" style="text-align: center; width: auto;"></p></strong> </div>
+                                                <div class="row form-group">
+                                                    <span class="col-md-1"></span>
+                                                    <span class="col-md-4"> {{=it.translation["admin_setting_company_mail"]}} </span>
+                                                    <span class="col-md-6"> <input type="text" placeholder='{{=it.translation.placeholder0}}' id="newmail"> </span>
+                                                    <span class="col-md-1"></span>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <span class="col-md-1"></span>
+                                                    <span class="col-md-4"> Email {{=it.translation["global_password"]}} </span>
+                                                    <span class="col-md-6"> <input type="password" placeholder='{{=it.translation.global_password}}' id="mailpass"> </span>
+                                                    <span class="col-md-1"></span>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <span class="col-md-1"></span>
+                                                    <span class="col-md-4"> {{=it.translation["admin_setting_confirm"]}} </span>
+                                                    <span class="col-md-6"> <input type="password" placeholder='{{=it.translation.placeholder2}}' id="confirm"> </span>
+                                                    <span class="col-md-1"></span>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" id="mail-save">{{=it.translation["admin_staff_save_changes"]}}</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="mail-close">{{=it.translation["admin_staff_close"]}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="portlet box blue" style ='border-top:1px solid #5faee4'>
+			<div class="portlet-body form"  style="background-color: #3e3e3e;color: #fff;">
+				<form action="#" class="form-horizontal">
+					<div class="form-body">
+						<div class="form-group">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_minimum_bet_amount']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputMinBetAmount' min="0" value="{{=it.min_bet_amount}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveMinBetAmount'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_maximum_bet_amount']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputMaxBetAmount' min="0" value="{{=it.max_bet_amount}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveMaxBetAmount'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_minimum_extra_bet_amount']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputMinExtraBetAmount' min="0" value="{{=it.min_extra_bet_amount}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveMinExtraBetAmount'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_maximum_extra_bet_amount']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputMaxExtraBetAmount' min="0" value="{{=it.max_extra_bet_amount}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveMaxExtraBetAmount'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">{{=it.translation['admin_setting_extra_bet_multiplier']}}</label>
+                            <div class="col-md-4">
+                                <input type="number" class="form-control input" id='id_inputExtraBetMultiplier' min="0" value="{{=it.extrabet_multiplier}}">
+                            </div>
+                            <button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveExtraBetMultiplier'>{{=it.translation['admin_setting_set']}}</button>
+                        </div>
+
+						<div class="form-group">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_minimum_range_bet_amount']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputMinRangeBetAmount' min="0" value="{{=it.min_range_bet_amount}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveMinRangeBetAmount'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_maximum_range_bet_amount']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputMaxRangeBetAmount' min="0" value="{{=it.max_range_bet_amount}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveMaxRangeBetAmount'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+
+		<div class="portlet box blue" style ='border-top:1px solid #5faee4'>
+			<div class="portlet-body form"  style="background-color: #3e3e3e;color: #fff;">
+
+				<form action="#" class="form-horizontal">
+					<div class="form-body">
+						<div class="form-group" style="margin-bottom:0px;">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_first_deposit_percent']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputFirstDepositPercent' min="0" value="{{=it.first_deposit_percent}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveFirstDepositPercent'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+					</div>
+				</form>
+
+				<form action="#" class="form-horizontal" style="margin-bottom:0px;">
+					<div class="form-body">
+						<div class="form-group" style="margin-bottom:0px;">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_first_deposit_multiplier']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputFirstDepositMultiplier' min="0" value="{{=it.first_deposit_multiplier}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveFirstDepositMultiplier'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</div>
+
+		<div class="portlet box blue" style ='border-top:1px solid #5faee4'>
+			<div class="portlet-body form"  style="background-color: #3e3e3e;color: #fff;">
+
+				<form action="#" class="form-horizontal">
+					<div class="form-body">
+						<div class="form-group" style="margin-bottom:0px;">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_eth_address']}}</label>
+							<div class="col-md-4">
+								<input type="text" class="form-control input" id='id_inputETHAddress' value="{{=it.eth_address}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveETHAddress'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+					</div>
+				</form>
+
+				<form action="#" class="form-horizontal" style="margin-bottom:0px;">
+					<div class="form-body">
+						<div class="form-group" style="margin-bottom:0px;">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_eth_password']}}</label>
+							<div class="col-md-4">
+								<input type="text" class="form-control input" id='id_inputETHPassword' value="{{=it.eth_password}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveETHPassword'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</div>
+
+		<div class="portlet box blue" style ='border-top:1px solid #5faee4'>
+			<div class="portlet-body form"  style="background-color: #3e3e3e;color: #fff;">
+				<form action="#" class="form-horizontal" style="margin-bottom:0px;">
+					<div class="form-body">
+						<div class="form-group" style="margin-bottom:0px;">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_add_gaming_pool']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputAddGamingPool' min="0" value="{{=it.add_gaming_pool}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveAddGamingPool'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="portlet box blue" style ='border-top:1px solid #5faee4'>
+			<div class="portlet-body form"  style="background-color: #3e3e3e;color: #fff;">
+				<form action="#" class="form-horizontal" style="margin-bottom:0px;">
+					<div class="form-body">
+						<div class="form-group" style="margin-bottom:0px;">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_max_profit']}}</label>
+							<div class="col-md-4">
+								<input type="number" class="form-control input" id='id_inputMaxProfit' min="0" value="{{=it.max_profit}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveMaxProfit'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="portlet box blue" style ='border-top:1px solid #5faee4'>
+			<div class="portlet-body form"  style="background-color: #3e3e3e;color: #fff;">
+				<form action="#" class="form-horizontal" style="margin-bottom:0px;">
+					<div class="form-body">
+						<div class="form-group" style="margin-bottom:0px;">
+							<label class="col-md-5 control-label">{{=it.translation['admin_setting_contactus_email']}}</label>
+							<div class="col-md-4">
+								<input type="text" class="form-control input" id='id_inputContactUsEmail' value="{{=it.global_email}}">
+							</div>
+							<button type="button" class="btn blue" style = 'margin-top:-1px;' id='id_btnSaveContactUsEmail'>{{=it.translation['admin_setting_set']}}</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+</div>
+<div id="handheld-detection"></div>
+
+{{?it.enginehost}}
+<div id="id_divEngineHost" hidden="true">{{=it.enginehost}}</div>
+{{?}}
+
+<!-- END PAGE CONTENT-->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/metronic/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+<!--<script data-main="/scripts/statistics_main" src="/node_modules/requirejs/require.js"></script>-->
+<script>
+    jQuery(document).ready(function() {
+        Metronic.init();
+        Layout.init();
+        $(".class_fileAdvertisement").change(function() {
+            onChangeFile(this);
+        });
+
+        function ValidURL(str) {
+		  var pattern = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+		  if(!pattern.test(str)) {
+		    alert('{{=it.translation.admin_setting_valid_url}}');
+		    return false;
+		  } else {
+		    return true;
+		  }
+		}
+
+        $("#id_btnSaveWelcomeFreeBits").click(function() {
+            $.post("/setWelcomeFreeBits", {
+                'welcome_free_bit' : $("#id_inputWelcomeFreeBits").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveWithdrawableBetAmount").click(function() {
+            $.post("/setWithdrawableBetAmount", {
+                'withdrawable_bet_amount' : $("#id_inputWithdrawableBetAmount").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveMinimumDepositAmountForWithdrawal").click(function() {
+            if ($("#id_inputMinimumDepositAmountForWithdrawal").val() == '')
+                return;
+            $.post("/saveCommonSetting", {
+                strkey : 'minimum_deposit_amount_for_withdrawal',
+                strvalue : $("#id_inputMinimumDepositAmountForWithdrawal").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveMinBetAmount").click(function() {
+            $.post("/setMinBetAmount", {
+                'min_bet_amount' : $("#id_inputMinBetAmount").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveMaxBetAmount").click(function() {
+            $.post("/setMaxBetAmount", {
+                'max_bet_amount' : $("#id_inputMaxBetAmount").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveMinExtraBetAmount").click(function() {
+            $.post("/setMinExtraBetAmount", {
+                'min_extra_bet_amount' : $("#id_inputMinExtraBetAmount").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveMaxExtraBetAmount").click(function() {
+            $.post("/setMaxExtraBetAmount", {
+                'max_extra_bet_amount' : $("#id_inputMaxExtraBetAmount").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveExtraBetMultiplier").click(function() {
+            $.post("/setExtraBetMultiplier", {
+                'extrabet_multiplier' : $("#id_inputExtraBetMultiplier").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveMinRangeBetAmount").click(function() {
+            $.post("/saveCommonSetting", {
+                strkey : 'min_range_bet_amount',
+                strvalue : $("#id_inputMinRangeBetAmount").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveMaxRangeBetAmount").click(function() {
+            $.post("/saveCommonSetting", {
+                strkey : 'max_range_bet_amount',
+                strvalue : $("#id_inputMaxRangeBetAmount").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveCollectFreeDays").click(function() {
+            $.post("/setCollectFreeDays", {
+                'collect_free_days' : $("#id_inputCollectFreeDays").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveWelcomeBitsMultiplier").click(function() {
+            $.post("/setWelcomeBitsMultiplier", {
+                'welcome_bits_multiplier' : $("#id_inputWelcomeBitsMultiplier").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveFirstDepositPercent").click(function() {
+            $.post("/setFirstDepositPercent", {
+                'first_deposit_percent' : $("#id_inputFirstDepositPercent").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveFirstDepositMultiplier").click(function() {
+            $.post("/setFirstDepositMultiplier", {
+                'first_deposit_multiplier' : $("#id_inputFirstDepositMultiplier").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveToBeAgentDepositMultiplier").click(function() {
+            $.post("/setToBeAgentDepositMultiplier", {
+                'to_be_agent_deposit_multiplier' : $("#id_inputToBeAgentDepositMultiplier").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveToBeAgentClientCount").click(function() {
+            $.post("/setToBeAgentClientCount", {
+                'to_be_agent_client_count' : $("#id_inputToBeAgentClientCount").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveMinTransferAmount").click(function() {
+            $.post("/setMinTransferAmount", {
+                'min_transfer_amount' : $("#id_inputMinTransferAmount").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveMaxTransferAmount").click(function() {
+            $.post("/setMaxTransferAmount", {
+                'max_transfer_amount' : $("#id_inputMaxTransferAmount").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveMaxTipFeeAmount").click(function() {
+            $.post("/setMaxTipFeeAmount", {
+                'max_tipfee_amount' : $("#id_inputMaxTipFeeAmount").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveMaxProfit").click(function() {
+            $.post("/setMaxProfit", {
+                'max_profit' : $("#id_inputMaxProfit").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveContactUsEmail").click(function() {
+            $.post("/setContactUsEmail", {
+                'contactus_email' : $("#id_inputContactUsEmail").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveAddGamingPool").click(function() {
+            $.post("/setAddGamingPool", {
+                'add_gaming_pool' : $("#id_inputAddGamingPool").val()
+            }, function(data) {
+            });
+        });
+
+
+        $("#id_btnSaveETHAddress").click(function() {
+            $.post("/setETHAddress", {
+                'eth_address' : $("#id_inputETHAddress").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnSaveETHPassword").click(function() {
+            $.post("/setETHPassword", {
+                'eth_password' : $("#id_inputETHPassword").val()
+            }, function(data) {
+            });
+        });
+
+        $("#id_btnTipFeeSet").click(function() {
+            $.post("/setTipFee", {
+                'tipFee' : $("#id_inputTipFee").val(),
+            }, function(data) {
+            });
+        });
+
+
+
+        $("#id_btnSaveAgent").click(function() {
+            $.post("/saveAgentProfitPercent", {
+                'agent_percent_parent1' : $("#id_inputAgentParent1").val(),
+                'agent_percent_parent2' : $("#id_inputAgentParent2").val(),
+                'agent_percent_parent3' : $("#id_inputAgentParent3").val(),
+                'agent_percent_masterib' : $("#id_inputAgentMasterIB").val(),
+                'agent_percent_agent' : $("#id_inputAgentAgent").val(),
+                'agent_percent_company' : $("#id_inputAgentCompany").val(),
+                'agent_percent_staff' : $("#id_inputAgentStaff").val()
+            }, function(data) {
+            });
+		});
+
+        $("#id_btnAddRange").click(function(ele) {
+            addLine(this);
+        });
+
+        $("#id_btnSaveRange").click(function() {
+			setCrashPointRange();
+		});
+
+        $(document).on('click', '.class_btnDeleteRange', function() {
+            deleteLine(this);
+        });
+
+        $(document).on('change', '.class_numStart', function() {
+            onChangeNumStart(this);
+        });
+
+        $(document).on('change', '.class_numEnd', function() {
+            onChangeNumEnd(this);
+        });
+
+        $(document).on('change', '.class_numPercent', function() {
+            onChangeNumPercent(this);
+        });
+
+        $("#id_btnSaveRange").click(function() {
+            setCrashPointRange();
+        });
+
+        $("#id_btnAddBetRange").click(function(ele) {
+            addBetRangeLine(this);
+        });
+
+        $(document).on('click', '.class_btnDeleteBetRange', function() {
+            deleteBetRangeLine(this);
+        });
+
+        $("#id_btnSaveRangeBet").click(function() {
+            saveBetRanges();
+        });
+
+        $(document).on('click', '#id_btnAddTutorial', function() {
+            addTutorial(this);
+        });
+
+        $(document).on('click', '.class_btnDeleteTutorial', function() {
+            deleteTutorial(this);
+        });
+
+        $("#id_btnSaveTutorial").click(function() {
+            saveTutorials();
+        });
+
+        $("#id_btnEnableRange").click(function() {
+            setIntervalStatus(1);
+            $("#id_btnDisableRange").parent().show();
+            $("#id_btnEnableRange").parent().hide();
+		});
+
+        $("#id_btnDisableRange").click(function() {
+            setIntervalStatus(0);
+            $("#id_btnDisableRange").parent().hide();
+            $("#id_btnEnableRange").parent().show();
+        });
+
+        $(".class_labelBetMode").mouseup(function() {
+            var betMode = $(this).children().first().val();
+				$.post("/setBetMode", {
+                'bet_mode' : betMode
+            }, function(data) {
+            });
+        });
+
+		$(".class_labelMobileCustomBet").click(function() {
+		    var mobileBetMode = $(this).children().eq(0).val();
+            $.post("/setMobileBetMode", {
+                'bet_mode_mobile' : mobileBetMode
+            }, function(data) {
+            });
+		});
+
+        $(".class_labelShowHash").click(function() {
+            var showHash = $(this).children().eq(0).val();
+            $.post("/setShowHash", {
+                'show_hash' : showHash
+            }, function(data) {
+            });
+        });
+
+		$("#id_btnSaveNoAgentCommission").click(function() {
+		    saveNoAgentCommission();
+		});
+    });
+
+    function onChangeFile(element) {
+		$(element).closest('form').submit();
+    };
+
+    function addLine(element) {
+        var newLine = $("#id_divContentRange").children().last().clone();
+        $(newLine).appendTo("#id_divContentRange");
+        var prevLine = $(newLine).prev();
+
+        var prevStart = $(prevLine).find('.class_numStart').val();
+        var prevEnd = $(prevLine).find('.class_numEnd').val();
+        var prevPercent = $(prevLine).find('.class_numPercent').val();
+
+        var newPercent = prevPercent / 2;
+        var newEnd = prevEnd;
+        var newStart = (parseInt(prevEnd) + parseInt(prevStart)) / 2;
+        prevPercent = prevPercent / 2;
+        prevEnd = newStart;
+
+        $(prevLine).find('.class_numEnd').val(prevEnd);
+        $(prevLine).find('.class_numPercent').val(prevPercent);
+
+        $(newLine).find('.class_numStart').val(newStart);
+        $(newLine).find('.class_numEnd').val(newEnd);
+        $(newLine).find('.class_numPercent').val(newPercent);
+    };
+
+    function deleteLine(element) {
+        var parentElement = $(element).parent();
+
+        var prevLine = $(parentElement).prev();
+        var nextLine= $(parentElement).next();
+
+        var currentStart = $(parentElement).find('.class_numStart').val();
+        var currentEnd = $(parentElement).find('.class_numEnd').val();
+        var currentPercent = $(parentElement).find('.class_numPercent').val();
+
+        var prevLineExist = $(prevLine).hasClass('class_divLineRange');
+        var nextLineExist = $(nextLine).hasClass('class_divLineRange');
+
+        if(!prevLineExist && !nextLineExist) {
+            return;
+        } else if(!prevLineExist && nextLineExist) {
+            prevLine = undefined;
+            $(nextLine).find('.class_numStart').val(currentStart);
+
+            var nextPercent = $(nextLine).find('.class_numPercent').val();
+            $(nextLine).find('.class_numPercent').val(parseFloat(currentPercent) + parseFloat(nextPercent));
+
+        } else if(prevLineExist && !nextLineExist) {
+            nextLine = undefined;
+            $(prevLine).find('.class_numEnd').val(currentEnd);
+
+            var prevPercent = $(prevLine).find('.class_numPercent').val();
+            $(prevLine).find('.class_numPercent').val(parseFloat(prevPercent) + parseFloat(currentPercent));
+
+        } else {
+            var prevPercent = $(prevLine).find('.class_numPercent').val();
+            var nextPercent = $(nextLine).find('.class_numPercent').val();
+            prevPercent = parseFloat(prevPercent) + parseFloat(currentPercent / 2);
+            nextPercent = parseFloat(nextPercent) + parseFloat(currentPercent / 2);
+
+            $(prevLine).find('.class_numPercent').val(prevPercent);
+            $(nextLine).find('.class_numPercent').val(nextPercent);
+
+            $(prevLine).find('.class_numEnd').val(currentEnd);
+        }
+
+        $(parentElement).empty();
+        $(parentElement).remove();
+    };
+
+    function onChangeNumStart(element) {
+        var currentStart = parseFloat($(element).val());
+        var currentEndElement = $(element).parent().find('.class_numEnd');
+        var currentEnd = parseFloat($(currentEndElement).val());
+
+        var prevLine = $(element).parent().prev();
+        var prevLineExist = $(prevLine).hasClass('class_divLineRange');
+
+        if(prevLineExist) {
+            var prevEnd = $(prevLine).find('.class_numEnd').val();
+            $(prevLine).find('.class_numEnd').val(currentStart);
+        }
+
+        checkParameters();
+    };
+
+    function onChangeNumEnd(element) {
+        var currentStartElement = $(element).parent().find('.class_numStart');
+        var currentStart = parseFloat($(currentStartElement).val());
+        var currentEnd = parseFloat($(element).val());
+
+        var nextLine = $(element).parent().next();
+        var nextLineExist = $(nextLine).hasClass('class_divLineRange');
+
+        if(nextLineExist) {
+            var nextStart = $(nextLine).find('.class_numStart').val();
+            $(nextLine).find('.class_numStart').val(currentEnd);
+        }
+        checkParameters();
+    };
+
+    function onChangeNumPercent(element) {
+
+        var sumPercent = 0.0;
+        var size = $("#id_divContentRange .class_numPercent").size();
+        var flag = false;
+        $("#id_divContentRange .class_numPercent").each(function(index) {
+            if(flag == false){
+                if($(this).is($(element))){
+                    flag = true;
+                    if(size == 1)
+                        $(this).val(100 - sumPercent);
+                }
+                sumPercent += parseFloat($(this).val());
+                size --;
+            } else {
+                if(sumPercent > 100)
+                    $(this).parent().find('.class_btnDeleteRange').trigger('click');
+                else $(this).val((100 - sumPercent) / size);
+            }
+        });
+    };
+
+    function checkParameters() {
+        $($("#id_divContentRange .class_divLineRange").get().reverse()).each(function(index) {
+            if(parseFloat($(this).find('.class_numStart').val()) >= parseFloat($(this).find('.class_numEnd').val()))
+                $(this).find('.class_btnDeleteRange').trigger('click');
+        });
+    };
+
+    function setCrashPointRange() {
+        var data = [];
+        var k = 0;
+
+        $("#id_divContentRange .class_divLineRange").each(function(index) {
+            data[k]={};
+            data[k]['interval_start'] = parseFloat($(this).find('.class_numStart').val());
+            data[k]['interval_end'] = parseFloat($(this).find('.class_numEnd').val());
+            data[k]['percentage'] = parseFloat($(this).find('.class_numPercent').val());
+            k++;
+        });
+		$.post('/saveIntervals', {
+            intervals:data
+		}, function(data){
+		});
+	};
+
+    function setIntervalStatus(status) {
+        $.post('/setIntervalStatus', {
+            status : status
+        }, function() {
+
+        });
+    }
+
+    function addTutorial() {
+        var newLine = $("#id_divContentTutorial").children().last().clone();
+        $(newLine).find('.class_tutorialTitle').val("");
+        $(newLine).find('.class_tutorialURL').val("");
+        $(newLine).appendTo("#id_divContentTutorial");
+	}
+
+	function deleteTutorial(element) {
+		var parentElement = $(element).parent();
+        var prevLine = $(parentElement).prev();
+        var nextLine= $(parentElement).next();
+        var prevLineExist = $(prevLine).hasClass('class_divLineTutorial');
+        var nextLineExist = $(nextLine).hasClass('class_divLineTutorial');
+        if(!prevLineExist && !nextLineExist) {
+            $(parentElement).find('.class_tutorialTitle').val("");
+            $(parentElement).find('.class_tutorialURL').val("");
+            return;
+        }
+		$(parentElement).empty();
+        $(parentElement).remove();
+	}
+
+	function saveTutorials() {
+        var data = [];
+        var k = 0;
+
+        $("#id_divContentTutorial .class_divLineTutorial").each(function(index) {
+            data[k]={};
+            var title = $(this).find('.class_tutorialTitle').val();
+            var url = $(this).find('.class_tutorialURL').val();
+
+            if(title != '' && url != '') {
+                data[k]['title'] = title;
+                data[k]['url'] = url;
+                k++;
+            }
+        });
+
+        $.post('/saveTutorials', {
+            tutorials:data
+        }, function(data){
+        });
+	}
+
+    $(document).on('click', '#mail-save', function(){
+        var newmail = $('#newmail').val();
+        var password = $('#mailpass').val();
+        var confirm = $('#confirm').val();
+
+        $('.notify').text('');
+
+        if (password !== confirm) {
+            $('.notify').text('{{=it.translation.rule_alert2}}');
+            return;
+        }
+
+        $.post('/change-mail', { mail: newmail, password: password }, function(data, status){
+            if (status === 'success') {
+                $('.notify').text('{{=it.translation.admin_setting_change_mail_success}}');
+                $('#id_textCompanyMail').val(newmail);
+                return;
+            }
+            else {
+                $('.notify').text('{{=it.translation.admin_setting_change_mail_error}}');
+                return;
+            }
+        })
+    });
+
+    $(document).on('click', '#id_btnChangeMail', function(){
+        $('#newmail').val($('#id_textCompanyMail').val());
+        $('.notify').text('');
+        $('#mailpass').val('');
+        $('#confirm').val('');
+    });
+
+    function saveNoAgentCommission() {
+        var point_from = $("#id_inputNoAgentCommissionFrom").val();
+        var point_to = $("#id_inputNoAgentCommissionTo").val();
+
+        point_from = point_from=="" ? 0 : point_from;
+        point_to = point_to=="" ? 0 : point_to;
+
+        $.post("/saveNoAgentCommissionRegion", {
+				point_from : point_from,
+				point_to : point_to
+			}, function(data) {
+			}
+		);
+	}
+
+    function addBetRangeLine(element) {
+        var newLine = $("#id_divContentBetRange").children().last().clone();
+        $(newLine).appendTo("#id_divContentBetRange");
+        $(newLine).find('.class_rangeStart').val(0);
+        $(newLine).find('.class_rangeEnd').val(0);
+        $(newLine).find('.class_rangeMultiplier').val(0);
+    };
+
+    function deleteBetRangeLine(element) {
+        var parentElement = $(element).parent();
+        $(parentElement).empty();
+        $(parentElement).remove();
+    };
+
+    function saveBetRanges() {
+        var data = [];
+        var k = 0;
+
+        $("#id_divContentBetRange .class_divLineBetRange").each(function(index) {
+            data[k]={};
+            data[k]['range_from'] = Math.round($(this).find('.class_rangeStart').val()*100);
+            if($(this).find('.class_rangeEnd').val() == '')
+            	data[k]['range_to'] = -1;
+            else
+                data[k]['range_to'] = Math.round($(this).find('.class_rangeEnd').val()*100);
+            data[k]['range_multiplier'] = $(this).find('.class_rangeMultiplier').val();
+            k++;
+        });
+        $.post('/saveBetRanges', {
+            betRanges:data
+        }, function(data){
+        });
+	};
+</script>
+<!-- END JAVASCRIPTS -->
+#}}
+{{#def.include('./template/main_admin')}}

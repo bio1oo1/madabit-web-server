@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+    <html lang="en">
+    <!-- BEGIN HEAD -->
+{{#def.include('head')}}
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed page-container-bg-solid page-sidebar-closed-hide-logo page-header-fixed-mobile page-footer-fixed">
+
+<!--Begin Comm100 Live Chat Code-->
+<script>
+    (function(a,h,c,b,f,g){a["UdeskApiObject"]=f;a[f]=a[f]||function(){(a[f].d=a[f].d||[]).push(arguments)};g=h.createElement(c);g.async=1;g.charset="utf-8";g.src=b;c=h.getElementsByTagName(c)[0];c.parentNode.insertBefore(g,c)})(window,document,"script","//assets-cli.udesk.cn/im_client/js/udeskApi.js","ud");
+    ud({
+        "code": "2b916c16",
+        "link": "https://madabit.udesk.cn/im_client/?web_plugin_id=48486"
+    });
+</script>
+<!--End Comm100 Live Chat Code-->
+
+    <input type ='hidden' id="id_hiddenLanguageCode" value = '{{=it.translation.language_for}}'/></input>
+    <!-- BEGIN HEADER -->
+    {{#def.include('header')}}
+    <!-- END HEADER -->
+    <div class="clearfix"></div>
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container">
+        <!-- BEGIN SIDEBAR -->
+        {{#def.include('sidebar')}}
+        <!-- END SIDEBAR -->
+        <div class="page-content-wrapper">
+            <!--<div class="page-content" style= 'box-shadow: inset 4px 0 20px 10px #232935;'>-->
+            <div class="page-content">
+                <!-- BEGIN PAGE CONTENT-->
+                {{#def.content || ""}}
+                <!-- END PAGE CONTENT-->
+            </div>
+        </div>
+        <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+    <div class="page-footer">
+        <div class="page-footer-inner">
+        </div>
+        <div class="scroll-to-top">
+            <i class="icon-arrow-up"></i>
+        </div>
+    </div>
+</body>
+</html>

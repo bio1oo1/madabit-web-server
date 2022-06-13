@@ -1,0 +1,1615 @@
+{{##def.content:
+<link rel="stylesheet" type="text/css" href="/metronic/assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
+<link rel="stylesheet" type="text/css" href="/vendor/datepicker/datepicker.css">
+<style type="text/css">
+	.class_chartCustom {
+		width	: 100%;
+		height	: 300px;
+		font-size	: 11px;
+	}
+</style>
+<!-- BEGIN PAGE HEADER-->
+<h1 style="text-align: center; margin-bottom: 15px;">
+	{{=it.translation['admin_statistics_title']}}
+</h1>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style ='margin-bottom: 20px;'>
+	<div class = 'col-md-12'>
+		<form action="/statistics-admin" method="POST" id="id_formDateRange">
+			<div class="form-group">
+				<div class="col-md-3"></div>
+				<div class="col-md-2">
+					<label for='date_from'>{{=it.translation['admin_statistics_daterange_from']}}</label>
+					<input class="form-control form-control-inline input-medium" id="id_date_from" data-date-format="yyyy-mm-dd" size=  "16"
+						   type="text" name='date_from' value="{{=it.date_from}}" style = "width: 150px !important;"/>
+
+				</div>
+				<div class = 'col-md-2'>
+					<label for='date_to'>{{=it.translation['admin_statistics_daterange_to']}}</label>
+					<input class="form-control form-control-inline input-medium" id="id_date_to" data-date-format="yyyy-mm-dd" size="16"
+						   type="text" name='date_to' value="{{=it.date_to}}" style = "width: 150px !important;"/>
+					<input type = 'hidden' value = '' name = 'time_zone_name' id = 'time_zone_name'>
+				</div>
+				<div class="col-md-2">
+					<label for=''></label>
+					<input class="btn btn-primary form-control form-control-inline input-medium" style="background-color: #b92525;width: 100px !important;margin-top: 25px;border-radius: 3px !important;border: none;-webkit-box-shadow: 0 0 6px 0px white;-moz-box-shadow: 0 0 6px 0px white;box-shadow: 0 0 6px 0px white;" type="button" value="View" id="id_btnView">
+				</div>
+				<div class="col-md-3"></div>
+			</div>
+		</form>
+	</div>
+</div>
+{{?it.statistics}}
+<div class="row">
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat blue-madison">
+			<div class="visual">
+				<i class="fas fa-chart-line fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.company_profit}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_companytotalprofits']}}
+				</div>
+			</div>
+			<a class="more" target="id_divTotalProfitsGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat red-intense">
+			<div class="visual">
+				<i class="fas fa-angle-double-up fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.gross_profit}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_companynetprofits']}}
+				</div>
+			</div>
+			<a class="more" target="id_divGrossProfitsGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat green-haze">
+			<div class="visual">
+				<i class="fas fa-plus fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.welcome_free_bit}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_welcomefreebits']}}
+				</div>
+			</div>
+			<a class="more" target="id_divWelcomeFreeBitGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat purple-plum">
+			<div class="visual">
+				<i class="fas fa-gamepad fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					{{=it.statistics.total_game}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_totalgames']}}
+				</div>
+			</div>
+			<a class="more" target="id_divTotalGamesGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+
+</div>
+<div class="row">
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat blue-madison">
+			<div class="visual">
+				<i class="fab fa-btc fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.total_volume}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_totalvolumes']}}
+				</div>
+			</div>
+			<a class="more" target="id_divTotalVolumeGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat red-intense">
+			<div class="visual">
+				<i class="fas fa-exchange-alt fa-2x" data-fa-transform="rotate-90"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.net_profit}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_playernetprofits']}}
+				</div>
+			</div>
+			<a class="more" target="id_divNetProfitsGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat green-haze">
+			<div class="visual">
+				<i class="far fa-play-circle fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.play_times_profit}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_freebitsfromloginplay']}}
+				</div>
+			</div>
+			<a class="more" target="id_divPlayTimesProfitsGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" hidden = 'true'>
+		<div class="dashboard-stat purple-plum">
+			<div class="visual">
+				<i class="far fa-user fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					{{=it.statistics.total_player}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_totalplayers']}}
+				</div>
+			</div>
+			<a class="more" target="id_divTotalPlayersGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat purple-plum">
+			<div class="visual">
+				<i class="far fa-credit-card fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.total_deposit}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_totaldeposit']}}
+				</div>
+			</div>
+			<a class="more" target="id_divTotalDepositGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+
+
+</div>
+<div class="row">
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat blue-madison">
+			<div class="visual">
+				<i class="fas fa-dollar-sign fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.total_extra_bet}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_sidebet']}}
+				</div>
+			</div>
+			<a class="more" target="id_divTotalExtraBetGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat red-intense">
+			<div class="visual">
+				<i class="fas fa-user-secret fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.agent_profit}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_agentcommission']}}
+				</div>
+			</div>
+			<a class="more" target="id_divAgentProfitsGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat green-haze">
+			<div class="visual">
+				<i class="far fa-credit-card fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.first_deposit_profit}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_commissionfromfunding']}}
+				</div>
+			</div>
+			<a class="more" target="id_divFirstDepositProfitsGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+
+
+
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat purple-plum">
+			<div class="visual">
+				<i class="far fa-money-bill-alt fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.total_withdraw}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_totalwithdraw']}}
+				</div>
+			</div>
+			<a class="more" target="id_divTotalWithdrawGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat blue-madison">
+			<div class="visual">
+				<i class="fas fa-plus fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.total_player_balance}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_totalplayerbalance']}}
+				</div>
+			</div>
+			<a class="more" target="id_divAgentProfitsGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat red-intense">
+			<div class="visual">
+				<i class="fas fa-plus  fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.total_transfer_fee}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_totaltransferfee']}}
+				</div>
+			</div>
+			<a class="more" target="id_divAgentProfitsGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat green-haze">
+			<div class="visual">
+				<i class="fas fa-plus fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.total_withdraw_fee}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_totalwithdrawfee']}}
+				</div>
+			</div>
+			<a class="more" target="id_divFirstDepositProfitsGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat purple-plum">
+			<div class="visual">
+				<i class="fas fa-angle-double-left fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.total_mining_fee}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_totalminingfee']}}
+				</div>
+			</div>
+			<a class="more" target="id_divTotalWithdrawGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat blue-madison">
+			<div class="visual">
+				<i class="far fa-credit-card fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.total_deposit_coin}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_totaldeposit_coin']}}
+				</div>
+			</div>
+			<a class="more" target="id_divAgentProfitsGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat red-intense">
+			<div class="visual">
+				<i class="far fa-credit-card fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.total_deposit_money}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_totaldeposit_money']}}
+				</div>
+			</div>
+			<a class="more" target="id_divAgentProfitsGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat green-haze">
+			<div class="visual">
+				<i class="far fa-money-bill-alt fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.total_withdraw_coin}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_totalwithdraw_coin']}}
+				</div>
+			</div>
+			<a class="more" target="id_divAgentProfitsGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat purple-plum">
+			<div class="visual">
+				<i class="far fa-money-bill-alt fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.total_withdraw_money}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_totalwithdraw_money']}}
+				</div>
+			</div>
+			<a class="more" target="id_divTotalWithdrawGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat blue-madison">
+			<div class="visual">
+				<i class="fas fa-university fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.madabit_balance}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_companybalance']}}
+				</div>
+			</div>
+			<a class="more" target="id_divAgentProfitsGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat red-intense">
+			<div class="visual">
+				<i class="fas fa-users fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.staff_balance}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_staffbalance']}}
+				</div>
+			</div>
+			<a class="more" target="id_divAgentProfitsGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat green-haze">
+			<div class="visual">
+				<i class="fas fa-users fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.deleted_profit}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_deletedprofit']}}
+				</div>
+			</div>
+			<a class="more" target="id_divAgentProfitsGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat purple-plum">
+			<div class="visual">
+				<i class="fas fa-angle-double-left fa-2x"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+					$ {{=it.statistics.total_capture_pay}}
+				</div>
+				<div class="desc">
+					{{=it.translation['admin_statistics_totalcapturepay']}}
+				</div>
+			</div>
+			<a class="more" target="id_divTotalWithdrawGraph">
+				<span>{{=it.translation['admin_statistics_showgraph']}}</span> <i class="m-icon-swapdown m-icon-white"></i>
+				<span style='display: none;'>{{=it.translation['admin_statistics_hidegraph']}}</span> <i style='display: none;' class="m-icon-swapup m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+</div>
+
+
+<div class = 'row' id='id_divTotalProfitsGraph' style='display: none;'>
+	<div class="col-md-12">
+		<!-- BEGIN CHART PORTLET-->
+		<div class="portlet light bordered" style = 'background-color: #3e3e3e;'>
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-bar-chart font-green-haze"></i>
+					<span class="caption-subject bold uppercase font-green-haze">{{=it.translation['admin_statistics_companytotalprofits']}}</span>
+				</div>
+				<div class="tools">
+					<a class="collapse">
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div id='id_divCompanyProfitChart' class = 'class_chartCustom'></div>
+			</div>
+		</div>
+		<!-- END CHART PORTLET-->
+	</div>
+</div>
+<div class = 'row' id = 'id_divTotalVolumeGraph' style='display: none;'>
+	<div class="col-md-12">
+		<!-- BEGIN CHART PORTLET-->
+		<div class="portlet light bordered" style = 'background-color: #3e3e3e;'>
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-bar-chart font-green-haze"></i>
+					<span class="caption-subject bold uppercase font-green-haze">{{=it.translation['admin_statistics_totalvolumes']}}</span>
+				</div>
+				<div class="tools">
+					<a class="collapse">
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div id="id_divVolumeChart" class = 'class_chartCustom' style = 'background-color: #3e3e3e; color:#fff;'></div>
+			</div>
+		</div>
+		<!-- END CHART PORTLET-->
+	</div>
+</div>
+<div class = 'row' id = 'id_divTotalExtraBetGraph' style='display: none;'>
+	<div class="col-md-12">
+		<!-- BEGIN CHART PORTLET-->
+		<div class="portlet light bordered" style = 'background-color: #3e3e3e;'>
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-bar-chart font-green-haze"></i>
+					<span class="caption-subject bold uppercase font-green-haze">{{=it.translation['admin_statistics_sidebet']}}</span>
+				</div>
+				<div class="tools">
+					<a class="collapse">
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div id="id_divExtraBetChart" class = 'class_chartCustom' style = 'background-color: #3e3e3e; color:#fff;'></div>
+			</div>
+		</div>
+		<!-- END CHART PORTLET-->
+	</div>
+</div>
+
+<div class = 'row' id = 'id_divGrossProfitsGraph'  style='display: none;'>
+	<div class="col-md-12">
+		<!-- BEGIN CHART PORTLET-->
+		<div class="portlet light bordered" style = 'background-color: #3e3e3e;'>
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-bar-chart font-green-haze"></i>
+					<span class="caption-subject bold uppercase font-green-haze">{{=it.translation['admin_statistics_companynetprofits']}}</span>
+				</div>
+				<div class="tools">
+					<a class="collapse">
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div id="id_divGrossProfitChart" class = 'class_chartCustom' style = 'background-color: #3e3e3e;  color:#fff;'></div>
+			</div>
+		</div>
+		<!-- END CHART PORTLET-->
+	</div>
+</div>
+<div class = 'row' id = 'id_divNetProfitsGraph'  style='display: none;'>
+	<div class="col-md-12">
+		<!-- BEGIN CHART PORTLET-->
+		<div class="portlet light bordered" style = 'background-color: #3e3e3e;'>
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-bar-chart font-green-haze"></i>
+					<span class="caption-subject bold uppercase font-green-haze">{{=it.translation['admin_statistics_playernetprofits']}}</span>
+				</div>
+				<div class="tools">
+					<a class="collapse">
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div id="id_divNetProfitChart" class = 'class_chartCustom' style = 'background-color: #3e3e3e;  color:#fff;'></div>
+			</div>
+		</div>
+		<!-- END CHART PORTLET-->
+	</div>
+</div>
+<div class = 'row' id = 'id_divAgentProfitsGraph' style='display: none;'>
+	<div class="col-md-12">
+		<!-- BEGIN CHART PORTLET-->
+		<div class="portlet light bordered" style = 'background-color: #3e3e3e;'>
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-bar-chart font-green-haze"></i>
+					<span class="caption-subject bold uppercase font-green-haze">{{=it.translation['admin_statistics_agentcommission']}}</span>
+				</div>
+				<div class="tools">
+					<a class="collapse">
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div id='id_divAgentProfitChart' class = 'class_chartCustom'></div>
+			</div>
+		</div>
+		<!-- END CHART PORTLET-->
+	</div>
+</div>
+
+<div class = 'row'  id = 'id_divWelcomeFreeBitGraph' style='display: none;'>
+	<div class="col-md-12">
+		<!-- BEGIN CHART PORTLET-->
+		<div class="portlet light bordered" style = 'background-color: #3e3e3e;'>
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-bar-chart font-green-haze"></i>
+					<span class="caption-subject bold uppercase font-green-haze">{{=it.translation['admin_statistics_welcomefreebits']}}</span>
+				</div>
+				<div class="tools">
+					<a class="collapse">
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div id="id_divWelcomeFreeBitChart" class = 'class_chartCustom' style = 'background-color: #3e3e3e;  color:#fff;'></div>
+			</div>
+		</div>
+		<!-- END CHART PORTLET-->
+	</div>
+</div>
+<div class = 'row' id = 'id_divPlayTimesProfitsGraph' style='display: none;'>
+	<div class="col-md-12">
+		<!-- BEGIN CHART PORTLET-->
+		<div class="portlet light bordered" style = 'background-color: #3e3e3e;'>
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-bar-chart font-green-haze"></i>
+					<span class="caption-subject bold uppercase font-green-haze">{{=it.translation['admin_statistics_freebitsfromloginplay']}}</span>
+				</div>
+				<div class="tools">
+					<a class="collapse">
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div id="id_divPlayTimesProfitChart" class = 'class_chartCustom' style = 'background-color: #3e3e3e; color:#fff;'></div>
+			</div>
+		</div>
+		<!-- END CHART PORTLET-->
+	</div>
+</div>
+<div class = 'row' id = 'id_divFirstDepositProfitsGraph'  style='display: none;'>
+	<div class="col-md-12">
+		<!-- BEGIN CHART PORTLET-->
+		<div class="portlet light bordered" style = 'background-color: #3e3e3e;'>
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-bar-chart font-green-haze"></i>
+					<span class="caption-subject bold uppercase font-green-haze">{{=it.translation['admin_statistics_commissionfromfunding']}}</span>
+				</div>
+				<div class="tools">
+					<a class="collapse">
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div id="id_divFirstDepositProfitChart" class = 'class_chartCustom' style = 'background-color: #3e3e3e;  color:#fff;'></div>
+			</div>
+		</div>
+		<!-- END CHART PORTLET-->
+	</div>
+</div>
+
+<div class = 'row'  id = 'id_divTotalGamesGraph' style='display: none;'>
+	<div class="col-md-12">
+		<!-- BEGIN CHART PORTLET-->
+		<div class="portlet light bordered" style = 'background-color: #3e3e3e;'>
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-bar-chart font-green-haze"></i>
+					<span class="caption-subject bold uppercase font-green-haze">{{=it.translation['admin_statistics_totalgames']}}</span>
+				</div>
+				<div class="tools">
+					<a class="collapse">
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div id="id_divGameChart" class = 'class_chartCustom' style = 'background-color: #3e3e3e;  color:#fff;'></div>
+			</div>
+		</div>
+		<!-- END CHART PORTLET-->
+	</div>
+</div>
+<div class = 'row'  id = 'id_divTotalPlayersGraph' style='display: none;'>
+	<div class="col-md-12">
+		<!-- BEGIN CHART PORTLET-->
+		<div class="portlet light bordered" style = 'background-color: #3e3e3e;'>
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-bar-chart font-green-haze"></i>
+					<span class="caption-subject bold uppercase font-green-haze">{{=it.translation['admin_statistics_totalplayers']}}</span>
+				</div>
+				<div class="tools">
+					<a class="collapse">
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div id="id_divPlayerChart" class = 'class_chartCustom' style = 'background-color: #3e3e3e;  color:#fff;'></div>
+			</div>
+		</div>
+		<!-- END CHART PORTLET-->
+	</div>
+</div>
+<div class = 'row'  id = 'id_divTotalDepositGraph' style='display: none;'>
+	<div class="col-md-12">
+		<!-- BEGIN CHART PORTLET-->
+		<div class="portlet light bordered" style = 'background-color: #3e3e3e;'>
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-bar-chart font-green-haze"></i>
+					<span class="caption-subject bold uppercase font-green-haze">{{=it.translation['admin_statistics_totalplayers']}}</span>
+				</div>
+				<div class="tools">
+					<a class="collapse">
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div id="id_divTotalDepositChart" class = 'class_chartCustom' style = 'background-color: #3e3e3e;  color:#fff;'></div>
+			</div>
+		</div>
+		<!-- END CHART PORTLET-->
+	</div>
+</div>
+<div class = 'row'  id = 'id_divTotalWithdrawGraph' style='display: none;'>
+	<div class="col-md-12">
+		<!-- BEGIN CHART PORTLET-->
+		<div class="portlet light bordered" style = 'background-color: #3e3e3e;'>
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-bar-chart font-green-haze"></i>
+					<span class="caption-subject bold uppercase font-green-haze">Total Deposit</span>
+				</div>
+				<div class="tools">
+					<a class="collapse">
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div id="id_divTotalWithdrawChart" class = 'class_chartCustom' style = 'background-color: #3e3e3e;  color:#fff;'></div>
+			</div>
+		</div>
+		<!-- END CHART PORTLET-->
+	</div>
+</div>
+
+{{?}}
+
+<div id="handheld-detection"></div>
+
+{{?it.enginehost}}
+<div id="id_divEngineHost" hidden="true">{{=it.enginehost}}</div>
+{{?}}
+
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/vendor/datepicker/bootstrap-datepicker.js"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="/vendor/amcharts/amcharts.js"></script>
+<script src="/vendor/amcharts/serial.js"></script>
+<script src="/vendor/amcharts/plugins/export/export.min.js"></script>
+<script src="/vendor/amcharts/themes/dark.js"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js" type="text/javascript"></script>
+
+<!--<script data-main="/scripts/statistics_main" src="/node_modules/requirejs/require.js"></script>-->
+
+<script>
+
+	var companyProfitChartData = {{?it.statistics}}{{=JSON.stringify(it.statistics.dailyCompanyProfitList)}}{{??}}[]{{?}}, companyProfitChart;
+	var volumeChartData = {{?it.statistics}}{{=JSON.stringify(it.statistics.dailyVolumeList)}}{{??}}[]{{?}}, volumeChart;
+    var extraBetChartData = {{?it.statistics}}{{=JSON.stringify(it.statistics.dailyExtraBetList)}}{{??}}[]{{?}}, extraBetChart;
+
+	var netProfitChartData = {{?it.statistics}}{{=JSON.stringify(it.statistics.dailyNetProfitList)}}{{??}}[]{{?}}, netProfitChart;
+    var grossProfitChartData = {{?it.statistics}}{{=JSON.stringify(it.statistics.dailyGrossProfitList)}}{{??}}[]{{?}}, grossProfitChart;
+    var agentProfitChartData = {{?it.statistics}}{{=JSON.stringify(it.statistics.dailyAgentProfitList)}}{{??}}[]{{?}}, agentProfitChart;
+
+    var welcomeFreeBitChartData = {{?it.statistics}}{{=JSON.stringify(it.statistics.dailyWelcomeFreeBitList)}}{{??}}[]{{?}}, welcomeFreeBitChart;
+    var playTimesProfitChartData = {{?it.statistics}}{{=JSON.stringify(it.statistics.dailyPlayTimesProfitList)}}{{??}}[]{{?}}, playTimesProfitChart;
+    var firstDepositProfitChartData = {{?it.statistics}}{{=JSON.stringify(it.statistics.dailyFirstDepositProfitList)}}{{??}}[]{{?}}, firstDepositProfitChart;
+
+    var playerChartData = {{?it.statistics}}{{=JSON.stringify(it.statistics.dailyPlayerList)}}{{??}}[]{{?}}, playerChart;
+    var gameChartData = {{?it.statistics}}{{=JSON.stringify(it.statistics.dailyGameList)}}{{??}}[]{{?}}, gameChart;
+    var depositChartData = {{?it.statistics}}{{=JSON.stringify(it.statistics.dailyDepositList)}}{{??}}[]{{?}}, depositChart;
+    var withdrawChartData = {{?it.statistics}}{{=JSON.stringify(it.statistics.dailyWithdrawList)}}{{??}}[]{{?}}, withdrawChart;
+
+
+    jQuery(document).ready(function() {
+        Metronic.init();
+        Layout.init();
+
+        var timezone = jstz.determine();
+        $("#time_zone_name").val(timezone.name());
+
+        $('#id_date_from').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+
+        $('#id_date_to').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+
+        $(document).on('click', '#id_btnView', function() {
+            $("#id_formDateRange").submit();
+        });
+
+        $(document).on('click', '.more', function() {
+            var target = $(this).attr('target');
+            $("#" + target).toggle();
+
+            $(this).children().eq(0).toggle();
+            $(this).children().eq(1).toggle();
+            $(this).children().eq(2).toggle();
+            $(this).children().eq(3).toggle();
+        });
+
+        if(companyProfitChartData.length != 0) {
+            companyProfitChart = AmCharts.makeChart("id_divCompanyProfitChart", {
+                "type": "serial",
+                "theme": "dark	",
+                "marginRight": 80,
+                "marginTop": 17,
+                "autoMarginOffset": 20,
+                "dataProvider": companyProfitChartData,
+                "valueAxes": [{
+                    "logarithmic": false,
+                    "dashLength": 1,
+                    "guides": [{
+                        "dashLength": 6,
+                        "inside": true,
+                        "label": "average",
+                        "lineAlpha": 1,
+                        "value": 90.4
+                    }],
+                    "position": "left"
+                }],
+                "graphs": [{
+                    "bullet": "round",
+                    "id": "g1",
+                    "bulletBorderAlpha": 1,
+                    "bulletColor": "#FFFFFF",
+                    "bulletSize": 7,
+                    "lineThickness": 2,
+                    "title": "Price",
+                    "type": "smoothedLine",
+                    "useLineColorForBulletBorder": true,
+                    "valueField": "profit",
+                    "balloonText": "[[value]]",
+                }],
+                "chartScrollbar": {},
+                "chartCursor": {
+                    "valueLineEnabled": true,
+                    "valueLineBalloonEnabled": true,
+                    "valueLineAlpha": 0.5,
+                    "fullWidth": true,
+                    "cursorAlpha": 0.05
+                },
+                "dataDateFormat": "YYYY-MM",
+                "categoryField": "created_date",
+                "categoryAxis": {
+                    "parseDates": false
+                },
+                "export": {
+                    "enabled": false
+                }
+            });
+            companyProfitChart.addListener('dateUpdated', zoomCompanyProfitChart);
+        }
+
+        if(volumeChartData.length != 0) {
+            volumeChart = AmCharts.makeChart("id_divVolumeChart", {
+                "type": "serial",
+                "theme": "dark",
+                "marginRight": 80,
+                "dataProvider": volumeChartData,
+                "balloon": {
+                    "cornerRadius": 6,
+                    "horizontalPadding": 15,
+                    "verticalPadding": 10
+                },
+                "valueAxes": [{
+                    "axisAlpha": 0
+                }],
+                "graphs": [{
+                    "bullet": "square",
+                    "bulletBorderAlpha": 1,
+                    "bulletBorderThickness": 1,
+                    "fillAlphas": 0.3,
+                    "legendValueText": "[[value]]",
+                    "title": "duration",
+                    "valueField": "value"
+                }],
+                "chartScrollbar": {},
+                "chartCursor": {
+                    "categoryBalloonDateFormat": "YYYY MMM DD",
+                    "cursorAlpha": 0,
+                    "fullWidth": true
+                },
+                "dataDateFormat": "YYYY-MM-DD",
+                "categoryField": "created_date",
+                "categoryAxis": {
+                    "dateFormats": [{
+                        "period": "DD",
+                        "format": "DD"
+                    }, {
+                        "period": "WW",
+                        "format": "MMM DD"
+                    }, {
+                        "period": "MM",
+                        "format": "MMM"
+                    }, {
+                        "period": "YYYY",
+                        "format": "YYYY"
+                    }],
+                    "parseDates": false,
+                    "autoGridCount": false,
+                    "axisColor": "#555555",
+                    "gridAlpha": 0,
+                    "gridCount": 50
+                },
+                "export": {
+                    "enabled": false
+                }
+            });
+            volumeChart.addListener("dataUpdated", zoomVolumeChart);
+        }
+
+        if(extraBetChartData.length != 0) {
+            extraBetChart = AmCharts.makeChart("id_divExtraBetChart", {
+                "type": "serial",
+                "theme": "dark",
+                "marginRight": 80,
+                "dataProvider": extraBetChartData,
+                "balloon": {
+                    "cornerRadius": 6,
+                    "horizontalPadding": 15,
+                    "verticalPadding": 10
+                },
+                "valueAxes": [{
+                    "axisAlpha": 0
+                }],
+                "graphs": [{
+                    "bullet": "square",
+                    "bulletBorderAlpha": 1,
+                    "bulletBorderThickness": 1,
+                    "fillAlphas": 0.3,
+                    "legendValueText": "[[value]]",
+                    "title": "duration",
+                    "valueField": "value"
+                }],
+                "chartScrollbar": {},
+                "chartCursor": {
+                    "categoryBalloonDateFormat": "YYYY MMM DD",
+                    "cursorAlpha": 0,
+                    "fullWidth": true
+                },
+                "dataDateFormat": "YYYY-MM-DD",
+                "categoryField": "created_date",
+                "categoryAxis": {
+                    "dateFormats": [{
+                        "period": "DD",
+                        "format": "DD"
+                    }, {
+                        "period": "WW",
+                        "format": "MMM DD"
+                    }, {
+                        "period": "MM",
+                        "format": "MMM"
+                    }, {
+                        "period": "YYYY",
+                        "format": "YYYY"
+                    }],
+                    "parseDates": false,
+                    "autoGridCount": false,
+                    "axisColor": "#555555",
+                    "gridAlpha": 0,
+                    "gridCount": 50
+                },
+                "export": {
+                    "enabled": false
+                }
+            });
+            extraBetChart.addListener("dataUpdated", zoomExtraBetChart);
+        }
+
+        if(netProfitChartData.length != 0) {
+            netProfitChart = AmCharts.makeChart("id_divNetProfitChart", {
+                "type": "serial",
+                "theme": "dark",
+                "marginRight": 80,
+                "autoMarginOffset": 20,
+                "marginTop": 7,
+                "dataProvider": netProfitChartData,
+                "valueAxes": [{
+                    "axisAlpha": 0.2,
+                    "dashLength": 1,
+                    "position": "left"
+                }],
+                "mouseWheelZoomEnabled": true,
+                "graphs": [{
+                    "id": "g1",
+                    "balloonText": "[[value]]",
+                    "bullet": "round",
+                    "bulletBorderAlpha": 1,
+                    "bulletColor": "#FFFFFF",
+                    "hideBulletsCount": 50,
+                    "title": "red line",
+                    "valueField": "value",
+                    "useLineColorForBulletBorder": true,
+                    "balloon": {
+                        "drop": true
+                    }
+                }],
+                "chartScrollbar": {
+                    "autoGridCount": true,
+                    "graph": "g1",
+                    "scrollbarHeight": 40
+                },
+                "chartCursor": {
+                    "limitToGraph": "g1"
+                },
+                "categoryField": "created_date",
+                "categoryAxis": {
+                    "parseDates": false,
+                    "axisColor": "#DADADA",
+                    "dashLength": 1,
+                    "minorGridEnabled": true
+                },
+                "export": {
+                    "enabled": false
+                }
+            });
+            netProfitChart.addListener("rendered", zoomNetProfitChart);
+        }
+
+        if(grossProfitChartData.length != 0) {
+            grossProfitChart = AmCharts.makeChart("id_divGrossProfitChart", {
+                "type": "serial",
+                "theme": "dark",
+                "marginRight": 80,
+                "autoMarginOffset": 20,
+                "marginTop": 7,
+                "dataProvider": grossProfitChartData,
+                "valueAxes": [{
+                    "axisAlpha": 0.2,
+                    "dashLength": 1,
+                    "position": "left"
+                }],
+                "mouseWheelZoomEnabled": true,
+                "graphs": [{
+                    "id": "g1",
+                    "balloonText": "[[value]]",
+                    "bullet": "round",
+                    "bulletBorderAlpha": 1,
+                    "bulletColor": "#FFFFFF",
+                    "hideBulletsCount": 50,
+                    "title": "red line",
+                    "valueField": "profit",
+                    "useLineColorForBulletBorder": true,
+                    "balloon": {
+                        "drop": true
+                    }
+                }],
+                "chartScrollbar": {
+                    "autoGridCount": true,
+                    "graph": "g1",
+                    "scrollbarHeight": 40
+                },
+                "chartCursor": {
+                    "limitToGraph": "g1"
+                },
+                "categoryField": "created_date",
+                "categoryAxis": {
+                    "parseDates": false,
+                    "axisColor": "#DADADA",
+                    "dashLength": 1,
+                    "minorGridEnabled": true
+                },
+                "export": {
+                    "enabled": false
+                }
+            });
+            grossProfitChart.addListener("rendered", zoomGrossProfitChart);
+        }
+
+        if(agentProfitChartData.length != 0) {
+            agentProfitChart = AmCharts.makeChart("id_divAgentProfitChart", {
+                "type": "serial",
+                "theme": "dark",
+                "marginRight": 80,
+                "autoMarginOffset": 20,
+                "marginTop": 7,
+                "dataProvider": agentProfitChartData,
+                "valueAxes": [{
+                    "axisAlpha": 0.2,
+                    "dashLength": 1,
+                    "position": "left"
+                }],
+                "mouseWheelZoomEnabled": true,
+                "graphs": [{
+                    "id": "g1",
+                    "balloonText": "[[value]]",
+                    "bullet": "round",
+                    "bulletBorderAlpha": 1,
+                    "bulletColor": "#FFFFFF",
+                    "hideBulletsCount": 50,
+                    "title": "red line",
+                    "valueField": "value",
+                    "useLineColorForBulletBorder": true,
+                    "balloon": {
+                        "drop": true
+                    }
+                }],
+                "chartScrollbar": {
+                    "autoGridCount": true,
+                    "graph": "g1",
+                    "scrollbarHeight": 40
+                },
+                "chartCursor": {
+                    "limitToGraph": "g1"
+                },
+                "categoryField": "created_date",
+                "categoryAxis": {
+                    "parseDates": false,
+                    "axisColor": "#DADADA",
+                    "dashLength": 1,
+                    "minorGridEnabled": true
+                },
+                "export": {
+                    "enabled": false
+                }
+            });
+            agentProfitChart.addListener("rendered", zoomAgentProfitChart);
+        }
+
+        if(welcomeFreeBitChartData.length != 0) {
+            welcomeFreeBitChart = AmCharts.makeChart("id_divWelcomeFreeBitChart", {
+                "type": "serial",
+                "theme": "dark",
+                "marginRight": 80,
+                "autoMarginOffset": 20,
+                "marginTop": 7,
+                "dataProvider": welcomeFreeBitChartData,
+                "valueAxes": [{
+                    "axisAlpha": 0.2,
+                    "dashLength": 1,
+                    "position": "left"
+                }],
+                "mouseWheelZoomEnabled": true,
+                "graphs": [{
+                    "id": "g1",
+                    "balloonText": "[[value]]",
+                    "bullet": "round",
+                    "bulletBorderAlpha": 1,
+                    "bulletColor": "#FFFFFF",
+                    "hideBulletsCount": 50,
+                    "title": "red line",
+                    "valueField": "value",
+                    "useLineColorForBulletBorder": true,
+                    "balloon": {
+                        "drop": true
+                    }
+                }],
+                "chartScrollbar": {
+                    "autoGridCount": true,
+                    "graph": "g1",
+                    "scrollbarHeight": 40
+                },
+                "chartCursor": {
+                    "limitToGraph": "g1"
+                },
+                "categoryField": "created_date",
+                "categoryAxis": {
+                    "parseDates": false,
+                    "axisColor": "#DADADA",
+                    "dashLength": 1,
+                    "minorGridEnabled": true
+                },
+                "export": {
+                    "enabled": false
+                }
+            });
+            welcomeFreeBitChart.addListener("rendered", zoomWelcomeFreeBitChart);
+        }
+
+        if(playTimesProfitChartData.length != 0) {
+            playTimesProfitChart = AmCharts.makeChart("id_divPlayTimesProfitChart", {
+                "type": "serial",
+                "theme": "dark",
+                "marginRight": 80,
+                "autoMarginOffset": 20,
+                "marginTop": 7,
+                "dataProvider": playTimesProfitChartData,
+                "valueAxes": [{
+                    "axisAlpha": 0.2,
+                    "dashLength": 1,
+                    "position": "left"
+                }],
+                "mouseWheelZoomEnabled": true,
+                "graphs": [{
+                    "id": "g1",
+                    "balloonText": "[[value]]",
+                    "bullet": "round",
+                    "bulletBorderAlpha": 1,
+                    "bulletColor": "#FFFFFF",
+                    "hideBulletsCount": 50,
+                    "title": "red line",
+                    "valueField": "value",
+                    "useLineColorForBulletBorder": true,
+                    "balloon": {
+                        "drop": true
+                    }
+                }],
+                "chartScrollbar": {
+                    "autoGridCount": true,
+                    "graph": "g1",
+                    "scrollbarHeight": 40
+                },
+                "chartCursor": {
+                    "limitToGraph": "g1"
+                },
+                "categoryField": "created_date",
+                "categoryAxis": {
+                    "parseDates": false,
+                    "axisColor": "#DADADA",
+                    "dashLength": 1,
+                    "minorGridEnabled": true
+                },
+                "export": {
+                    "enabled": false
+                }
+            });
+            playTimesProfitChart.addListener("rendered", zoomPlayTimesProfitChart);
+        }
+
+        if(firstDepositProfitChartData.length != 0) {
+            firstDepositProfitChart = AmCharts.makeChart("id_divFirstDepositProfitChart", {
+                "type": "serial",
+                "theme": "dark",
+                "marginRight": 80,
+                "autoMarginOffset": 20,
+                "marginTop": 7,
+                "dataProvider": firstDepositProfitChartData,
+                "valueAxes": [{
+                    "axisAlpha": 0.2,
+                    "dashLength": 1,
+                    "position": "left"
+                }],
+                "mouseWheelZoomEnabled": true,
+                "graphs": [{
+                    "id": "g1",
+                    "balloonText": "[[value]]",
+                    "bullet": "round",
+                    "bulletBorderAlpha": 1,
+                    "bulletColor": "#FFFFFF",
+                    "hideBulletsCount": 50,
+                    "title": "red line",
+                    "valueField": "value",
+                    "useLineColorForBulletBorder": true,
+                    "balloon": {
+                        "drop": true
+                    }
+                }],
+                "chartScrollbar": {
+                    "autoGridCount": true,
+                    "graph": "g1",
+                    "scrollbarHeight": 40
+                },
+                "chartCursor": {
+                    "limitToGraph": "g1"
+                },
+                "categoryField": "created_date",
+                "categoryAxis": {
+                    "parseDates": false,
+                    "axisColor": "#DADADA",
+                    "dashLength": 1,
+                    "minorGridEnabled": true
+                },
+                "export": {
+                    "enabled": false
+                }
+            });
+            firstDepositProfitChart.addListener("rendered", zoomfirstDepositProfitChart);
+        }
+
+        if(gameChartData.length != 0) {
+            gameChart = AmCharts.makeChart("id_divGameChart", {
+                "type": "serial",
+                "theme": "dark",
+                "marginRight": 80,
+                "autoMarginOffset": 20,
+                "marginTop": 7,
+                "dataProvider": gameChartData,
+                "valueAxes": [{
+                    "axisAlpha": 0.2,
+                    "dashLength": 1,
+                    "position": "left"
+                }],
+                "mouseWheelZoomEnabled": true,
+                "graphs": [{
+                    "id": "g1",
+                    "balloonText": "[[value]]",
+                    "bullet": "round",
+                    "bulletBorderAlpha": 1,
+                    "bulletColor": "#FFFFFF",
+                    "hideBulletsCount": 50,
+                    "title": "red line",
+                    "valueField": "value",
+                    "useLineColorForBulletBorder": true,
+                    "balloon": {
+                        "drop": true
+                    }
+                }],
+                "chartScrollbar": {
+                    "autoGridCount": true,
+                    "graph": "g1",
+                    "scrollbarHeight": 40
+                },
+                "chartCursor": {
+                    "limitToGraph": "g1"
+                },
+                "categoryField": "created_date",
+                "categoryAxis": {
+                    "parseDates": false,
+                    "axisColor": "#DADADA",
+                    "dashLength": 1,
+                    "minorGridEnabled": true
+                },
+                "export": {
+                    "enabled": false
+                }
+            });
+            gameChart.addListener("rendered", zoomGameChart);
+        }
+
+        if(playerChartData.length != 0) {
+            playerChart = AmCharts.makeChart("id_divPlayerChart", {
+                "type": "serial",
+                "theme": "dark",
+                "marginRight": 80,
+                "autoMarginOffset": 20,
+                "marginTop": 7,
+                "dataProvider": playerChartData,
+                "valueAxes": [{
+                    "axisAlpha": 0.2,
+                    "dashLength": 1,
+                    "position": "left"
+                }],
+                "mouseWheelZoomEnabled": true,
+                "graphs": [{
+                    "id": "g1",
+                    "balloonText": "[[value]]",
+                    "bullet": "round",
+                    "bulletBorderAlpha": 1,
+                    "bulletColor": "#FFFFFF",
+                    "hideBulletsCount": 50,
+                    "title": "red line",
+                    "valueField": "value",
+                    "useLineColorForBulletBorder": true,
+                    "balloon": {
+                        "drop": true
+                    }
+                }],
+                "chartScrollbar": {
+                    "autoGridCount": true,
+                    "graph": "g1",
+                    "scrollbarHeight": 40
+                },
+                "chartCursor": {
+                    "limitToGraph": "g1"
+                },
+                "categoryField": "created_date",
+                "categoryAxis": {
+                    "parseDates": false,
+                    "axisColor": "#DADADA",
+                    "dashLength": 1,
+                    "minorGridEnabled": true
+                },
+                "export": {
+                    "enabled": false
+                }
+            });
+            playerChart.addListener("rendered", zoomPlayerChart);
+        }
+
+        if(depositChartData.length != 0) {
+            depositChart = AmCharts.makeChart("id_divDepositChart", {
+                "type": "serial",
+                "theme": "dark",
+                "marginRight": 80,
+                "autoMarginOffset": 20,
+                "marginTop": 7,
+                "dataProvider": depositChartData,
+                "valueAxes": [{
+                    "axisAlpha": 0.2,
+                    "dashLength": 1,
+                    "position": "left"
+                }],
+                "mouseWheelZoomEnabled": true,
+                "graphs": [{
+                    "id": "g1",
+                    "balloonText": "[[value]]",
+                    "bullet": "round",
+                    "bulletBorderAlpha": 1,
+                    "bulletColor": "#FFFFFF",
+                    "hideBulletsCount": 50,
+                    "title": "red line",
+                    "valueField": "value",
+                    "useLineColorForBulletBorder": true,
+                    "balloon": {
+                        "drop": true
+                    }
+                }],
+                "chartScrollbar": {
+                    "autoGridCount": true,
+                    "graph": "g1",
+                    "scrollbarHeight": 40
+                },
+                "chartCursor": {
+                    "limitToGraph": "g1"
+                },
+                "categoryField": "created_date",
+                "categoryAxis": {
+                    "parseDates": false,
+                    "axisColor": "#DADADA",
+                    "dashLength": 1,
+                    "minorGridEnabled": true
+                },
+                "export": {
+                    "enabled": false
+                }
+            });
+        }
+
+        if(withdrawChartData.length != 0) {
+            withdrawChart = AmCharts.makeChart("id_divWithdrawChart", {
+                "type": "serial",
+                "theme": "dark",
+                "marginRight": 80,
+                "autoMarginOffset": 20,
+                "marginTop": 7,
+                "dataProvider": withdrawChartData,
+                "valueAxes": [{
+                    "axisAlpha": 0.2,
+                    "dashLength": 1,
+                    "position": "left"
+                }],
+                "mouseWheelZoomEnabled": true,
+                "graphs": [{
+                    "id": "g1",
+                    "balloonText": "[[value]]",
+                    "bullet": "round",
+                    "bulletBorderAlpha": 1,
+                    "bulletColor": "#FFFFFF",
+                    "hideBulletsCount": 50,
+                    "title": "red line",
+                    "valueField": "value",
+                    "useLineColorForBulletBorder": true,
+                    "balloon": {
+                        "drop": true
+                    }
+                }],
+                "chartScrollbar": {
+                    "autoGridCount": true,
+                    "graph": "g1",
+                    "scrollbarHeight": 40
+                },
+                "chartCursor": {
+                    "limitToGraph": "g1"
+                },
+                "categoryField": "created_date",
+                "categoryAxis": {
+                    "parseDates": false,
+                    "axisColor": "#DADADA",
+                    "dashLength": 1,
+                    "minorGridEnabled": true
+                },
+                "export": {
+                    "enabled": false
+                }
+            });
+        }
+
+    });
+
+	function zoomCompanyProfitChart() {
+	}
+	function zoomVolumeChart() {
+	}
+    function zoomExtraBetChart() {
+    }
+    function zoomGrossProfitChart() {
+    }
+	function zoomNetProfitChart() {
+	}
+    function zoomAgentProfitChart() {
+    }
+    function zoomWelcomeFreeBitChart() {
+    }
+    function zoomPlayTimesProfitChart() {
+    }
+    function zoomfirstDepositProfitChart() {
+    }
+    function zoomGameChart() {
+    }
+    function zoomPlayerChart() {
+    }
+</script>
+<!-- END JAVASCRIPTS -->
+#}}
+{{#def.include('./template/main_admin')}}

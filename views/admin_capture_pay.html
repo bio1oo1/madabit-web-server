@@ -1,0 +1,354 @@
+
+{{##def.content:
+<style>
+	.no-control {
+		border: none;
+		text-align: center;
+		cursor: default !important;
+		background: none !important;
+	}
+
+	.class_divLine {
+		margin: 1px;
+	}
+
+	tbody tr:nth-child(even) {
+		background: #5a5a5a;
+	}
+
+	.class_selectUser option {
+		background-color : #363c46;
+	}
+
+	.class_selectType option {
+		background-color : #363c46;
+	}
+
+	.table th, .table td {
+		text-align: center;
+		font-size: 14px !important;
+		padding: 0;
+	}
+
+	@media screen and (max-width: 480px) {
+		.table th, .table td {
+			text-align: center;
+			font-size: 10px !important;
+			padding: 0;
+		}
+
+		.table-parent-div {
+			padding: 0;
+			width: 107%;
+			margin-left: -8px;
+		}
+
+		.class_hiddenInMobile {
+			display: none;
+		}
+	}
+</style>
+<!-- BEGIN PAGE HEADER-->
+<h1 style="text-align: center; margin-bottom: 30px;">
+	{{=it.translation['admin_menu_capture_pay']}}
+</h1>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class = 'row' align="center" style="margin-bottom: 10px; display: none;" id = 'id_divTopup888Link'>
+	<a id = 'id_linkLoginTopup888' style="font-weight: 600; font-size: 20px; color: #b92525; text-decoration: none;">{{=it.translation.admin_capture_pay_logintoup888}}</a>
+</div>
+<div class="row" style="text-align: center; display: none;" id = 'id_divDeposit'>
+	<div class="col-md-2" ></div>
+	<div class="col-md-8" >
+		<div class="portlet box blue">
+			<div class="portlet-body" style="background-color: #3e3e3e;color: #fff;">
+
+				<div class = 'row class_controlHeader' align = 'center'>
+					<div class='col-md-12'>
+						<input type = 'text' class = 'form-control input-inline input-small no-control' readonly value = "{{=it.translation['global_username']}}" placeholder = '{{=it.translation["admin_capture_pay_username"]}}'/>
+						<input type = 'text' class = 'form-control input-inline input-small no-control' readonly value = "{{=it.translation['admin_capture_pay_type']}}" placeholder="{{=it.translation['admin_capture_pay_type']}}" style='display:none;'/>
+						<input type = 'text' class = 'form-control input-inline input-small no-control' readonly value = "{{=it.translation['admin_capture_pay_amount']}}" placeholder="{{=it.translation['admin_capture_pay_amount']}}({{=it.translation.miscellaneous3}})"/>
+						<input type = 'button' class = 'btn blue input-inline input-small' style = 'width:100px !important; margin-left:10px; margin-top:-1px; background: none;box-shadow: none !important;' value = "" />
+					</div>
+				</div>
+				<div class = 'row class_controlHeader' align = 'center'>
+					<div class='col-md-12'>
+						<select class = 'form-control input-inline input-small class_selectUser' style = 'margin-top:-1px;' name="user" id="user">
+							{{~it.cp_users :cp_user:index}}
+							<option value = '{{=cp_user.username}}'>{{=cp_user.username}}</option>
+							{{~}}
+						</select>
+						<select class = 'form-control input-inline input-small class_selectType' style = 'margin-top:-1px;display:none;' name="type" id="type">
+							{{~it.cp_types :cp_type:index}}
+							<option value = '{{=cp_type.cp_type}}'>{{=cp_type.cp_type}}</option>
+							{{~}}
+						</select>
+						<input type = 'number' class = 'form-control input-inline input-small' min=1 step=1 id='id_amount'/>
+						<input type = 'button' class = 'btn blue input-inline input-small' style = 'width:100px !important; margin-left:10px; margin-top: -2px;' id='id_btnDeposit' value = "{{=it.translation['admin_capture_pay_deposit']}}" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<form action = 'http://www.topup888.com/login' method='post' target= '_blank' id= 'id_formTopup888' style="display: none">
+			<input type = 'hidden' name = 'user_id' value = '{{=it.user.id}}' id = 'id_userIdForTopup'>
+			<input type = 'hidden' name = 'username' value = '{{=it.user.username}}' id = 'id_usernameForTopup'>
+			<input type = 'hidden' name = 'balance' value = '0' id = 'id_balanceForTopup'>
+			<input type = 'hidden' name = 'admin' value = '{{=it.user.admin}}'>
+			<input type = 'hidden' name = 'clang' value = '{{=it.translation.language_for}}'>
+		</form>
+	</div>
+	<div class="col-md-2" ></div>
+</div>
+<div class = 'row'>
+	<div class = 'col-md-4'></div>
+	<div class = 'col-md-4'>
+		<form action="#" class="form-horizontal" style="margin-bottom:10px;">
+			<div class="form-body" id = 'id_divUnlockPassword'>
+				<div class="form-group" style="margin-bottom:10px;">
+					<label class="col-md-4 control-label">{{=it.translation.global_password}}</label>
+					<div class="col-md-4">
+						<input type="password" class="form-control input" id='id_inputCurrentPassword'>
+					</div>
+					<div class = 'col-md-4'>
+						<button type="button" class="btn blue" style = 'width: 100%;' id='id_btnUnlockPassword'>{{=it.translation.admin_capture_pay_unlock}}</button>
+					</div>
+				</div>
+			</div>
+			<div class="form-body class_divChangePassword" style = 'display: none;'>
+				<div class="form-group" style="margin-bottom:10px;">
+					<label class="col-md-4 control-label">{{=it.translation.security_password_newpassword}}</label>
+					<div class="col-md-4">
+						<input type="password" class="form-control input" id='id_inputNewPassword'>
+					</div>
+				</div>
+			</div>
+			<div class="form-body class_divChangePassword" style= 'display: none;'>
+				<div class="form-group" style="margin-bottom:10px;">
+					<label class="col-md-4 control-label">{{=it.translation.security_password_confirmpassword}}</label>
+					<div class="col-md-4">
+						<input type="password" class="form-control input" id='id_inputConfirmPassword'>
+					</div>
+					<div class = 'col-md-4'>
+						<button type="button" class="btn blue" style = 'width: 100%;' id='id_btnUpdatePassword'>{{=it.translation.security_password_change}}</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class='row' style="padding-right:20px; padding-left:20px; display: none;" id = 'id_divHistory'>
+	{{?it.cp_history.length > 0}}
+	<table class="table table-hover" style="margin-top: 40px;">
+		<thead style = 'color:#fefefe;'>
+		<tr>
+			<th>{{=it.translation['global_username']}}</th>
+			<th>{{=it.translation['deposit_table_header_amounts']}}</th>
+			<th>{{=it.translation['deposit_table_header_created']}}</th>
+		</tr>
+		</thead>
+		<tbody id = 'id_tbodyHistory'>
+		{{~it.cp_history :deposit:index}}
+		<tr>
+			<td>{{=deposit.username}}</td>
+			<td>{{#def.format: {n: deposit.amount, decimals: 2 } }}</td>
+			<td class="show-for-medium-up" style="text-align: center;">
+				{{#def.date_format:{created:deposit.created_timezone} }}
+			</td>
+		</tr>
+		{{~}}
+		</tbody>
+	</table>
+	{{??}}
+	<br />
+	<p style = 'margin-left : 15px; font-size:18px;'>{{=it.translation['deposit_nodeposit']}}</p>
+	{{?}}
+</div>
+
+<div id="handheld-detection"></div>
+
+{{?it.enginehost}}
+<div id="id_divEngineHost" hidden="true">{{=it.enginehost}}</div>
+{{?}}
+
+<!-- BEGIN TOASTR -->
+<script src="/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/pages/scripts/ui-toastr.js" type="text/javascript"></script>
+<!-- END TOASTR -->
+
+<!-- END PAGE CONTENT-->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/metronic/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+<script>
+var isUnlock = false;
+jQuery(document).ready(function() {
+	Metronic.init();
+	Layout.init();
+
+	toastr.options = {
+		"closeButton": true,
+		"debug": false,
+		"positionClass": "toast-top-right",
+		"onclick": null,
+		"showDuration": "1000",
+		"hideDuration": "1000",
+		"timeOut": "5000",
+		"extendedTimeOut": "2000",
+		"showEasing": "swing",
+		"hideEasing": "linear",
+		"showMethod": "fadeIn",
+		"hideMethod": "fadeOut"
+	};
+
+    $(document).on('click', '#id_btnDeposit', function() {
+        if(isUnlock !== true)
+            return;
+
+        var strUser = $('select[name=user]').val();
+        var strType = $('select[name=type]').val();
+        var strAmount = $('#id_amount').val();
+
+        if (strUser === '' || strUser === undefined)
+		{
+            toastr['warning']('{{=it.translation.admin_capture_pay_alert_1}}');
+            return;
+		}
+
+        if (strType === '' || strType === undefined)
+        {
+            toastr['warning']('{{=it.translation.admin_capture_pay_alert_2}}');
+            return;
+        }
+
+        if (strAmount === '' || strAmount === undefined)
+        {
+            toastr['warning']('{{=it.translation.admin_capture_pay_alert_3}}');
+            return;
+        }
+
+        var data = {};
+        data['user'] = strUser;
+        data['type'] = strType;
+        data['amount'] = strAmount;
+
+        $.post("/depositCapturePay", { cpPayInfo : data }, function(result) {
+        	if (result === 'failed') {
+                toastr['warning']('{{=it.translation.admin_capture_pay_alert_5}}');
+                return;
+            }
+			var current_time = new Date();
+        	var current_locale_date_str = current_time.toLocaleDateString();
+
+            function pad(n) {return n < 10 ? "0"+n : n;}
+            var current_locale_date_str = current_locale_date_str.split('/')[2] + '-' + pad(current_locale_date_str.split('/')[0]) + '-' + pad(current_locale_date_str.split('/')[1]);
+
+        	var tbodyChildrenCount = $("#id_tbodyHistory").children().length;
+
+			var str_element = 	'<tr>' +
+								'<td>' + result.username + '</td>' +
+								'<td>' + (result.amount/100.0).toFixed(2) + '</td>' +
+								'<td class="show-for-medium-up" style="text-align: center;">' + current_locale_date_str + ' ' + current_time.toLocaleTimeString('it-IT') + '</td>' +
+								'</tr>';
+			$(str_element).prependTo("#id_tbodyHistory");
+            toastr['success']('{{=it.translation.admin_capture_pay_alert_4}}');
+
+            $('#id_amount').val('');
+        });
+    });
+
+    $(document).on('click', '#id_linkLoginTopup888', function() {
+        if(isUnlock !== true)
+            return;
+		$('#id_formTopup888').submit();
+	});
+
+    $(document).on('click', '#id_btnUnlockPassword', function() {
+        var current_password = $("#id_inputCurrentPassword").val();
+        if(current_password == '')
+            return;
+
+        $.post('/capturePayUnlockPassword', {
+            current_password: current_password
+        }, function(result) {
+            if(result == false) {
+                $("#id_inputCurrentPassword").val('');
+                toastr['warning']('{{=it.translation.user_warning6}}');
+                return;
+			}
+            $('#id_btnUnlockPassword').parent().parent().parent().hide();
+            $("#id_divTopup888Link").show();
+            $("#id_divDeposit").show();
+            $(".class_divChangePassword").show();
+            $("#id_divHistory").show();
+            isUnlock = true;
+		});
+	});
+
+    $(document).on('click', '#id_btnUpdatePassword', function() {
+        if(isUnlock !== true)
+            return;
+
+        var new_password = $("#id_inputNewPassword").val();
+        var confirm_password = $("#id_inputConfirmPassword").val();
+        if(new_password == '' || new_password != confirm_password) {
+            $("#id_inputNewPassword").val('');
+            $("#id_inputConfirmPassword").val('');
+            toastr['warning']('{{=it.translation.register_retypeyourpassword}}');
+            return;
+		}
+
+        $.post('/capturePayUpdatePassword', {
+            new_password: new_password
+        }, function(result) {
+            if(result == false) {
+                toastr['warning']('{{=it.translation.admin_capture_pay_alert_6}}');
+                return;
+            }
+            $("#id_inputNewPassword").val('');
+            $("#id_inputConfirmPassword").val('');
+            toastr['success']('{{=it.translation.admin_capture_pay_alert_7}}');
+        })
+    });
+
+    $('#id_inputCurrentPassword').keypress(function(e) {
+        if (e.which == 13) {
+            $("#id_btnUnlockPassword").click();
+        }
+    });
+
+    $('#id_inputConfirmPassword').keypress(function(e) {
+        if (e.which == 13) {
+            $("#id_btnUpdatePassword").click();
+        }
+    });
+});
+
+</script>
+<!-- END JAVASCRIPTS -->
+#}}
+{{#def.include('./template/main_admin')}}

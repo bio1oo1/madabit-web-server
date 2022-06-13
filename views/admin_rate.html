@@ -1,0 +1,223 @@
+{{##def.content:
+<style>
+</style>
+<!-- BEGIN PAGE HEADER-->
+<h1 style="text-align: center; margin-bottom: 30px;">
+	{{=it.translation['admin_menu_exchangerate']}}
+</h1>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+
+<div class="row">
+	<div class='col-md-8 col-md-offset-2'>
+		<div class="portlet-body form">
+			<!-- BEGIN FORM-->
+			<form action="#">
+				<div class='row'>
+					<div class = 'col-md-3'>
+						<div class="form-body">
+							<div class="form-group">
+								<!--<label class="control-label">BTC</label>-->
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="1" value = '1' readonly>
+									<span class="input-group-addon" style = 'color: #efefef; border: none; background: #616161;'>{{=it.translation.miscellaneous0}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class ='col-md-1' align = 'center'>
+						<div class="form-body">
+							<div class="form-group">
+								<!--<label class="control-label">BTC</label>-->
+								<label class="control-label" style = 'font-size: 24px; transform: scale(1.5, 1.5);'> = </label>
+							</div>
+						</div>
+					</div>
+					<div class = 'col-md-3'>
+						<div class="form-body">
+							<div class="form-group">
+								<!--<label class="control-label">BTC</label>-->
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="1" value = '{{?it.exchangeRates["rate_USD_bit"]}}{{=it.exchangeRates["rate_USD_bit"]}}{{?}}' id = 'id_inputUSD2Bit'>
+									<span class="input-group-addon" style = 'color: #efefef; border: none; background: #616161;'>{{=it.translation.miscellaneous3}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class='row'>
+					<div class = 'col-md-3'>
+							<div class="form-body">
+								<div class="form-group">
+									<!--<label class="control-label">BTC</label>-->
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="1" value = '1' readonly>
+										<span class="input-group-addon" style = 'color: #efefef; border: none; background: #616161;'>{{=it.translation.miscellaneous1}}</span>
+									</div>
+								</div>
+							</div>
+					</div>
+					<div class ='col-md-1' align = 'center'>
+						<div class="form-body">
+							<div class="form-group">
+								<!--<label class="control-label">BTC</label>-->
+								<label class="control-label" style = 'font-size: 24px; transform: scale(1.5, 1.5);'> = </label>
+							</div>
+						</div>
+					</div>
+					<div class = 'col-md-3'>
+						<div class="form-body">
+							<div class="form-group">
+								<!--<label class="control-label">BTC</label>-->
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="1" value = '{{?it.exchangeRates["rate_BTC_USD"]}}{{=it.exchangeRates["rate_BTC_USD"]}}{{?}}' id = 'id_inputBTC2USD'>
+									<span class="input-group-addon" style = 'color: #efefef; border: none; background: #616161;'>{{=it.translation.miscellaneous0}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class ='col-md-1' align = 'center'>
+						<div class="form-body">
+							<div class="form-group">
+								<!--<label class="control-label">BTC</label>-->
+								<label class="control-label" style = 'font-size: 24px; transform: scale(1.5, 1.5);'> = </label>
+							</div>
+						</div>
+					</div>
+					<div class = 'col-md-4'>
+						<div class="form-body">
+							<div class="form-group">
+								<!--<label class="control-label">BTC</label>-->
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="1" id = 'id_inputBTC2Bit'
+										   value = '{{?it.exchangeRates["rate_BTC_USD"] * it.exchangeRates["rate_USD_bit"]}}{{=it.exchangeRates["rate_BTC_USD"] * it.exchangeRates["rate_USD_bit"]}}{{?}}' readonly>
+									<span class="input-group-addon" style = 'color: #efefef; border: none; background: #616161;'>{{=it.translation.miscellaneous3}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class='row'>
+					<div class = 'col-md-3'>
+						<div class="form-body">
+							<div class="form-group">
+								<!--<label class="control-label">BTC</label>-->
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="1" value = '1' readonly >
+									<span class="input-group-addon" style = 'color: #efefef; border: none; background: #616161;'>{{=it.translation.miscellaneous2}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class ='col-md-1' align = 'center'>
+						<div class="form-body">
+							<div class="form-group">
+								<!--<label class="control-label">BTC</label>-->
+								<label class="control-label" style = 'font-size: 24px; transform: scale(1.5, 1.5);'> = </label>
+							</div>
+						</div>
+					</div>
+					<div class = 'col-md-3'>
+						<div class="form-body">
+							<div class="form-group">
+								<!--<label class="control-label">BTC</label>-->
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="1" value = '{{?it.exchangeRates["rate_ETH_USD"]}}{{=it.exchangeRates["rate_ETH_USD"]}}{{?}}' id = 'id_inputETH2USD'>
+									<span class="input-group-addon" style = 'color: #efefef; border: none; background: #616161;'>{{=it.translation.miscellaneous0}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class ='col-md-1' align = 'center'>
+						<div class="form-body">
+							<div class="form-group">
+								<!--<label class="control-label">BTC</label>-->
+								<label class="control-label" style = 'font-size: 24px; transform: scale(1.5, 1.5);'> = </label>
+							</div>
+						</div>
+					</div>
+					<div class = 'col-md-4'>
+						<div class="form-body">
+							<div class="form-group">
+								<!--<label class="control-label">BTC</label>-->
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="1" id = 'id_inputETH2Bit'
+										   value = '{{?it.exchangeRates["rate_ETH_USD"] * it.exchangeRates["rate_USD_bit"]}}{{=it.exchangeRates["rate_ETH_USD"] * it.exchangeRates["rate_USD_bit"]}}{{?}}' readonly >
+									<span class="input-group-addon" style = 'color: #efefef; border: none; background: #616161;'>{{=it.translation.miscellaneous3}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-actions right">
+					<button type="button" class="btn green" id = 'id_btnSave'}>{{=it.translation['global_save']}}</button>
+				</div>
+			</form>
+			<!-- END FORM-->
+		</div>
+	</div>
+</div>
+<div id="handheld-detection"></div>
+
+{{?it.enginehost}}
+<div id="id_divEngineHost" hidden="true">{{=it.enginehost}}</div>
+{{?}}
+
+<!-- END PAGE CONTENT-->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+<script>
+    jQuery(document).ready(function() {
+        Metronic.init();
+        Layout.init();
+        $(document).on('click', '#id_btnSave', function() {
+            $.post('/saveExchangeRate', {
+				USD_bit : $("#id_inputUSD2Bit").val(),
+				BTC_USD : $("#id_inputBTC2USD").val(),
+				ETH_USD : $("#id_inputETH2USD").val()
+			}, function(data){
+			});
+		});
+
+        $(document).on('keyup', '#id_inputUSD2Bit', function() {
+            $("#id_inputBTC2Bit").val($("#id_inputBTC2USD").val() * $("#id_inputUSD2Bit").val());
+            $("#id_inputETH2Bit").val($("#id_inputETH2USD").val() * $("#id_inputUSD2Bit").val());
+		});
+
+        $(document).on('keyup', '#id_inputBTC2USD', function() {
+            $("#id_inputBTC2Bit").val($("#id_inputBTC2USD").val() * $("#id_inputUSD2Bit").val());
+        });
+
+        $(document).on('keyup', '#id_inputETH2USD', function() {
+            $("#id_inputETH2Bit").val($("#id_inputETH2USD").val() * $("#id_inputUSD2Bit").val());
+        });
+    });
+</script>
+<!-- END JAVASCRIPTS -->
+#}}
+{{#def.include('./template/main_admin')}}

@@ -1,0 +1,280 @@
+{{##def.content:
+<style>
+	.class_btnDelete {
+	}
+
+	.class_btnSave {
+	}
+
+	.class_btnDeposit {
+	}
+
+	.no-control {
+		border: none;
+		text-align: center;
+	}
+
+	.class_divLine {
+		margin: 1px;
+	}
+
+</style>
+
+<!-- BEGIN PAGE HEADER-->
+<h1 style="text-align: center; margin-bottom: 30px;">
+	{{=it.translation['admin_demo_title']}}
+</h1>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+	<div class="col-md-12" >
+		<div class="portlet box blue">
+			<div class="portlet-body" style="background-color: #3e3e3e;color: #fff;">
+				<div class = 'row' align = 'right'>
+					<div class='col-md-6'>
+						<input type = 'number' id="id_edtDepositFakePool" class = 'form-control input-inline input-small pull-left' style="margin-right:5px;" min = '0' step='1' placeholder="{{=it.translation['admin_demo_bits']}}"/>
+						<input type = 'button' class = 'btn blue input-inline input-small no-control pull-left' id='id_btnDepositFakePool' value = "{{=it.translation['admin_demo_deposit_fakepool']}}" />
+					</div>
+					<div class='col-md-6'>
+						<input type = 'button' class = 'btn blue input-inline input-small no-control pull-right' style = 'width:100px !important;' id='id_btnAddDemo' value = "{{=it.translation['admin_demo_adddemo']}}" />
+					</div>
+				</div>
+				<hr style = 'margin: 5px;'/>
+				<div class = 'row' id='id_divContent'>
+
+					{{?it.demo_list.length == 0}}
+					<div class = 'col-md-12 class_divLine' align = 'center'>
+						<input type = 'text' class = 'form-control input-inline input-small class_demo_name' placeholder="{{=it.translation['admin_demo_name']}}"/>
+						<input type = 'text' class = 'form-control input-inline input-small class_demo_password' placeholder="{{=it.translation['global_password']}}"/>
+						<input type = 'button' class = 'btn red input-inline input-small class_btnSave' style = 'width:100px !important;margin-right:10px;' value = "{{=it.translation['global_save']}}" />
+						<input type = 'number' class = 'form-control input-inline input-small class_demo_balance' style='text-align: center;' value='0' readonly="true"/>
+						<input type = 'number' class = 'form-control input-inline input-small class_demo_deposit' min = '0' step='1' placeholder="{{=it.translation['admin_demo_bits']}}" readonly="true"/>
+						<input type = 'button' class = 'btn red input-inline input-small class_btnDeposit' style = 'width:100px !important;margin-right:10px;' value = "{{=it.translation['admin_demo_deposit']}}" />
+						<input type = 'button' class = 'btn green input-inline input-small class_btnDelete' style = 'width:100px !important;' value = "{{=it.translation['admin_demo_delete']}}" />
+					</div>
+					{{??}}
+					{{~it.demo_list:demo:index}}
+					<div class = 'col-md-12 class_divLine' align = 'center'>
+						<input type = 'text' class = 'form-control input-inline input-small class_demo_name' placeholder="{{=it.translation['admin_demo_name']}}" value = '{{=demo.username}}' readonly='true'/>
+						<input type = 'text' class = 'form-control input-inline input-small class_demo_password' placeholder="{{=it.translation['global_password']}}" value = '{{=demo.demo_password}}'/>
+						<input type = 'button' class = 'btn red input-inline input-small class_btnSave' style = 'width:100px !important;margin-right:10px;' value = "{{=it.translation['global_save']}}"  />
+						<input type = 'number' class = 'form-control input-inline input-small class_demo_balance' style='text-align: center;' value = '{{=parseFloat(demo.balance_satoshis/100.0)}}' readonly="true"/>
+						<input type = 'number' class = 'form-control input-inline input-small class_demo_deposit' min = '0' step='1' placeholder="{{=it.translation['admin_demo_bits']}}"/>
+						<input type = 'button' class = 'btn red input-inline input-small class_btnDeposit' style = 'width:100px !important;margin-right:10px;' value = "{{=it.translation['admin_demo_deposit']}}" />
+						<input type = 'button' class = 'btn green input-inline input-small class_btnDelete' style = 'width:100px !important;' value ="{{=it.translation['admin_demo_delete']}}"/>
+					</div>
+					{{~}}
+					{{?}}
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="handheld-detection"></div>
+
+{{?it.enginehost}}
+<div id="id_divEngineHost" hidden="true">{{=it.enginehost}}</div>
+{{?}}
+
+<!-- BEGIN TOASTR -->
+<script src="/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/pages/scripts/ui-toastr.js" type="text/javascript"></script>
+<!-- END TOASTR -->
+
+<!-- END PAGE CONTENT-->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/metronic/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+<script>
+    jQuery(document).ready(function() {
+        Metronic.init();
+        Layout.init();
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "positionClass": "toast-top-right",
+            "onclick": null,
+            "showDuration": "1000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "2000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        $("#id_btnAddDemo").click(function() {
+			var strLineContent = "<div class = 'col-md-12 class_divLine' align = 'center'>\n" +
+                "<input type = 'text' class = 'form-control input-inline input-small class_demo_name' placeholder='{{=it.translation.global_name}}'/>\n" +
+                "<input type = 'text' class = 'form-control input-inline input-small class_demo_password' placeholder='{{=it.translation.global_password}}'/>\n" +
+                "<input type = 'button' class = 'btn red input-inline input-small class_btnSave' style = 'width:100px !important;margin-right:10px;' value = '{{=it.translation.global_save}}' />\n" +
+                "<input type = 'number' class = 'form-control input-inline input-small class_demo_balance' style='text-align: center;' value='0' readonly='true'/>\n" +
+                "<input type = 'number' class = 'form-control input-inline input-small class_demo_deposit' min = '0' step='1' placeholder='{{=it.translation.miscellaneous3}}' readonly='true'/>\n" +
+                "<input type = 'button' class = 'btn red input-inline input-small class_btnDeposit' style = 'width:100px !important;margin-right:10px;' value = '{{=it.translation.admin_demo_deposit}}' />\n" +
+                "<input type = 'button' class = 'btn green input-inline input-small class_btnDelete' style = 'width:100px !important;' value = '{{=it.translation.admin_demo_delete}}' />\n" +
+                "</div>";
+
+            $(strLineContent).appendTo("#id_divContent");
+        });
+
+        $("#id_btnDepositFakePool").click(function()
+		{
+		    var strDepositFakePool = $("#id_edtDepositFakePool").val();
+		    if (strDepositFakePool == '' || strDepositFakePool == undefined)
+			{
+                toastr['warning']('{{=it.translation.admin_demo_alert7}}');
+                return;
+			}
+
+            $.post('/depositFakePool', {
+                deposit_fakepool: strDepositFakePool
+            }, function(data){
+                $("#id_edtDepositFakePool").val("");
+                if (data == true)
+				{
+                    toastr['success']('{{=it.translation.admin_demo_alert8}}');
+				}
+				else
+				{
+                    toastr['warning']('{{=it.translation.admin_demo_alert9}}');
+				}
+            });
+        });
+
+        $(document).on('click', '.class_btnSave', function()
+		{
+			var strName = $(this).parent().find('.class_demo_name').val();
+            var strPassword = $(this).parent().find('.class_demo_password').val();
+            var objDeposit = $(this).parent().find('.class_demo_deposit');
+
+            if (strName === "" || strPassword === "")
+			{
+                toastr['warning']('{{=it.translation.admin_demo_alert0}}');
+			    return;
+			}
+
+            var data = {};
+            data['name'] = strName;
+            data['password'] = strPassword;
+            $.post('/saveDemoAccount', {
+                demo_account_info: data
+            }, function(data){
+                if (data.state == "DEMO_ERROR_1" || data.state == "DEMO_ERROR_2" || data.state == "DEMO_ERROR_3" || data.state == "DEMO_ERROR_4" || data.state == "DEMO_ERROR_5")
+                {
+                    toastr['error']('{{=it.translation.admin_demo_alert1}}');
+                }
+                else if (data.state == "ALREADY_EXIST")
+                {
+                    toastr['error']('{{=it.translation.admin_demo_alert2}}');
+                }
+                else if (data.state == "UPDATED")
+				{
+                    toastr['success']('{{=it.translation.admin_demo_alert3}}');
+				}
+				else if (data.state == "CREATED")
+				{
+                    $(objDeposit).removeAttr('readonly');
+                    toastr['success']('{{=it.translation.admin_demo_alert4}}');
+				}
+            });
+        });
+
+        $(document).on('click', '.class_btnDelete', function()
+		{
+            var strName = $(this).parent().find('.class_demo_name').val();
+			if (strName == "")
+			{
+                toastr['warning']('{{=it.translation.admin_demo_alert5}}');
+			    return;
+			}
+
+			var objParent = $(this).parent();
+
+            $.post('/deleteDemoAccount', {
+                name: strName
+            }, function(data){
+                if (data == "DEMO_ERROR_6")
+				{
+                    toastr['error']('{{=it.translation.admin_demo_alert1}}');
+				}
+				else if (data == "DELETED")
+				{
+                    $(objParent).remove();
+                    toastr['success']('{{=it.translation.admin_demo_alert6}}');
+                }
+            });
+        });
+
+        $(document).on('click', '.class_btnDeposit', function()
+        {
+            var strName = $(this).parent().find('.class_demo_name').val();
+            var strDeposit = $(this).parent().find('.class_demo_deposit').val();
+            var objBalance = $(this).parent().find('.class_demo_balance');
+            var objDeposit = $(this).parent().find('.class_demo_deposit');
+
+            if (strName === "")
+            {
+                toastr['warning']('{{=it.translation.admin_demo_alert13}}');
+                return;
+            }
+
+            if (strDeposit === "")
+            {
+                toastr['warning']('{{=it.translation.admin_demo_alert10}}');
+                return;
+            }
+
+            var data = {};
+            data['name'] = strName;
+            data['deposit'] = strDeposit;
+            $.post('/depositFakeAccount', {
+                demo_account_info: data
+            }, function(data){
+                if (data.state == "DEMO_ERROR_1" || data.state == "DEMO_ERROR_2")
+                {
+                    toastr['error']('{{=it.translation.admin_demo_alert11}}');
+                }
+                else if (data.state == "SUCCESS")
+                {
+                    objBalance.val(data.balance);
+                    objDeposit.val("");
+                    toastr['success']('{{=it.translation.admin_demo_alert12}}');
+                }
+            });
+        });
+    });
+
+</script>
+<!-- END JAVASCRIPTS -->
+#}}
+
+
+{{#def.include('./template/main_admin')}}

@@ -1,0 +1,271 @@
+{{##def.content:
+<style>
+	tbody tr:nth-child(even) {
+		background: #5a5a5a;
+	}
+
+	.class_trSupport {
+		cursor: pointer;
+	}
+	.class_trUnread {
+		color : #f1353d;
+	}
+
+	.class_optionReadType{
+		color: rgba(255, 255, 255, 0.4);
+		background-color: rgba(53, 152, 220, 0.08);
+	}
+
+	.class_optionReadType:hover{
+		color: rgba(255, 255, 255, 1);
+		background-color: rgb(34, 103, 150);
+	}
+
+	.class_optionReadType.active{
+		color: rgba(255, 255, 255, 1);
+		background-color: rgba(53, 152, 220, 1);
+	}
+
+    td {
+        padding: 5px !important;
+    }
+
+    .state {
+        color: white;
+        padding: 5px 0px;
+        border-radius: 20px !important;
+    }
+
+	.replied {
+		/*background-color: #006000;*/
+		background-color: #2a4c2a;
+        margin: auto;
+	}
+
+	.waiting {
+		/*background-color: darkgoldenrod;*/
+		background-color: #7f6925;
+        margin: auto;
+	}
+
+	.unread {
+		/*background-color: #822222;*/
+		background-color: #843131;
+        margin: auto;
+	}
+</style>
+<!-- BEGIN PAGE HEADER-->
+<h1 style="text-align: center; margin-bottom: 30px; margin-top: 35px;">{{=it.translation['admin_support_title']}}</h1>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+	<div class="col-md-7">
+		<div class="btn-group" data-toggle="buttons">
+			<label class="btn class_optionReadType {{?it.type=='all'}}active{{?}}">
+				<input type="radio" class="toggle" value="all">{{=it.translation['admin_support_type_all']}}
+                <sup><span class="badge badge-info  ">{{?it.total_msg}}{{=it.total_msg}}{{?}}</span></sup>
+            </label>
+			<label class="btn class_optionReadType {{?it.type=='replied'}}active{{?}}">
+				<input type="radio" class="toggle" value="replied">{{=it.translation['admin_support_type_replied']}}
+                <sup><span class="badge badge-success">{{?it.total_msg}}{{=it.replied_msg}}{{?}}</span></sup>
+            </label>
+            <label class="btn class_optionReadType {{?it.type=='waiting'}}active{{?}}">
+                <input type="radio" class="toggle" value="waiting">{{=it.translation['admin_support_type_waiting']}}
+                <sup><span class="badge badge-warning">{{?it.total_msg}}{{=it.waiting_msg}}{{?}}</span></sup>
+            </label>
+			<label class="btn class_optionReadType {{?it.type=='unread'}}active{{?}}">
+				<input type="radio" class="toggle" value="unread">{{=it.translation['admin_support_type_unread']}}
+                <sup><span class="badge badge-danger">{{?it.unread_msg}}{{=it.unread_msg}}{{?}}</span></sup>
+            </label>
+		</div>
+		<table  class = 'table' style ='text-align: center; font-size:14px;'>
+			<thead>
+			<tr style = 'font-weight: bold;'>
+				<td hidden = 'true'></td>
+				<td>{{=it.translation['global_no']}}</td>
+				<td>{{=it.translation['global_username']}}</td>
+				<td>{{=it.translation['global_email']}}</td>
+				<td hidden = 'true'>Message</td>
+				<td hidden = 'true'>Reply</td>
+				<td>{{=it.translation['admin_support_table_header_created']}}</td>
+				<td>{{=it.translation['admin_support_table_header_replied']}}</td>
+				<td>{{=it.translation['admin_support_table_header_status']}}</td>
+			</tr>
+			</thead>
+			<tbody>
+
+			{{~it.supports :support:index}}
+			<tr class = 'class_trSupport {{?(support.read == false)}} class_trUnread {{?}}'>
+				<td hidden = 'true'>{{=support.id}}</td>
+				<td>{{=index+1}}</td>
+				<td class="username">{{=support.username}}</td>
+				<td>{{?support.email && support.email !== 'undefined'}}{{=support.email}}{{??}}---{{?}}</td>
+				<td hidden = 'true'><p class = 'class_msg2Admin'>{{=support.message_to_admin}}</p></td>
+				<td hidden = 'true'><p class = 'class_msg2User'>{{=support.message_to_user}}</p></td>
+				<td>{{?support.created}}{{#def.date_format:{created:support.created} }}{{??}}---{{?}}</td>
+				<td>{{?support.replied}}{{#def.date_format:{created:support.replied} }}{{??}}---{{?}}</td>
+
+				<td>
+					{{?support.message_to_user}}
+						<div class="state replied"><i class="fa fa-check"></i>	&nbsp; {{=it.translation["admin_support_type_replied"]}} </div>
+					{{??support.read}}
+						<div class="state waiting"><i class="fa fa-clock"></i> 	&nbsp; {{=it.translation['admin_support_type_waiting']}} </div>
+					{{??}}
+						<div class="state unread"><i class="fa fa-comment"></i>	&nbsp; {{=it.translation['admin_support_type_unread']}} 	</div>
+					{{?}}
+				</td>
+			</tr>
+			{{~}}
+			</tbody>
+		</table>
+	</div>
+	<div class="col-md-5">
+		<div class='row'>
+			<h3 style = 'margin-top:24px;'>{{=it.translation['admin_support_message']}}<span id="username"></span></h3>
+			<textarea id = 'id_msg2AdminView' class="form-control" rows="6" style = 'margin-top:20px;'></textarea>
+		</div>
+
+		<div class='row'>
+			<h3>{{=it.translation['admin_support_reply']}}</h3>
+			<form >
+				<div class="form-group">
+					<input type = 'hidden' id = 'id_formSupportId' name = 'supportId'/>
+					<input type = 'hidden' id = 'id_formEmail' name = 'email'/>
+					<textarea id = 'id_msg2UserView' class="form-control" rows="6" name = 'msg2User' required = ''></textarea>
+				</div>
+				<input type="button" class="btn btn-primary" value="{{=it.translation['admin_support_send']}}" id = 'id_btnSend'/>
+                <span class="notify" style="float: right; font-size: larger; color: #ffa700; width: auto; text-align: right;">
+                </span>
+			</form>
+		</div>
+	</div>
+</div>
+<div id="handheld-detection"></div>
+<!-- END PAGE CONTENT-->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<!--<script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>-->
+<script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+<script>
+	var selected_element;
+    jQuery(document).ready(function() {
+        Metronic.init();
+        Layout.init();
+    });
+
+    $(document).on('click', '.class_trUnread', function() {
+		$(this).removeClass('class_trUnread');
+		var support_id = $(this).children().first().text();
+		var unread = parseInt($('.badge-danger').text());
+		var waiting  = parseInt($('.badge-warning').text());
+		$('.badge-danger').text(unread - 1);
+		$('.badge-warning').text(waiting + 1);
+		$(this).children().last().replaceWith('<td><div class="state waiting"><i class="fa fa-clock"></i>'+"{{=it.translation['admin_support_type_waiting']}}"+'</div></td>');
+        $.post('/setSupportReadFlag', {
+			supportId : support_id,
+			flag : true
+        }, function(data) {
+        });
+	});
+
+    $(document).on('click', '.class_trSupport', function() {
+        selected_element = this;
+        var username = $(this).find('.username').text();
+        var message_to_admin = $(this).find('.class_msg2Admin').text();
+        var message_to_user = $(this).find('.class_msg2User').text();
+        var support_id = $(this).children().first().text();
+        var email = $(this).children().eq(3).text();
+        var state = $(this).children().last().text().trim().toLowerCase();
+        message_to_admin = message_to_admin.replace(/ELM/g, '\n');
+        message_to_user = message_to_user.replace(/ELM/g, '\n');
+
+        if ($('#id_hiddenLanguageCode').val() === 'zh'){
+            $("#username").text('从' + username + '来的');
+        }
+        else {
+            $("#username").text('from ' + username);
+        }
+		$("#id_msg2AdminView").val(message_to_admin);
+        $("#id_msg2UserView").val(message_to_user);
+        $("#id_formSupportId").val(support_id);
+        $("#id_formEmail").val(email);
+        if (state === 'replied') $('#id_btnSend').hide();
+        else $('#id_btnSend').show();
+    });
+
+    /* send a reply message */
+    $(document).on('click', '#id_btnSend', function() {
+        if(selected_element === undefined) return;
+        var support_id = $('#id_formSupportId').val();
+        var email = $('#id_formEmail').val();
+        var msg2User = $('#id_msg2UserView').val();
+
+        if (msg2User.split(/\s+/).join('') === '')
+        { /* check if reply message is not empty */
+            alert('{{=it.translation.admin_support_alert0}}');
+            return;
+        }
+
+        $('.notify').children().remove();
+        $('.notify').append("<p>"+"{{=it.translation.admin_support_alert2}}"+"</p>");
+
+        $.post('/replySupport', {
+            supportId : support_id,
+            email : email,
+			msg2User: msg2User
+        }, function(data, status) {
+            if(status === 'success' && data.result) {
+				$(selected_element).find('.class_msg2User').text(msg2User);
+                $(selected_element).children('td').eq(6).replaceWith('<td>' + data.result.created + '</td>');
+                $(selected_element).children('td').eq(7).replaceWith('<td>' + data.result.replied + '</td>');
+              	$(selected_element).children('td').last().replaceWith('<td><div class="state replied"><i class="fa fa-check"></i>'+'{{=it.translation["admin_support_type_replied"]}}'+'</div></td>');
+
+                $('.notify').children().remove();
+              	$('.notify').append("<p>"+'{{=it.translation.admin_support_alert3}}'+"</p>");
+                setTimeout(function(){
+                    $('.notify').children().remove();
+                }, 2000);
+			}
+			else {
+
+                $('.notify').children().remove();
+                $('.notify').append("<p>"+'{{=it.translation.admin_support_alert4}}'+"</p><p>" + data.error + "</p>");
+                /*$('.notify').append("<p>" + JSON.stringify(data.data) + "</p>");*/
+                setTimeout(function(){
+                    $('.notify').children().remove();
+                }, 2000);
+            }
+        });
+    });
+
+    $(document).on('click', '.class_optionReadType', function() {
+        window.location = '/support-admin/' + $(this).children().first().val();
+    });
+
+</script>
+<!-- END JAVASCRIPTS -->
+#}}
+{{#def.include('./template/main_admin')}}

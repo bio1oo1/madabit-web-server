@@ -1,0 +1,400 @@
+{{##def.content:
+<link href="/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css">
+<style>
+	.class_labelUserclass{
+		color: rgba(255, 255, 255, 0.4);
+		background-color: rgba(53, 152, 220, 0.08);
+	}
+
+	.class_labelUserclass:hover{
+		color: rgba(255, 255, 255, 1);
+		background-color: rgb(34, 103, 150);
+	}
+
+	.class_labelUserclass.active{
+		color: rgba(255, 255, 255, 1);
+		background-color: rgba(53, 152, 220, 1);
+	}
+
+	tbody tr:nth-child(even) {
+		background: #5a5a5a;
+	}
+
+	.class_inputPhone {
+		border: none;
+		background: none;
+		border-bottom: 1px solid #464646;
+		text-align: center;
+	}
+
+	.class_inputRefId {
+		border: none;
+		background: none;
+		border-bottom: 1px solid #464646;
+		text-align: center;
+	}
+</style>
+<link href="/metronic/assets/global/plugins/icheck/skins/all.css" rel="stylesheet"/>
+<!-- BEGIN PAGE HEADER-->
+<h1 style="text-align: center; margin-bottom: 30px;">
+	{{=it.translation['admin_user_title']}}
+</h1>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+	<div class = 'col-md-4' align = 'center'></div>
+	<div class = 'col-md-4' align = 'center'>
+		<div id="page-selection"></div>
+	</div>
+	<div class = 'col-md-4' align = 'center'></div>
+</div>
+<div class="row" style = 'margin-bottom:15px;'>
+	<div class="col-md-6" align = 'left' style="margin-top: 10px;">
+		<form method = 'post' action='/user-admin'>
+			<input type="text" name="username" class="form-control input-inline input-small no-control" value="{{?it.username}}{{=it.username}}{{??}}{{?}}" placeholder="{{=it.translation['global_username']}}" style = 'margin-top: 2px;'>
+			<input type="hidden" name="page" value = '{{=it.page}}' id = 'page'>
+			<input type="submit" class="btn blue input-inline input-small no-control" style="width:100px !important; margin-left:10px;" id="id_btnSearch" value="{{=it.translation['admin_user_search']}}">
+		</form>
+	</div>
+	<div class="col-md-6" align = 'right' style="margin-top: 10px;">
+		<input type="checkbox" class="icheck" data-checkbox="icheckbox_square-blue" id = 'id_checkboxSendSMS'><span style="margin-right: 15px;">{{=it.translation['admin_user_sms']}}</span>
+		<input type="checkbox" class="icheck" data-checkbox="icheckbox_square-blue" id = 'id_checkboxSendNotification'><span style="margin-right: 15px;">{{=it.translation['admin_user_notification']}}</span>
+		<input type="text" class="form-control input-inline input-small no-control" id = 'id_inputMsg' value="" placeholder="{{=it.translation['admin_user_message']}}" style = 'margin-top: 2px; width: 250px !important; '>
+		<input type="button" class="btn blue input-inline input-small no-control" style="margin-left:10px;" id="id_btnSendMessage" value="{{=it.translation['admin_user_sendmessage']}}">
+	</div>
+</div>
+<div class='row'>
+	<div class="col-md-12" align = 'center'>
+
+	</div>
+	<div class="col-md-12" align = 'center'>
+		<table  class = 'table' style ='text-align: center; font-size:14px;'>
+			<thead>
+			<tr style = 'font-weight: bold;'>
+				<td hidden = 'true'></td>
+				<td><input type="checkbox" class="icheck class_select_all" data-checkbox="icheckbox_square-blue"></td>
+				<td>{{=it.translation['global_no']}}</td>
+				<td>{{=it.translation['global_username']}}</td>
+				<td>{{=it.translation['admin_user_table_header_phone']}}</td>
+				<td>{{=it.translation['global_email']}}</td>
+				<td>{{=it.translation['admin_user_table_header_created']}}</td>
+				<td>{{=it.translation['admin_user_table_header_referralid']}}</td>
+				<td>{{=it.translation['admin_user_table_header_chat']}}</td>
+				<td>{{=it.translation['admin_user_table_header_class']}}</td>
+				<td></td>
+			</tr>
+			</thead>
+			<tbody>
+
+			{{~it.users :user:index}}
+			<tr class = '{{?(index%2==0)}}class_trOddRow{{?}}'>
+				<td hidden = 'true'>{{=user.id}}</td>
+				<td><input type="checkbox" class="icheck class_select" data-checkbox="icheckbox_square-blue"></td>
+				<td>{{=index+1}}</td>
+				<td>{{=user.username}}</td>
+				<td><input type='text' value="{{?user.phone_number}}{{=user.phone_number}}{{?}}" class='class_inputPhone'></td>
+				<td>{{?user.email}}{{=user.email}}{{?}}</td>
+				<td>{{#def.date_format:{created:user.created} }}</td>
+				<td>
+					<input type='text' value="{{?user.ref_id}}{{=user.ref_id}}{{?}}" prev_value = '{{?user.ref_id}}{{=user.ref_id}}{{?}}' class='class_inputRefId'>
+				</td>
+				<td>
+					<label style = 'margin-bottom: 0;'>
+						<input type="checkbox" class="icheck class_canChat" data-checkbox="icheckbox_square-blue" {{?user.can_chat==true}}checked{{?}}>
+					</label>
+				</td>
+				<td>
+					<div class="btn-group btn-group" data-toggle="buttons">
+						<label class="btn class_labelUserclass {{?(user.userclass=='staff')}}active{{?}}">
+							<input type="radio" class="toggle" value="staff">{{=it.translation['admin_user_table_staff']}}
+						</label>
+						<label class="btn class_labelUserclass {{?(user.userclass=='user')}}active{{?}}">
+							<input type="radio" class="toggle" value="user">{{=it.translation['admin_user_table_user']}}
+						</label>
+						<label class="btn class_labelUserclass {{?(user.userclass=='agent')}}active{{?}}">
+							<input type="radio" class="toggle" value="agent">{{=it.translation['admin_user_table_agent']}}
+						</label>
+						<label class="btn class_labelUserclass {{?(user.userclass=='master_ib')}}active{{?}}">
+							<input type="radio" class="toggle" value="master_ib">{{=it.translation['admin_user_table_masterib']}}
+						</label>
+						<label class="btn class_labelUserclass {{?(user.userclass=='admin')}}active{{?}}">
+							<input type="radio" class="toggle" value="admin">{{=it.translation['admin_user_table_admin']}}
+						</label>
+						{{?it.user.superadmin}}
+						<label class="btn class_labelUserclass {{?(user.userclass=='superadmin')}}active{{?}}">
+							<input type="radio" class="toggle" value="superadmin">{{=it.translation['admin_user_table_superadmin']}}
+						</label>
+						{{?}}
+					</div>
+				</td>
+				<td>
+					<input type="button" class="btn btn-danger input-inline input-small class_deleteUser" style="width:70px !important;" value="{{=it.translation['admin_user_delete']}}">
+				</td>
+			</tr>
+			{{~}}
+			</tbody>
+		</table>
+	</div>
+</div>
+<div id="handheld-detection"></div>
+<!-- END PAGE CONTENT-->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/icheck/icheck.min.js"></script>
+<script src="/metronic/assets/global/plugins/jquery-bootpag/jquery.bootpag.min.js"></script>
+<!-- END CORE PLUGINS -->
+
+<script src="/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/pages/scripts/ui-toastr.js" type="text/javascript"></script>
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+<script>
+var isSendSMS = false;
+var isSendNotification = false;
+jQuery(document).ready(function() {
+	Metronic.init();
+	Layout.init();
+
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "positionClass": "toast-top-right",
+        "onclick": null,
+        "showDuration": "1000",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "2000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+
+	$(document).on('click', '.class_labelUserclass', function() {
+		var user_id = $(this).parent().parent().siblings().first().text();
+		var userClass = $(this).children().first().val();
+		$.post('/setUserClass', {
+			userId : user_id,
+			userClass : userClass
+		}, function(data) {
+		});
+	});
+
+    $(document).on('click', '.class_deleteUser', function() {
+        deleteUser(this);
+    });
+
+    $(document).on('click', '#id_btnSendMessage', function() {
+        if(isSendSMS == true)
+			sendSMS();
+        if(isSendNotification == true)
+            sendNotification();
+	});
+
+	$('input.icheck.class_canChat').on('ifChecked', function(event){
+        setUserCanChatStatus(this, true);
+	});
+
+	$('input.icheck.class_canChat').on('ifUnchecked', function(event){
+        setUserCanChatStatus(this, false);
+	});
+
+    $('input.icheck.class_select_all').on('ifChecked', function(event){
+        $('input.icheck.class_select').iCheck('check');
+    });
+
+    $('input.icheck.class_select_all').on('ifUnchecked', function(event){
+        $('input.icheck.class_select').iCheck('uncheck');
+    });
+
+    $('input#id_checkboxSendSMS').on('ifChecked', function(event){
+        isSendSMS = true;
+    });
+
+    $('input#id_checkboxSendSMS').on('ifUnchecked', function(event){
+        isSendSMS = false;
+    });
+
+    $('input#id_checkboxSendNotification').on('ifChecked', function(event){
+        isSendNotification = true;
+    });
+
+    $('input#id_checkboxSendNotification').on('ifUnchecked', function(event){
+        isSendNotification = false;
+    });
+
+    $('.class_inputPhone').focusout(function(){
+        savePhoneNumber(this);
+    });
+
+    $('.class_inputRefId').focusout(function(){
+        saveRefId(this);
+    });
+
+    $('#page-selection').bootpag({
+        total: {{=it.total}},
+		page: {{=it.page}},
+		maxVisible: 5,
+		leaps: true,
+		firstLastUse: true,
+		first: '←',
+		last: '→',
+		wrapClass: 'pagination',
+		activeClass: 'active',
+		disabledClass: 'disabled',
+		nextClass: 'next',
+		prevClass: 'prev',
+		lastClass: 'last',
+		firstClass: 'first'
+	}).on("page", function(event, num){
+		$("#page").val(num);
+		$("#id_btnSearch").click();
+    });
+});
+
+function savePhoneNumber(element) {
+    var phone_number = $(element).val();
+    var user_id = $(element).parent().siblings().first().text();
+
+	$.post("/savePhoneNumber", {
+		user_id: user_id,
+		phone_number: phone_number
+	}, function(clear_phone_number) {
+		    $(element).val(clear_phone_number);
+	});
+}
+
+function saveRefId(element) {
+    var ref_id = $(element).val();
+    var user_id = $(element).parent().siblings().first().text();
+
+    if($(element).attr('prev_value') == '' && ref_id == '') {
+		return;
+    } else if($(element).attr('prev_value') == '' && ref_id != '') {
+        $(element).val($(element).attr('prev_value'));
+        toastr['warning']('{{=it.translation.admin_user_alert3}}');
+        return;
+	} else if(ref_id == '' && $(element).attr('prev_value') != '') {
+        $(element).val($(element).attr('prev_value'));
+        toastr['warning']('{{=it.translation.admin_user_alert1}}');
+        return;
+    }
+
+    $.post("/saveRefId", {
+        user_id: user_id,
+        ref_id: ref_id
+    }, function(result) {
+        if(result.error) {
+            if(result.error == 'USER ALREADY PLAYED GAME')
+            	toastr['warning']('{{=it.translation.admin_user_alert4}}');
+            else if(result.error == 'NO REF INFO')
+                toastr['warning']('{{=it.translation.admin_user_alert2}}');
+            else
+                toastr['warning']('{{=it.translation.admin_user_alert1}}');
+            $(element).val($(element).attr('prev_value'));
+            return;
+        }
+        $(element).val(result);
+        $(element).attr('prev_value', result);
+    });
+
+}
+
+function setUserCanChatStatus(element, status) {
+
+    var user_id = $(element).closest('td').siblings().first().text();
+
+    $.post('/setUserCanChatStatus', {
+        userId : user_id,
+        status : status
+    }, function(data) {
+    });
+}
+
+function deleteUser(element) {
+    var user_id = $(element).parent().siblings().first().text();
+    var username = $(element).parent().siblings().eq(3).text();
+    if(confirm('{{=it.translation.admin_user_alert0}}')) {
+        $.post('/deleteUser', {
+            userId: user_id,
+            username: username
+        }, function (data) {
+            if (data == true) {
+                var parentElement = $(element).parent().parent();
+                parentElement.empty();
+                parentElement.remove();
+            }
+        });
+    }
+}
+
+function sendSMS() {
+
+    var msg = $("#id_inputMsg").val();
+    if(msg == "")
+		return;
+    var phoneNumbers = [];
+    $("input.icheck.class_select").each(function(index) {
+        var state = $(this).prop('checked');
+        if(state == true) {
+            var phoneNumber = $(this).parent().parent().siblings().eq(3).children().first().val();
+            if(phoneNumber != "")
+            	phoneNumbers.push(phoneNumber);
+        }
+    });
+
+    $.post("/sendSMSToMultiUsers", {
+        phoneNumbers: phoneNumbers,
+        message:msg,
+        isSendSMS: isSendSMS,
+        isSendNotification: isSendNotification
+    }, function(data) {
+        if(data == 'true') {
+            $('input.icheck.class_select_all').iCheck('uncheck');
+            $('input.icheck.class_select').iCheck('uncheck');
+        }
+    });
+}
+
+function sendNotification() {
+
+    var msg = $("#id_inputMsg").val();
+    if(msg == "")
+        return;
+    var userIds = [];
+    $("input.icheck.class_select").each(function(index) {
+        var state = $(this).prop('checked');
+        if(state == true) {
+            userIds.push($(this).parent().parent().prev().text());
+        }
+    });
+
+    if(userIds.length == 0)
+        return;
+
+    $.post("/sendMessageToMultiUsers", {
+        userIds: userIds,
+        message: msg
+    }, function(data) {
+    });
+}
+</script>
+<!-- END JAVASCRIPTS -->
+#}}
+{{#def.include('./template/main_admin')}}

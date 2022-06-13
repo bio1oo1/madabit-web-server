@@ -1,0 +1,305 @@
+{{##def.content:
+<style>
+.sort-up-custom {
+	margin-left: 4px;
+	cursor: pointer;
+}
+
+.sort-down-custom {
+	margin-right:4px;
+	cursor: pointer;
+}
+</style>
+<link href="/metronic/assets/global/plugins/icheck/skins/all.css" rel="stylesheet"/>
+<!-- BEGIN PAGE HEADER-->
+<h1 style="text-align: center; margin-bottom: 30px;">
+	{{=it.translation.admin_userdetail_title}}
+</h1>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style = 'margin-bottom:15px; display:block;'>
+	<div class="col-md-6" align = 'left'>
+		<form method = 'get' action='/user-detail-admin'>
+			<input type="text" name="username" class="form-control input-inline input-small no-control" value="{{?it.username}}{{=it.username}}{{??}}{{?}}"
+				   placeholder="{{=it.translation['global_username']}}/{{=it.translation.reset_phone_number}}" style = 'width: 200px !important; margin-top: 2px; margin-right:10px;'>
+			<input type="hidden" name="page" value="{{?it.page}}{{=it.page}}{{?}}" id = 'page'>
+			<input type="hidden" name="sort_field" value="{{?it.sort_field}}{{=it.sort_field}}{{?}}" id = 'id_inputField'>
+			<input type="hidden" name="sort_direction" value="{{?it.sort_direction}}{{=it.sort_direction}}{{?}}" id = 'id_inputDirection'>
+			<input type="hidden" name="show_all" value="{{?it.show_all}}{{=it.show_all}}{{?}}" id = 'show_all'>
+			<input type="hidden" name="clang" value="{{=it.translation.language_for}}">
+			<input type="checkbox" class="icheck class_showAll" data-checkbox="icheckbox_square-red" {{?it.show_all=='true'}}checked{{?}}>{{=it.translation['admin_userdetail_showall']}}
+			<input type="submit" class="btn blue input-inline input-small no-control" style="width:80px !important; margin-left:10px; margin-right:10px;" id="id_btnSearch" value="{{=it.translation['admin_user_search']}}">
+		</form>
+	</div>
+	<div class="col-md-6" align = 'right'>
+		<input type="button" class="btn blue input-inline input-small no-control" style="width:100px !important; margin-left:10px;" id="id_btnReportPDF" value="{{=it.translation.admin_userdetail_report_pdf}}">
+		<input type="button" class="btn blue input-inline input-small no-control" style="width:110px !important; margin-left:10px;" id="id_btnReportExcel" value="{{=it.translation.admin_userdetail_report_excel}}">
+	</div>
+</div>
+<div class = 'row' align = 'center'>
+	<div id="page-selection" style="margin-top:-63px;"></div>
+</div>
+<div class='row'  id = 'customers'>
+	<div class="col-md-12">
+		<table  class = 'table' style ='text-align: center; font-size:14px;'>
+			<thead>
+			<tr style = 'font-weight: bold;'>
+				<td hidden = 'true'></td>
+				<td>{{=it.translation.global_no}}</td>
+				<td field = 'username'><i class="fas fa-sort-down sort-down-custom"></i>{{=it.translation.global_username}}<i class="fas fa-sort-up sort-up-custom"></i></td>
+				<td field = 'gross_profit'><i class="fas fa-sort-down sort-down-custom"></i>{{=it.translation.admin_userdetail_grossprofit}}<i class="fas fa-sort-up sort-up-custom"></i></td>
+				<td field = 'net_profit'><i class="fas fa-sort-down sort-down-custom"></i>{{=it.translation.admin_userdetail_netprofit}}<i class="fas fa-sort-up sort-up-custom"></i></td>
+				<td field = 'sum_bet'><i class="fas fa-sort-down sort-down-custom"></i>{{=it.translation.admin_userdetail_totalvolumes}}<i class="fas fa-sort-up sort-up-custom"></i></td>
+				<td field = 'login_play_bonus'><i class="fas fa-sort-down sort-down-custom"></i>{{=it.translation.admin_userdetail_loginplaybonus}}<i class="fas fa-sort-up sort-up-custom"></i></td>
+				<td field = 'funding_bonus'><i class="fas fa-sort-down sort-down-custom"></i>{{=it.translation.admin_userdetail_fundingbonus}}<i class="fas fa-sort-up sort-up-custom"></i></td>
+				<td field = 'welcome_bonus'><i class="fas fa-sort-down sort-down-custom"></i>{{=it.translation.admin_userdetail_welcomebonus}}<i class="fas fa-sort-up sort-up-custom"></i></td>
+				<td field = 'sum_deposit'><i class="fas fa-sort-down sort-down-custom"></i>{{=it.translation.admin_userdetail_deposit}}<i class="fas fa-sort-up sort-up-custom"></i></td>
+				<td field = 'sum_withdraw'><i class="fas fa-sort-down sort-down-custom"></i>{{=it.translation.admin_userdetail_withdraw}}<i class="fas fa-sort-up sort-up-custom"></i></td>
+				<td field = 'balance_satoshis'><i class="fas fa-sort-down sort-down-custom"></i>{{=it.translation.admin_userdetail_balance}}<i class="fas fa-sort-up sort-up-custom"></i></td>
+				<td field = 'agent_profit'><i class="fas fa-sort-down sort-down-custom"></i>{{=it.translation.admin_userdetail_agentprofit}}<i class="fas fa-sort-up sort-up-custom"></i></td>
+				<td hidden = 'true'>{{=it.translation.admin_userdetail_withdrawfee}}'</td>
+				<td field = 'transfer'><i class="fas fa-sort-down sort-down-custom"></i>{{=it.translation.admin_userdetail_transfer}}<i class="fas fa-sort-up sort-up-custom"></i></td>
+
+			</tr>
+			</thead>
+			<tbody>
+			{{~it.users :user:index}}
+			<tr>
+				<td hidden = 'true'>{{=user.id}}</td>
+				<td>{{=index+1}}</td>
+				<td><a href="/gamehistory-admin/{{=user.id}}/?clang={{=it.translation.language_for}}">{{=user.username}}</a></td>
+				<td>{{#def.format: {n: user.gross_profit, decimals: 2} }}</td>
+				<td>{{#def.format: {n: user.net_profit, decimals: 2} }}</td>
+				<td>{{#def.format: {n: user.sum_bet, decimals: 2} }}</td>
+				<td>{{#def.format: {n: user.login_play_bonus, decimals: 2} }}</td>
+				<td>{{#def.format: {n: user.funding_bonus, decimals: 2} }}</td>
+				<td>{{#def.format: {n: user.welcome_bonus, decimals: 2} }}</td>
+				<td>{{#def.format: {n: user.sum_deposit, decimals: 2} }}</td>
+				<td>{{#def.format: {n: user.sum_withdraw, decimals: 2} }}</td>
+				<td>{{#def.format: {n: user.balance_satoshis, decimals: 2} }}</td>
+				<td>{{#def.format: {n: user.agent_profit, decimals: 2} }}</td>
+				<td hidden = 'true'>{{#def.format: {n: user.sum_withdraw_fee, decimals: 2} }}</td>
+				<td>{{?user.transfer < 0}}+{{?}}{{#def.format: {n: -1*user.transfer, decimals: 2} }}</td>
+			</tr>
+			{{~}}
+			</tbody>
+		</table>
+	</div>
+</div>
+<div id="handheld-detection"></div>
+<!-- END PAGE CONTENT-->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/icheck/icheck.min.js"></script>
+<script src="/metronic/assets/global/plugins/jquery-bootpag/jquery.bootpag.min.js"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
+
+<script src="/vendor/jspdf/dist/jspdf.debug.js"></script>
+<script src="/vendor/jspdf/plugins/canvas.js"></script>
+<script src="/vendor/jspdf/plugins/faker.min.js"></script>
+<script src="/vendor/jspdf/plugins/jspdf.plugin.autotable.js"></script>
+
+<!-- END/vendor PAGE LEVEL PLUGINS -->
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+<script>
+
+jQuery(document).ready(function() {
+	Metronic.init();
+	Layout.init();
+	$("#id_btnReportPDF").click(function() {
+        printTableData();
+    });
+
+	$("#id_btnReportExcel").click(function () {
+        $.post("/build_excel_report", {
+            sort_field: $("#id_inputField").val(),
+            sort_direction: $("#id_inputDirection").val(),
+            page: $("#page").val(),
+            show_all: $("#show_all").val()
+        }, function(result)
+		{
+            if (result.state == "success")
+			{
+				console.log("success");
+				location.href = '/get_excel_report';
+			}
+			else if (result.state == "failed")
+			{
+			    alert("error occured.");
+			}
+        });
+    });
+
+	$(document).on('click', ".sort-down-custom", function() {
+		var field = $(this).parent().attr('field');
+		var direction = 'DESC';
+		$("#id_inputField").val(field);
+		$("#id_inputDirection").val(direction);
+		$("#id_btnSearch").click();
+	});
+
+    $(document).on('click', ".sort-up-custom", function() {
+        var field = $(this).parent().attr('field');
+        var direction = 'ASC';
+        $("#id_inputField").val(field);
+        $("#id_inputDirection").val(direction);
+        $("#id_btnSearch").click();
+    });
+
+    $('input.icheck.class_showAll').on('ifChecked', function(event){
+        $("#show_all").val(true);
+        $("#id_btnSearch").click();
+    });
+
+    $('input.icheck.class_showAll').on('ifUnchecked', function(event){
+        $("#show_all").val(false);
+        $("#id_btnSearch").click();
+    });
+
+    $('#page-selection').bootpag({
+        total: {{=it.total}},
+		page: {{=it.page}},
+		maxVisible: 5,
+		leaps: true,
+		firstLastUse: true,
+		first: '←',
+		last: '→',
+		wrapClass: 'pagination',
+		activeClass: 'active',
+		disabledClass: 'disabled',
+		nextClass: 'next',
+		prevClass: 'prev',
+		lastClass: 'last',
+		firstClass: 'first'
+	}).on("page", function(event, num){
+			$("#page").val(num);
+			$("#id_btnSearch").click();
+		});
+});
+
+function printTableData(){
+
+    var pdf = new jsPDF('l', 'pt', 'letter');
+    pdf.setProperties({
+        title: "",
+        subject: "This is a report",
+        creator: "Madabit"
+    });
+
+    pdf.chsetup = {
+        background: "#fff",
+        foreground: "#000",
+        fontsize: 10
+    };
+
+    var tableCols = ["id", 'username', 'gross_profit', 'net_profit', 'sum_bet',
+		'login_play_bonus', "funding_bonus", 'welcome_bonus', 'balance_satoshis', 'sum_deposit', 'sum_withdraw', 'sum_withdraw_fee', 'sum_transfer_fee'];
+    tableCols = ['No', 'Name', 'Net Profit', 'Total Volumes', 'Deposit', 'Withdraw', 'Balance'];
+
+    var tableRows = {{=JSON.stringify(it.users)}};
+
+	var dataToPrint = [];
+	for(var i = 0; i < tableRows.length; i++) {
+
+	    var row = [];
+	    row.push(i + 1);
+	    row.push(tableRows[i]['username']);
+        row.push(tableRows[i]['net_profit']);
+        row.push(tableRows[i]['sum_bet']);
+        row.push(tableRows[i]['balance_satoshis']);
+        row.push(tableRows[i]['sum_deposit']);
+        row.push(tableRows[i]['sum_withdraw']);
+
+        dataToPrint.push(row);
+	}
+
+    if('{{=it.translation.language_for}}'==='zh') {
+        tableCols =["  ", "    ", "       ", "       ", "     ", "     ", "      "]; /*排名  帐户名	总获取算力	净获取算力	总投入算力量	总入金	总出金	余额*/
+    }
+    pdf.autoTable(tableCols, dataToPrint, {
+        styles: {theme: 'grid' },
+        columnStyles: { id: {fillColor: 255} },
+        margin: {top:70},
+        addPageContent: function(data) {
+            if('{{=it.translation.language_for}}'==='zh'){
+                chtext(pdf, "玩家统计", 40, 50, 50);
+            }
+            else {
+                pdf.text("Players Details", 40, 50);
+            }
+        }
+    });
+    if('{{=it.translation.language_for}}'==='zh') {
+        pdf.chsetup.background = "rgb(41, 128, 185)";
+        pdf.chsetup.foreground = "#fff";
+        chtext(pdf, "排名", 42, 85, 30);
+        chtext(pdf, "帐户名", 80, 85, 30);
+        chtext(pdf, "净获取算力", 275, 85, 30);
+        chtext(pdf, "总投入算力量", 395, 85, 30);
+        chtext(pdf, "总入金", 510, 85, 30);
+        chtext(pdf, "总出金", 635, 85, 30);
+        chtext(pdf, "余额", 690, 85, 30);
+    }
+
+    pdf.save('Report.pdf');
+};
+
+/**
+ * Prints a line of non-ASCII text as a series of images.
+ * @param {String} chstr     Non-ASCII string to add as an image
+ * @param {Number} x         Horizontal displacement
+ * @param {Number} y         Vertical displacement
+ * @param {Number} fontsize  Similar sizing as doc.setFontSize()
+ */
+function chtext(pdf, chstr, x, y, fontsize, align) {
+
+    if (pdf.chsetup.ctx === undefined) {
+        pdf.chsetup.canvas = document.createElement('canvas');
+        pdf.chsetup.canvas.width = '150';  /* Height default is 150 */
+        pdf.chsetup.ctx = pdf.chsetup.canvas.getContext('2d');
+        pdf.chsetup.ctx.font = "bold 150px PMingLiU";
+    }
+
+    var ctx = pdf.chsetup.ctx,
+        char = null,
+        xi = x,
+        size = 150,
+        scale = (fontsize || pdf.chsetup.fontsize) / 450;
+
+    for (var i=0; i<chstr.length; i++) {
+
+        ctx.fillStyle = pdf.chsetup.background;
+        ctx.fillRect(0,0,size,size);  /* Clear content */
+        ctx.fillStyle = pdf.chsetup.foreground;
+        ctx.fillText(chstr.charAt(i), 0, 120);  /* Draw character */
+        char = pdf.chsetup.canvas.toDataURL("image/jpeg", 1.0);  /* 1.0 highest quality */
+        pdf.addImage(char, 'JPEG', xi, y-size*scale*.9, size*scale, size*scale);
+        xi = xi + ctx.measureText(chstr.charAt(i)).width*scale*1.1;  /* 1.1 for a little extra space */
+    }
+};
+</script>
+<!-- END JAVASCRIPTS -->
+#}}
+{{#def.include('./template/main_admin')}}

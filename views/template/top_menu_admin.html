@@ -1,0 +1,55 @@
+<ul class="nav nav-pills">
+    <li>
+        <a href="/statistics-admin/?clang={{=it.translation['language_for']}}">{{=it.translation['admin_menu_companystatistics']}}</a>
+    </li>
+    <li>
+        <a href="/user-detail-admin/?clang={{=it.translation['language_for']}}">{{=it.translation['admin_menu_playerstatistics']}}</a>
+    </li>
+    <li>
+        <a href="/agent-admin/?clang={{=it.translation['language_for']}}">{{=it.translation['admin_menu_agent']}}</a>
+    </li>
+    {{?it.user.superadmin}}
+    <li>
+        <a href="/setting/?clang={{=it.translation['language_for']}}">{{=it.translation['admin_menu_setting']}}</a>
+    </li>
+    {{?}}
+    <li>
+        <a href="/exchangerate-admin/?clang={{=it.translation['language_for']}}">{{=it.translation['admin_menu_exchangerate']}}</a>
+    </li>
+    <li>
+        <a href="/game-admin/?clang={{=it.translation['language_for']}}">{{=it.translation['admin_menu_game']}}</a>
+    </li>
+    <li>
+        <a href="/user-admin/?clang={{=it.translation['language_for']}}">{{=it.translation['admin_menu_user']}}</a>
+    </li>
+    <li>
+        <a href="/demo/?clang={{=it.translation['language_for']}}">{{=it.translation['admin_menu_demo']}}</a>
+    </li>
+    <li>
+        <a href="/ib-ranking-admin/?clang={{=it.translation['language_for']}}">{{=it.translation['admin_menu_ib_ranking']}}</a>
+    </li>
+    <li>
+        <a href="/login_bonus/?clang={{=it.translation['language_for']}}">{{=it.translation['admin_menu_login_bonus']}}</a>
+    </li>
+    <li style="display: none;">
+        <a href="/staff-admin/?clang={{=it.translation['language_for']}}">{{=it.translation['admin_menu_staff']}}</a>
+    </li>
+    <li>
+        <a href="/support-admin/all/?clang={{=it.translation['language_for']}}">{{=it.translation['admin_menu_support']}}</a>
+    </li>
+    <li>
+        <a href="/capture-pay/?clang={{=it.translation['language_for']}}">{{=it.translation['admin_menu_capture_pay']}}</a>
+    </li>
+    <li>
+        <a href="/withdraw-admin/?clang={{=it.translation['language_for']}}">{{=it.translation['admin_menu_coinwithdraw']}}</a>
+    </li>
+
+</ul>
+<hr/>
+<script>
+$(function() {
+    var pathname = window.location.pathname;
+    var firstPath = '/' + pathname.split('/')[1] + '/';
+    $(".nav.nav-pills a[href*='"+firstPath+"']").parent().addClass('active');
+});
+</script>

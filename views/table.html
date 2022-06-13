@@ -1,0 +1,304 @@
+{{##def.format:param:{{=(param.n/100).toFixed(param.decimals).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}}#}}
+
+<!DOCTYPE html>
+<!--
+Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.2
+Version: 3.7.0
+Author: KeenThemes
+Website: http://www.keenthemes.com/
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Like: www.facebook.com/keenthemes
+Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+-->
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+    <!-- BEGIN HEAD -->
+    <head>
+
+        <meta charset="utf-8" />
+        <title>{{=it.translation.site_title}}</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta content="" name="description" />
+        <meta content="" name="author" />
+        <!-- BEGIN GLOBAL MANDATORY STYLES -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css">
+        <link href="/metronic/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css">
+        <link href="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css">
+        <link href="/metronic/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="/metronic/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
+        <link href="/metronic/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+
+        <!-- END GLOBAL MANDATORY STYLES -->
+        <!-- BEGIN THEME STYLES -->
+        <link href="/metronic/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css" />
+        <link href="/metronic/assets/global/css/plugins.css" rel="stylesheet" type="text/css" />
+        <link href="/metronic/assets/admin/layout2/css/layout.css" rel="stylesheet" type="text/css" />
+        <link href="/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css">
+        <link id="style_color" href="/metronic/assets/admin/layout2/css/themes/grey.css" rel="stylesheet" type="text/css" />
+        <link href="/metronic/assets/global/plugins/icheck/skins/all.css" rel="stylesheet"/>
+        <link href="/css/custom.css" rel="stylesheet">
+        <link href="/css/custom-480.css" rel="stylesheet" media="screen and (max-width:480px)">
+        <link href="/css/custom-760.css" rel="stylesheet" media="screen and (max-width:767px) and (min-width: 481px)">
+        <link href="/css/custom-1200.css" rel="stylesheet" media="screen and (max-width:1200px) and (min-width: 768px)">
+        <!-- END THEME STYLES -->
+        <!-- BEGIN PAGE LEVEL STYLES -->
+        <link rel="stylesheet" href="/vendor/amcharts/plugins/export/export.css" type="text/css" media="all" />
+        <!-- END PAGE LEVEL STYLES -->
+
+        <style type="text/css">
+            #chartdiv {
+                width   : 100%;
+                height  : 400px;
+            }
+        </style>
+
+        <link rel="icon" href="/img/favicon/madabit256.ico" type="image/x-icon">
+
+        <link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/madabit57.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/img/favicon/madabit72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/img/favicon/madabit114.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="/img/favicon/madabit144.png">
+
+        <link rel="apple-touch-icon" sizes="60x60" href="/img/favicon/madabit60.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/madabit76.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="/img/favicon/madabit120.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="/img/favicon/madabit152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/madabit180.png">
+
+
+        <!--<link rel="icon" sizes="128×128" href="/img/favicon/madabit128.png">-->
+        <!--<link rel="icon" sizes="128×128" href="/img/favicon/madabit128.png">-->
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"/>
+        <style>
+            .modal-content {
+                background-color: #383838;
+            }
+            .modal-body {
+                font-size:15px;
+            }
+            .modal-footer button[data-bb-handler='cancel'] {
+                width:120px;
+                background-color: #383838;
+                color: white;
+                border-radius: 3px !important;
+            }
+            .modal-footer button[data-bb-handler='cancel']:hover {
+                width:120px;
+                background-color: #383838;
+                color: white;
+                border-radius: 3px !important;
+            }
+            .modal-footer button[data-bb-handler='confirm'] {
+                width:120px;
+            }
+        </style>
+    </head>
+
+    <body class="page-header-fixed page-container-bg-solid page-sidebar-closed-hide-logo page-header-fixed-mobile page-sidebar-fixed">
+
+        <!-- embedded chat box -->
+        <script>
+            (function(a,h,c,b,f,g){a["UdeskApiObject"]=f;a[f]=a[f]||function(){(a[f].d=a[f].d||[]).push(arguments)};g=h.createElement(c);g.async=1;g.charset="utf-8";g.src=b;c=h.getElementsByTagName(c)[0];c.parentNode.insertBefore(g,c)})(window,document,"script","//assets-cli.udesk.cn/im_client/js/udeskApi.js","ud");
+            ud({
+                "code": "2b916c16",
+                "link": "https://madabit.udesk.cn/im_client/?web_plugin_id=48486"
+            });
+        </script>
+
+        <span id="id_type" style="display: none;">{{=it.type}}</span>
+
+        <!-- image cache -->
+        <img src="/img/fireworks.gif" style="display: none;">
+        <img src="/img/ads_back.png" style="display: none;">
+        <img src="/img/ads_btn_normal.png" style="display: none;">
+        <img src="/img/ads_btn_selected.png" style="display: none;">
+        <img src="/img/ads_1.png" style="display: none;">
+        <img src="/img/ads_2.png" style="display: none;">
+        <img src="/img/ads_3.png" style="display: none;">
+        <img src="/img/ads_4.png" style="display: none;">
+
+        <!-- background audio -->
+        <audio autoplay loop id="id_audioBackground">
+            <source src="/sounds/background.mp3" type="audio/mpeg">
+            AUDIO_NOT_SUPPORTED
+        </audio>
+
+        <!-- reg modal -->
+        <div class="reg-modal">
+            <div class="reg-modal-content">
+                <div class="row">
+                    <span class="reg-close icon-close"></span>
+                </div>
+
+                <div class="row">
+                    <a href="/tutorial/?clang={{=it.translation['language_for']}}">
+                        <img src="/img/reg.png" class="reg-modal-img">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- balance modal -->
+        <div class="balance-modal">
+            <div class="balance-modal-content">
+                <div class="row">
+                    <span class="balance-close icon-close"></span>
+                </div>
+
+                <div class="row">
+                    {{? it.user}}
+                    <a href="/deposit/?clang={{=it.translation['language_for']}}">
+                        <img src="/img/balance.png" class="balance-modal-img">
+                    </a>
+                    {{??}}
+                    <img src="/img/balance.png" class="balance-modal-img">
+                    {{?}}
+                </div>
+            </div>
+        </div>
+
+        <!-- ads modal -->
+        <div class="ads-modal not-mobile">
+            <div class="ads-modal-content">
+                <div class="ads-sidebar">
+                    <div class="ads-btn ads-btn-selected" id="id_btn_ads_1">比特币狂撒一个亿</div>
+                    <div class="ads-btn" id="id_btn_ads_2">登录有礼</div>
+                    <div class="ads-btn" id="id_btn_ads_3">邀请好友抢比特</div>
+                    <div class="ads-btn" id="id_btn_ads_4">首次注册奖励50比特</div>
+                </div>
+                <div class="ads-panel-content">
+                    <span class="ads-close icon-close"></span>
+                    <img src="/img/ads_1.png" class="ads-modal-img">
+                </div>
+            </div>
+        </div>
+
+        <div class="ads-modal mobile">
+            <div class="ads-modal-content">
+                <span class="ads-close icon-close" style="margin-top: -30px;"></span>
+                <div class = 'row'>
+                    <div class='col-xs-1'></div>
+                    <div class='col-xs-5' align = 'right'>
+                        <div class="ads-btn ads-btn-selected" id="id_btn_ads_1_m">比特币狂撒一个亿</div>
+                    </div>
+                    <div class='col-xs-5' align = 'left'>
+                        <div class="ads-btn" id="id_btn_ads_2_m">登录有礼</div>
+                    </div>
+                    <div class='col-xs-1'></div>
+                </div>
+                <div class = 'row'>
+                    <div class='col-xs-1'></div>
+                    <div class='col-xs-5' align = 'right'>
+                        <div class="ads-btn" id="id_btn_ads_3_m">邀请好友抢比特</div>
+                    </div>
+                    <div class='col-xs-5' align = 'left'>
+                        <div class="ads-btn" id="id_btn_ads_4_m">首次注册奖励50比特</div>
+                    </div>
+                    <div class='col-xs-1'></div>
+                </div>
+                <div class="row" align = 'center'>
+                    <!--<div class = 'ads-panel-content'>-->
+                        <img src="/img/ads_1.png" class="ads-modal-img_m">
+                    <!--</div>-->
+                </div>
+            </div>
+        </div>
+
+        <input type ='hidden' id="id_hiddenLanguageCode" value = '{{=it.translation.language_for}}'/>
+
+        <div id="game-wrapper">
+
+            {{?it.enginehost}}
+            <div id="id_divEngineHost" hidden="true">{{=it.enginehost}}</div>
+            {{?}}
+
+            <!-- Receive variables from the server -->
+            <script>
+
+                var user = {{=JSON.stringify(it.user)}};
+                var confirmString = '{{=it.translation.gameplay_alert8}}';
+                var alert4String = '{{=it.translation.gameplay_alert4}}';
+                var strBonusMessage0 = '{{=it.translation.bonus_message0}}';
+                var strBonusMessage2 = '{{=it.translation.bonus_message2}}';
+                var strBonusMessage3 = '{{=it.translation.bonus_message3}}';
+                var strBonusMessage4 = '{{=it.translation.bonus_message4}}';
+                var strBonusMessage5 = '{{=it.translation.bonus_message5}}';
+                var strBonusMessage6 = '{{=it.translation.bonus_message6}}';
+                var strBonusMessage7 = '{{=it.translation.bonus_message7}}';
+                var strBonusMessage8 = '{{=it.translation.bonus_message8}}';
+                var strGameplayAlert0 = '{{=it.translation.gameplay_alert0}}';
+                var strGameplayAlert1 = '{{=it.translation.gameplay_alert1}}';
+                var strGameplayAlert2 = '{{=it.translation.gameplay_alert2}}';
+                var strGameplayAlert3 = '{{=it.translation.gameplay_alert3}}';
+                var strGameplayAlert9 = '{{=it.translation.gameplay_alert9}}';
+
+                var enableBackground = true;
+                var enableChatMsg = true;
+				var enableEtc = true;
+
+            </script>
+
+            <div id="game-content">
+
+                <div id="game-container" style='overflow-x: hidden;'>
+                    <div style="width: 100%;height: 100%; position: absolute; top: 240px;left: 0;z-index: 1000;/* color: white; */font-size: 30px;text-align: center;" id = 'loading-div'>
+                        <div style="padding: 20px; margin: 0% auto; height: 100%;">
+                            <img src="/img/loading-ring.gif" style="width: 80px;"> <br>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+                <!-- BEGIN CORE PLUGINS -->
+                <!--[if lt IE 9]>
+                <script src="/metronic/assets/global/plugins/respond.min.js"></script>
+                <script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+                <![endif]-->
+                <script src="/metronic/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+                <script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+                <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+                <script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+                <script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+                <script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+                <script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+                <script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+                <script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+                <script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+                <script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+                <script src="/metronic/assets/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+                <script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+
+                <script src="/vendor/amcharts/amcharts.js"></script>
+                <script src="/vendor/amcharts/serial.js"></script>
+                <script src="/vendor/amcharts/themes/dark.js"></script>
+                <script src="/vendor/clipboard/clipboard.min.js"></script>
+
+                <!-- END CORE PLUGINS -->
+                <script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+                <script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+                <!-- END JAVASCRIPTS -->
+                <!-- BEGIN TOASTR -->
+                <script src="/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+                <script src="/metronic/assets/admin/pages/scripts/ui-toastr.js" type="text/javascript"></script>
+                <!-- END TOASTR -->
+
+                <!--RequireJs-->
+                <script data-main="/scripts/main" src="{{?it.buildConfig }}/scripts/{{=it.buildConfig['main.min.js']}}{{??}}/node_modules/requirejs/require.js{{?}}"></script>
+                <!-- Detect the viewport size with css and javascript hack -->
+                <div id="handheld-detection"></div>
+                <div id="ghost-handheld-detection"></div>
+
+            </div>
+        </div>
+
+    </body>
+
+</html>

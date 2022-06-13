@@ -1,0 +1,946 @@
+{{##def.content:
+
+<style>
+    tbody tr:nth-child(even) {
+        background: #5a5a5a;
+    }
+
+    td {
+        padding: 3px;
+    }
+
+    table.result-table td {
+        border: 1px solid lightgray;
+    }
+
+    thead {
+        border: 1px solid;
+    }
+
+    .btn-success {
+        background-color: #165a56;
+    }
+
+    .save-staff>[class*="fa-"]:hover {
+        font-size:18px;
+    }
+    .save-staff>[class*="fa-"]:active {
+        font-size:14px;
+    }
+
+</style>
+
+<link href="/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css">
+<!-- BEGIN PAGE CONTENT-->
+
+<div class="col-md-12">
+
+    <!-- START OF STAFF SECTION -->
+    <div class="col-md-5">
+        <h1 style="text-align: center; margin-bottom: 30px;">
+            {{=it.translation['admin_staff_staff']}}
+        </h1>
+        <a class="btn btn-primary add" data-toggle="modal" href="#add-dialog" style="margin-bottom: 20px;"> + {{=it.translation['admin_staff_add']}} </a>
+        <a class="btn btn-primary" href="#add-user-dialog" data-toggle="modal" style="margin-bottom: 20px; float: right;">{{=it.translation['admin_staff_add_user_to_staff']}}</a>
+        <table  class = 'table staff-list' style ='text-align: center; font-size:14px; padding:3px;'>
+            <thead>
+            <tr style = 'font-weight: bold;'>
+                <td hidden = 'true'></td>
+                <td>{{=it.translation['global_no']}}</td>
+                <td>{{=it.translation['admin_staff_staffname']}}</td>
+                <td>
+                    {{=it.translation['global_email']}}
+                </td>
+                <td>{{=it.translation['admin_staff_edit']}}</td>
+                <td>{{=it.translation['admin_staff_delete']}}</td>
+            </tr>
+            </thead>
+
+            <tbody>
+            {{~it.staff :user:index}}
+            <tr>
+                <td hidden = 'true'>{{=user.emp_id}}</td>
+                <td class="sel_row">{{=index+1}}</td>
+                <td class="sel_row">{{=user.emp_name}}</td>
+                <td class="sel_row">{{=user.email}}</td>
+                <td style="white-space: nowrap; width: 1%;">
+                    <a class="btn btn-success edit" data-toggle="modal" href="#edit-dialog">
+                        <i class="far fa-edit"></i> {{=it.translation['admin_staff_edit']}}
+                    </a>
+                </td>
+                <td class="sel_row" style="width: 1%; white-space: nowrap;">
+                    <a class="btn btn-success remove">
+                        <i class="fas fa-trash-alt"></i> {{=it.translation['admin_staff_delete']}}
+                    </a>
+                </td>
+            </tr>
+            {{~}}
+            </tbody>
+        </table>
+    </div>
+    <!-- END OF STAFF SECTION -->
+
+    <!-- START OF RIGHT PANE -->
+    <div id="print">
+    <div class="col-md-7">
+        <h1 style="text-align: center; margin-bottom: 30px;">
+            {{=it.translation["admin_staff_report"]}}
+        </h1>
+        <div class="stat-show">
+
+            <div class="row">
+                <style>
+                    .item > p {
+                        color: #fff;
+                        background: #337ab7;
+                        padding-right: 5px;
+                        font-weight: 600;
+                    }
+                    .number {
+                        padding-top: 20px;
+                        text-align: right;
+                        font-size: 25px;
+                        line-height: 36px;
+                        letter-spacing: -1px;
+                        margin-bottom: 0px;
+                    }
+                    .more {
+                        clear: both;
+                        display: block;
+                        padding: 6px 10px 6px 10px;
+                        position: relative;
+                        background: #0b5a56 !important;
+                        text-transform: uppercase;
+                        font-size: 12px;
+                    }
+                </style>
+                <div class="item col-md-2">
+                    <p class="number user-count"></p>
+                    <p class="more">{{=it.translation["admin_staff_users_invited"]}}</p>
+                </div>
+                <!--<div class="item col-md-3">-->
+                    <!--<p class="number gross-profit"></p>-->
+                    <!--<p class="more">{{=it.translation["admin_staff_gross_profit"]}}</p>-->
+                <!--</div>-->
+                <div class="item col-md-3">
+                    <p class="number total-for-company"></p>
+                    <p class="more">{{=it.translation["admin_staff_total_for_company"]}}</p>
+                </div>
+                <div class="item col-md-3">
+                    <p class="number total-volume"></p>
+                    <p class="more">{{=it.translation["admin_staff_total_volume"]}}</p>
+                </div>
+                <div class="item col-md-2">
+                    <p class="number net-profit"></p>
+                    <p class="more">{{=it.translation["admin_staff_net_profit"]}}</p>
+                </div>
+                <div class="item col-md-2">
+                    <p class="number games-played"></p>
+                    <p class="more">{{=it.translation["admin_staff_games_played"]}}</p>
+                </div>
+                <!--<table>-->
+                    <!--<tr>-->
+                        <!--<td>Users Invited:</td>-->
+                        <!--<td class="user-count"></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td>Gross Profit:</td>-->
+                        <!--<td class="gross-profit"></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td>Net Profit:</td>-->
+                        <!--<td class="net-profit"></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td>Games Played:</td>-->
+                        <!--<td class="games-played"></td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+            </div>
+        </div>
+
+        <div class="users-show" style="margin-top: 15px;">
+            <div class="row">
+                <h1 style="float: left;">
+                    {{=it.translation["admin_staff_invited_players"]}}
+                    {{?it.staffname}}
+                    <span class="staffname">{{?it.translation['language_for']=='en'}} by {{=it.staffname}} {{??}} {{=it.staffname}} {{?}}</span>
+                    {{?}}
+                </h1>
+                <span>
+                    <a class="make-report btn btn-primary" style="float: right; margin-top: 20px;">
+                        {{=it.translation["admin_staff_make_report"]}}
+                    </a>
+                </span>
+            </div>
+            <style>
+                table.user-list {
+                    font-size: 13px !important;
+                    text-align: center !important;
+                }
+                table.user-list th {
+                    font-weight: bold !important;
+                    font-size: 15px !important;
+                    text-align: center !important;
+                }
+                table.user-list td {
+                    line-height: 2 !important;
+                    border: 1px solid;
+                }
+            </style>
+            <table class="table user-list">
+                <thead>
+                    <tr>
+                        <th hidden='true'>user_id</th>
+                        <th>{{=it.translation['global_no']}}</th>
+                        <th>{{=it.translation["global_username"]}}</th>
+                        <!--<th>{{=it.translation["global_email"]}}</th>-->
+                        <th>{{=it.translation["admin_staff_gross_profit"]}}</th>
+                        <th>{{=it.translation["admin_staff_net_profit"]}}</th>
+                        <th>{{=it.translation["admin_staff_games_played"]}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{~it.userlist:user:index}}
+                        <tr>
+                            <td hidden='true'>{{=user.id}}</td>
+                            <td>{{=index + 1}}</td>
+                            <td>{{=user.username}}</td>
+                            <!--<td>{{=user.email}}</td>-->
+                            <td>{{=user.gross_profit/100}}</td>
+                            <td>{{=user.net_profit/100}}</td>
+                            <td>{{=user.games_played}}</td>
+                        </tr>
+                    {{~}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+    <!-- END OF RIGHT PANE -->
+
+</div>
+
+<div id="handheld-detection"></div>
+
+<!-- BEGINNING OF  ADD A STAFF DIALOG -->
+<div class="modal fade" id="add-dialog" tabindex="-1" role="basic" aria-hidden="true" style="color: #000;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">{{=it.translation['admin_staff_add_new_staff']}}</h4>
+            </div>
+            <div class="modal-body">
+                <table style="padding: 3px; margin: auto;">
+                    <tr>
+                        <td>    <label for="name">{{=it.translation['admin_staff_staffname']}}</label>      </td>
+                        <td>    <input type="text" id="name" />     </td>
+                    </tr>
+                    <tr>
+                        <td>    <label for="email">{{=it.translation['global_email']}}</label>    </td>
+                        <td>    <input type="text" id="email"/>     </td>
+                    </tr>
+                    <!--<tr>
+                        <td>    <label for="password">Password</label>  </td>
+                        <td>    <input type="password" id="password"/>  </td>
+                    </tr>
+                    <tr>
+                        <td>    <label for="confirm">Confirm</label>   </td>
+                        <td>    <input type="password" id="confirm"/>   </td>
+                    </tr>-->
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default" data-dismiss="modal">{{=it.translation['admin_staff_close']}}</button>
+                <button type="button" class="btn blue save">{{=it.translation['admin_staff_save_changes']}}</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- END OF ADD A STAFF DIALOG -->
+
+<!-- BEGINNING OF AN EDIT DIALOG -->
+<div class="modal fade" id="edit-dialog" tabindex="-1" role="basic" aria-hidden="true" style="color: #000;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">{{=it.translation['admin_staff_edit_staff']}}</h4>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <td>    <input type="hidden" id="emp_id"/>    </td>
+                    </tr>
+                    <tr>
+                        <td>    <label for="newname">{{=it.translation['admin_staff_staffname']}}</label>      </td>
+                        <td>    <input type="text" id="newname" />     </td>
+                    </tr>
+                    <tr>
+                        <td>    <label for="newmail">{{=it.translation['global_email']}}</label>    </td>
+                        <td>    <input type="text" id="newmail"/>     </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default" data-dismiss="modal">{{=it.translation['admin_staff_close']}}</button>
+                <button type="button" class="btn blue update">{{=it.translation['admin_staff_save_changes']}}</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- END OF AN EDIT DIALOG -->
+
+<!-- BEGINNING OF ADD A USER TO A STAFF DIALOG -->
+<div class="modal fade" id="add-user-dialog" tabindex="-1" role="basic" aria-hidden="true" style="color: #000; min-width: 1000px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black;"></button>
+                <h4 class="modal-title">{{=it.translation["admin_staff_add_user_to_staff"]}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="info">
+                    {{=it.translation["admin_staff_sentence1"]}}
+                </div>
+                <div class="search-bar">
+                    <label for="str-search">{{=it.translation["admin_staff_keyword"]}}: </label>
+                    <input type="text" id="str-search" value="" placeholder="{{=it.translation['admin_staff_sentence2']}}">
+                    <button type="button" id="btn-search">
+                        <i class="fa fa-search"></i> {{=it.translation["admin_staff_search"]}}
+                    </button>
+                </div>
+                <div class="search-container" style="margin-top:10px;">
+
+                    <table class="result-table" style="width: 100%; text-align: center !important;">
+                        <thead>
+                        <tr>
+                            <th hidden="true">UserId</th>
+                            <!--<th><input type="checkbox"></th>-->
+                            <th>{{=it.translation["global_no"]}}</th>
+                            <th>{{=it.translation["global_username"]}}</th>
+                            <th>{{=it.translation["admin_staff_email_address"]}}</th>
+                            <th>{{=it.translation["admin_staff_introduced_by"]}}</th>
+                            <th>{{=it.translation["global_save"]}}</th>
+                            <!--<th>Add</th>-->
+                            <!--<th>Change</th>-->
+                        </tr>
+                        </thead>
+                        <tbody class="search-result"></tbody>
+                        <!--<tfoot>-->
+                        <!--<tr>-->
+                            <!--<td hidden="true">UserIds</td>-->
+                            <!--<td><i class="fa fa-hand-point-right"></i></td>-->
+                            <!--<td colspan="2">-->
+                                <!--<span>With Selected Items, Do <i class="fas fa-long-arrow-alt-right"></i></span>-->
+                            <!--</td>-->
+                            <!--<td><select></select></td>-->
+                            <!--<td><span><i class="fa fa-save"></i><br>Save</span></td>-->
+                            <!--&lt;!&ndash;<td><span><i class="fa fa-user-plus"></i><br>Add</span></td>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<td><span><i class="fa fa-wrench"></i><br>Change</span></td>&ndash;&gt;-->
+                        <!--</tr>-->
+                        <!--</tfoot>-->
+                    </table>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END OF ADD A USER TO A STAFF DIALOG -->
+
+<!-- END PAGE CONTENT-->
+
+
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="/metronic/assets/global/plugins/bootstrap-tabdrop/js/bootstrap-tabdrop.js"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+
+<!-- BEGIN TOASTR -->
+<script src="/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/pages/scripts/ui-toastr.js" type="text/javascript"></script>
+<!-- END TOASTR -->
+
+
+<script src="/vendor/jspdf/dist/jspdf.debug.js"></script>
+<script src="/vendor/jspdf/plugins/canvas.js"></script>
+<script src="/vendor/jspdf/plugins/faker.min.js"></script>
+<script src="/vendor/jspdf/plugins/jspdf.plugin.autotable.js"></script>
+
+<script src="http://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+<script src="http://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+
+<script>
+    var oldElement;
+    var total_for_company,
+        total_extra_bet,
+        total_bet,
+        net_profit,
+        gross_profit,
+        games_played,
+        count,
+        userlist,
+        staffname;
+
+    jQuery(document).ready(function() {
+        Metronic.init();
+        Layout.init();
+        $('#add-dialog').modal('hide');
+        $('#edit-dialog').modal('hide');
+        $('#add-user-dialog').modal('hide');
+
+        gross_profit = 0;
+        net_profit = 0;
+        games_played = 0;
+        count = 0;
+        userlist = {{=JSON.stringify(it.userlist)}};
+        if (userlist === undefined) return;
+
+        userlist.forEach(function(user){
+             gross_profit += user.gross_profit;
+             net_profit   += user.net_profit;
+             games_played += user.games_played;
+             count++;
+        });
+
+        /*$('.gross-profit').text(gross_profit);*/
+        total_for_company = parseInt('{{=it.total_profit_for_company}}');
+        if (isNaN(total_for_company)) total_for_company = 0;
+        total_extra_bet = parseInt('{{=it.total_extra_bet}}');
+        if (isNaN(total_extra_bet)) total_extra_bet = 0;
+        total_bet = parseInt('{{=it.total_bet}}');
+        if (isNaN(total_bet)) total_bet = 0;
+        staffname = '{{=it.staffname}}';
+
+        $('.user-count').text(count);
+        $('.total-for-company').text(total_for_company / 100);
+        $('.total-volume').text((total_extra_bet + total_bet) / 100);
+        $('.net-profit').text(net_profit / 100);
+        $('.games-played').text(games_played);
+
+    });
+
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "positionClass": "toast-top-right",
+        "onclick": null,
+        "showDuration": "1000",
+        "hideDuration": "1000",
+        "timeOut": "60000",
+        "extendedTimeOut": "2000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+
+    function ValidateEmail(mail) {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
+        {
+            return true;
+        }
+        toastr['error']('{{=it.translation.admin_staff_alert4}}', "{{=it.translation['admin_staff_error']}}"+"{{=it.translation['admin_staff_notification']}}");
+        return false;
+    };
+
+    /* +ADD button*/
+    $(document).on('click', '.btn.add', function(){
+        $('#add-dialog').modal('show');
+    });
+
+    /* ADD A STAFF */
+    $(document).on('click', '.blue.save', function() {
+        var name = $('#name').val();
+        var mail = $('#email').val();
+        /*var password = $('#password').val();
+        var confirm  = $('#confirm').val();
+        if (password != confirm) {
+            alert("Password not matched. Please check again.");
+            return;
+        }*/
+
+        if (name.split(/\s+/).join('') === ''){
+            alert('{{=it.translation.rule_alert0}}');
+            return;
+        }
+        if (mail.split(/\s+/).join('') === ''){
+            alert('{{=it.translation.rule_alert25}}');
+            return;
+        }
+        if (!ValidateEmail(mail)) {
+            return;
+        }
+
+        $.post('/staff-add', {
+                name: name,
+                mail: mail
+                /*pass: password*/
+            },
+            function(data){
+                if (data === 'success') {
+                    toastr['success']("{{=it.translation['admin_staff_success']}}: " + '{{=it.translation.admin_staff_alert5}}', "{{=it.translation['admin_staff_success']}}"+"{{=it.translation['admin_staff_notification']}}");
+                    var rows = $('table.staff-list').children().last().children();
+                    var element_hidden=$("<td></td>", {'hidden':'true'}).text($(rows[rows.length-1]).children().first().text() + 1);
+                    var element_id   = $("<td class='sel_row'></td>").text(rows.length + 1);
+                    var element_name = $("<td class='sel_row'></td>").text(name);
+                    var element_mail = $("<td class='sel_row'></td>").text(mail);
+                    var element_edit = "<td>" +
+                        '<a class="btn btn-success edit" data-toggle="modal" href="#edit-dialog"> <i class="far fa-edit"></i> {{=it.translation["admin_staff_edit"]}} </a>' +
+                        "</td>";
+                    var element_remove = '<td class="sel_row"><a class="btn btn-success remove">'+
+                        '<i class="fas fa-trash-alt"></i> {{=it.translation["admin_staff_delete"]}}'+
+                        '</a></td>';
+                    $('table.staff-list').children().last()
+                        .append($("<tr class='class_tr'></tr>").addClass((rows.length%2)?'':'class_trOddRow')
+                        .append(element_hidden, element_id, element_name, element_mail, element_edit, element_remove));
+                }
+                else if (data=='duplicate')
+                    toastr['warning']("{{=it.translation['admin_staff_warning']}}: "+'{{=it.translation.admin_staff_alert6}}', "{{=it.translation['admin_staff_warning']}}"+"{{=it.translation['admin_staff_notification']}}");
+                else
+                    toastr['error']("{{=it.translation['admin_staff_error']}}: "+'{{=it.translation.admin_staff_alert7}}', "{{=it.translation['admin_staff_error']}}"+"{{=it.translation['admin_staff_notification']}}");
+                $('#add-dialog').modal('hide');
+        });
+    });
+
+    /* UPDATE A STAFF */
+    $(document).on('click', '.blue.update', function() {
+        var emp_id = $('#emp_id').val();
+        var name = $('#newname').val();
+        var mail = $('#newmail').val();
+        if (name === old_staff_name && mail === old_staff_email){
+            /* Nothing changed */
+            $('#edit-dialog').modal('hide');
+            return;
+        }
+        $.post('/staff-update', {
+            emp_id: emp_id,
+            name: name,
+            mail: mail
+        }, function(data) {
+            if (data == 'success') {
+                toastr['success']("{{=it.translation['admin_staff_success']}}: "+'{{=it.translation.admin_staff_alert8}}', "{{=it.translation['admin_staff_success']}}"+"{{=it.translation['admin_staff_notification']}}");
+                $('table.staff-list').children().children().eq(emp_id).children().eq(2).text(name);
+                $('table.staff-list').children().children().eq(emp_id).children().eq(3).text(mail);
+            }
+            else
+                toastr['error']("{{=it.translation['admin_staff_error']}}: "+'{{=it.translation.admin_staff_alert9}}', "{{=it.translation['admin_staff_error']}}"+"{{=it.translation['admin_staff_notification']}}");
+            $('#edit-dialog').modal('hide');
+        });
+    });
+
+    /* DELETE button */
+    $(document).on('click', '.remove', function() {
+        var r = confirm('{{=it.translation.admin_staff_alert10}}');
+        if (r === false) {
+            return;
+        }
+        var tr_element = $(this).parent().parent();
+        var emp_name = $(this).parent().siblings().eq(2).text();
+        $.post('/staff-delete', {
+            emp_name: emp_name
+        }, function(data, status){
+            if (data === 'success' && status === 'success') {
+                toastr['success']("{{=it.translation['admin_staff_success']}}: "+'{{=it.translation.admin_staff_alert11}}', "{{=it.translation['admin_staff_success']}}"+"{{=it.translation['admin_staff_notification']}}");
+                tr_element.remove();
+                $('table.user-list').children('tbody').children().remove();
+            }
+            else {
+                toastr['error']("{{=it.translation['admin_staff_error']}}: "+'{{=it.translation.admin_staff_alert3}}', "{{=it.translation['admin_staff_error']}}"+"{{=it.translation['admin_staff_notification']}}");
+            }
+        })
+    });
+
+    /* Add a user button */
+    $(document).on('click', '.add-user', function() {
+        $('#add-user-dialog').modal('show');
+        $('#str-search').focus();
+        $('#str-search').trigger('click');
+    });
+
+    var old_staff_name, old_staff_email;
+    /* EDIT button */
+    $(document).on('click', '.edit', function(){
+        oldElement = this;
+        var emp_id = $(this).parent().siblings().first().text();
+        var emp_name = $(this).parent().siblings().eq(2).text();
+        var emp_email = $(this).parent().siblings().eq(3).text();
+        $('#emp_id').val(emp_id);
+        $('#newname').val(emp_name);
+        $('#newmail').val(emp_email);
+        old_staff_name = emp_name;
+        old_staff_email = emp_email;
+        $('#edit-dialog').modal('show');
+    });
+
+    /* select table row */
+    $(document).on('click', '.sel_row', function(e) {
+        if (e.toElement.classList.contains('remove')) return;
+        if (e.toElement.classList.contains('edit')) return;
+        var emp_id = $(this).siblings().first().text();
+        window.location = '/staff-admin/' + emp_id + '/?clang={{=it.translation["language_for"]}}';
+    });
+
+    /* search users list with keywords */
+    $('#btn-search').click(function(){
+        var term = $('#str-search').val();
+        $.post('/search', { keyword : term }, function (data, status) {
+            if (status==="success" && data.result) {
+                var html ='';
+                data.result.users.forEach(function(item, index){
+                    html += '<tr><td hidden="true">' + item.id + '</td>';
+                    /*html += '<td><input type="checkbox"></td>';*/
+                    html += '<td>' + (index + 1) + '</td>';
+                    html += '<td>' + item.username + '</td>';
+                    html += '<td>' + item.email + '</td>';
+
+                    var options = '<option value="null">--None--</option>';
+                    data.result.emps.forEach(function(emp) {
+                        options += '<option value=' + emp.emp_id;
+                        if (emp.emp_id == item.ref_staff_id) options += ' selected';
+                        options += '>' + emp.emp_name + '</option>';
+                    });
+
+                    html += '<td><select>' + options + '</select></td>';
+                    html += '<td class="save-staff"><i class="fa fa-save"></i></td>';
+                    /*html += '<td class="add-staff"><i class="fa fa-user-plus"></i></td>';*/
+                    /*html += '<td class="change-staff"><i class="fa fa-wrench"></i></td>';*/
+                    html += '</tr>';
+                });
+                $('.search-result').children().remove();
+                $('.search-result').append(html);
+            } else {
+                /*$('search-container').children('p').remove();*/
+                $('search-container').append('<p>'+'{{=it.translation.admin_staff_alert12}}'+'</p>');
+            }
+        });
+    });
+
+    /* save staff */
+    $(document).on('click', '.save-staff', function () {
+        var user_id = $(this).siblings().first().text();
+        var emp_id = $(this).siblings().find('select').val();
+
+        $.post('/save_staff', { user_id: user_id, emp_id: emp_id }, function(data, status) {
+            if (status === 'success') {
+                alert('{{=it.translation["admin_staff_save_success"]}}');
+            }
+            else {
+                alert('{{=it.translation.admin_staff_alert2}}');
+            }
+        });
+    });
+
+    /* add a staff */
+    $(document).on('click', '.add-staff', function () { });
+
+    /* change staff */
+    $(document).on('click', '.change-staff', function () { });
+
+    /* link to the user page */
+    $(document).on('click', '.user-list td', function () {
+        var username = $(this).parentsUntil('td').children().eq(2).text();
+        window.location = '/user/' + username;
+    });
+
+    $(document).on('hover', 'td',
+        function() {
+            $(this).css('cursor', 'auto');
+        }, function() {
+            $(this).css('cursor', 'pointer');
+    });
+
+</script>
+
+<script>
+    $('.make-report').click(function(){
+
+        if (staffname === undefined || count === 0) return;
+        var balloonData = {
+            total_user_count    : count+'',
+            total_for_company   : total_for_company+'',
+            total_volume        : total_bet + total_extra_bet+'',
+            total_net_profit    : net_profit+'',
+            total_games_played  : games_played+''
+        };
+        var tableCols = [], tableRows = [];
+
+        var pdf = new jsPDF('p', 'pt', 'letter');
+        var logourl = '/img/logo print.png';
+        var title = "Report on the Staff \""+staffname + "\"";
+
+        margins = {
+            top: 70,
+            bottom: 40,
+            left: 30,
+            width: 550
+        };
+
+        pdf.setProperties({
+            title: title,
+            subject: "This is a report",
+            creator: "Madabit"
+        });
+
+        /**
+         * Settings required for doc.chtext function.
+         * Set background and foreground colors and default font size.
+         */
+        pdf.chsetup = {
+            background: "#fff",
+            foreground: "#000",
+            fontsize: 10
+        };
+
+        if (userlist) {
+            tableCols = ["Username", "Email", "GrossProfit", "Net Profit", "Played Games"];
+            userlist.forEach(function(user){
+                var mail;
+                if (user.email === 'undefined') mail = 'No Email Address';
+                else mail = user.email;
+                var row = [user.username, mail, user.gross_profit, user.net_profit, user.games_played];
+                tableRows.push(row);
+            });
+        }
+
+        generateReport(pdf, title, logourl, balloonData, tableCols, tableRows);
+    });
+
+    /* generate the report of a staff */
+    function generateReport(pdf, title, logourl, balloonData, tableCols, tableRows){
+
+        printHeader(pdf, title, logourl);
+
+        printBalloonData(pdf, balloonData);
+
+        printTableData(pdf, tableCols, tableRows);
+
+        pdf.save('Report.pdf');
+
+    };
+
+    /* print the title of the report page */
+    function printHeader(pdf, title, logourl){
+
+        var getImageFromUrl = function(url, callback) {
+            var img = new Image();
+
+            img.onError = function() {
+                alert('{{=it.translation.admin_staff_alert1}}' + '"'+url+'"');
+                return callback(null);
+            };
+            img.onload = function() {
+                callback(img);
+            };
+            img.crossOrigin = "";
+            img.src = url;
+        };
+
+        /*getImageFromUrl(logourl, function(img){
+            if (img) {
+                pdf.addImage(img, 'PNG', 10, 10, 110, 110);*/
+                pdf.setTextColor(200, 0, 0);
+                pdf.setFontSize(22);
+                if ('{{=it.translation.language_for}}' === 'zh') {
+                    title = "报告职员“" + staffname + "”工作";
+                }
+                pdf.chsetup.foreground = '#e00';
+                chtext(pdf, title, pdf.internal.pageSize.width/3, 50, 50);
+                pdf.line(3, 60, pdf.internal.pageSize.width-3, 60);
+        /*    }
+        });*/
+    };
+
+    /* print the general statistics of players invited by staff */
+    function printBalloonData(pdf, balloonData){
+
+        var width = pdf.internal.pageSize.width;
+        var data_count = Object.keys(balloonData).length;
+        var boxwidth = parseInt((width - margins.left) / data_count);
+
+        pdf.setTextColor(0, 0, 0);
+        pdf.setFontSize(13);
+        pdf.chsetup.foreground = '#000';
+
+        if ('{{=it.translation.language_for}}' === 'en') {
+            pdf.text(balloonData.total_user_count, boxwidth, 100, 'right');
+            pdf.text(balloonData.total_for_company, boxwidth * 2, 100, 'right');
+            pdf.text(balloonData.total_volume, boxwidth * 3, 100, 'right');
+            pdf.text(balloonData.total_net_profit, boxwidth * 4, 100, 'right');
+            pdf.text(balloonData.total_games_played, boxwidth * 5, 100, 'right');
+        }
+        else {
+            pdf.text(balloonData.total_user_count, margins.left, 100);
+            pdf.text(balloonData.total_for_company, margins.left + boxwidth, 100);
+            pdf.text(balloonData.total_volume, margins.left + boxwidth * 2, 100);
+            pdf.text(balloonData.total_net_profit, margins.left + boxwidth * 3, 100);
+            pdf.text(balloonData.total_games_played, margins.left + boxwidth * 4, 100);
+        }
+
+        if ('{{=it.translation.language_for}}' === 'en') {
+            pdf.text("User Count",      boxwidth, 120, 'right');
+            pdf.text("Company Profit",  boxwidth*2, 120, 'right');
+            pdf.text("Total Volume",    boxwidth*3, 120, 'right');
+            pdf.text("Net Profit",      boxwidth*4, 120, 'right');
+            pdf.text("Games Played",    boxwidth*5, 120, 'right');
+        }
+        else {
+            chtext(pdf, "受邀用户",      margins.left, 120, 30);
+            chtext(pdf, "公司总毛利",    margins.left + boxwidth, 120, 30);
+            chtext(pdf, "总投入算力量",      margins.left + boxwidth * 2, 120, 30);
+            chtext(pdf, "净利",         margins.left + boxwidth * 3, 120, 30);
+            chtext(pdf, "游戏总局数",    margins.left + boxwidth * 4, 120, 30);
+        }
+    };
+
+    /* print the table of players data */
+    function printTableData(pdf, tableCols, tableRows){
+
+        if('{{=it.translation.language_for}}'==='zh') {
+            tableCols =["", "", "", "", ""]/* ["用户名", "电子邮件", "毛利", "净利", "游戏总局数"]*/;
+        }
+        pdf.autoTable(tableCols, tableRows, {
+            styles: {theme: 'grid' },
+            columnStyles: { id: {fillColor: 255} },
+            margin: {top:200},
+            addPageContent: function(data) {
+                if('{{=it.translation.language_for}}'==='zh'){
+                    chtext(pdf, "细节", 40, 175, 30);
+                }
+                else {
+                    pdf.text("Players Details", 40, 175);
+                }
+            }
+        });
+        if('{{=it.translation.language_for}}'==='zh') {
+            pdf.chsetup.background = "rgb(41, 128, 185)";
+            pdf.chsetup.foreground = "#fff";
+            chtext(pdf, "用户名",    45, 215, 30);
+            chtext(pdf, "电子邮件",  145, 215, 30);
+            chtext(pdf, "毛利",     360, 215, 30);
+            chtext(pdf, "净利",     445, 215, 30);
+            chtext(pdf, "游戏总局数",515, 215, 30);
+        }
+    };
+
+    /**
+     * Prints a line of non-ASCII text as a series of images.
+     * @param {String} chstr     Non-ASCII string to add as an image
+     * @param {Number} x         Horizontal displacement
+     * @param {Number} y         Vertical displacement
+     * @param {Number} fontsize  Similar sizing as doc.setFontSize()
+     */
+    function chtext(pdf, chstr, x, y, fontsize, align) {
+
+        if (pdf.chsetup.ctx === undefined) {
+            pdf.chsetup.canvas = document.createElement('canvas');
+            pdf.chsetup.canvas.width = '150';  /* Height default is 150 */
+            pdf.chsetup.ctx = pdf.chsetup.canvas.getContext('2d');
+            pdf.chsetup.ctx.font = "bold 150px PMingLiU";
+        }
+
+        var ctx = pdf.chsetup.ctx,
+            char = null,
+            xi = x,
+            size = 150,
+            scale = (fontsize || pdf.chsetup.fontsize) / 450;
+
+        for (var i=0; i<chstr.length; i++) {
+
+            ctx.fillStyle = pdf.chsetup.background;
+            ctx.fillRect(0,0,size,size);  /* Clear content */
+            ctx.fillStyle = pdf.chsetup.foreground;
+            ctx.fillText(chstr.charAt(i), 0, 120);  /* Draw character */
+            char = pdf.chsetup.canvas.toDataURL("image/jpeg", 1.0);  /* 1.0 highest quality */
+            pdf.addImage(char, 'JPEG', xi, y-size*scale*.9, size*scale, size*scale);
+            xi = xi + ctx.measureText(chstr.charAt(i)).width*scale*1.1;  /* 1.1 for a little extra space */
+        }
+    };
+
+    $(document).on('keypress', '#str-search', function (e) {
+        if (e.charCode === 13) {
+            $('#btn-search').trigger('click');
+        }
+    });
+
+</script>
+
+<script>
+
+    /*var base64Img = null;
+
+    generate = function()
+    {
+        var pdf = new jsPDF('p', 'pt', 'a4');
+        pdf.setFontSize(18);
+        pdf.fromHTML(document.getElementById('print'),
+            margins.left,
+            margins.top,
+            {
+                width: margins.width /!*max width of content on PDF*!/
+            },function(dispose) {
+                headerFooterFormatting(pdf, pdf.internal.getNumberOfPages());
+            },
+            margins);
+
+        var iframe = document.createElement('iframe');
+        iframe.setAttribute('style','position:absolute;right:0; top:0; bottom:0; height:100%; width:45%; padding:20px;');
+        document.body.appendChild(iframe);
+
+        iframe.src = pdf.output('datauristring');
+    };
+
+    function header(doc)
+    {
+        doc.setFontSize(30);
+        doc.setTextColor(40);
+        doc.setFontStyle('normal');
+
+        imgToBase64('/img/logo print.png', function(base64){
+            base64Img = base64;
+        });
+
+        if (base64Img) {
+            doc.addImage(base64Img, 'JPEG', margins.left, 10);
+        }
+
+        doc.text("Report Header Template", margins.left + 50, 40 );
+        doc.setLineCap(2);
+        doc.line(3, 70, margins.width + 43,70); /!* horizontal line *!/
+    };*/
+
+</script>
+
+
+<!-- END JAVASCRIPTS -->
+#}}
+{{#def.include('./template/main_admin')}}

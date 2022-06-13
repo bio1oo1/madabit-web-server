@@ -1,0 +1,139 @@
+{{##def.content:
+<link href="/metronic/assets/global/plugins/icheck/skins/all.css" rel="stylesheet"/>
+<!-- BEGIN PAGE HEADER-->
+<h1 style="text-align: center; margin-bottom: 30px;">
+	{{=it.translation.gamehistory_title}}
+</h1>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="margin-bottom : 10px;">
+	<div class = 'col-md-12'>
+		<form action="/gamehistory-admin/{{=it.userId}}" method="POST" id="id_formDateRange">
+			<div class="form-group">
+				<div class="col-md-3"></div>
+				<div class="col-md-2">
+					<label for='date_from'>{{=it.translation['gamehistory_daterange_from']}}</label>
+					<input class="form-control form-control-inline input-medium date-picker" size=  "16"
+						   type="text" name='date_from' value="{{=it.date_from}}" style = "width: 150px !important;"/>
+
+				</div>
+				<div class = 'col-md-2'>
+					<label for='date_to'>{{=it.translation['gamehistory_daterange_to']}}</label>
+					<input class="form-control form-control-inline input-medium date-picker" size="16"
+						   type="text" name='date_to' value="{{=it.date_to}}" style = "width: 150px !important;"/>
+					<input type = 'hidden' value = '' name = 'time_zone_name' id = 'time_zone_name'>
+				</div>
+				<div class="col-md-2">
+					<label for=''></label>
+					<input class="btn btn-primary form-control form-control-inline input-medium" style="background-color: #b92525;width: 100px !important;margin-top: 25px;border-radius: 3px !important;border: none;-webkit-box-shadow: 0 0 6px 0px white;-moz-box-shadow: 0 0 6px 0px white;box-shadow: 0 0 6px 0px white;" type="button" value="View" id="id_btnView">
+				</div>
+				<div class="col-md-3">
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class = 'row' >
+	<table  class = 'table' style ='text-align: center; font-size:14px;'>
+		<thead>
+		<tr style="border-bottom: 3px solid #c3c3c3;">
+			<td>
+				{{=it.translation['gamehistory_table_header_gameno']}}
+			</td>
+			<td>{{=it.translation['gamehistory_table_header_gamecrash']}}</td>
+			<td>{{=it.translation['gamehistory_table_header_gamecreated']}}</td>
+			<td>{{=it.translation['gamehistory_table_header_bet']}}</td>
+			<td>{{=it.translation['gamehistory_table_header_extrabet']}}</td>
+			<td>{{=it.translation['gamehistory_table_header_cashedout']}}</td>
+		</tr>
+		</thead>
+		<tbody>
+		{{?it.histories}}
+		{{~it.histories : history:index}}
+		<tr>
+			<td>{{=history.game_id}}</td>
+			<td>{{#def.format: {n: history.game_crash, decimals: 2} }}</td>
+			<td>{{#def.date_format:{created:history.created} }}</td>
+			<td>{{=history.bet / 100}}</td>
+			<td>{{=history.extra_bet / 100}}</td>
+			<td>
+				{{? history.cash_out}}
+				{{#def.format: {n: history.cash_out / history.bet * 100, decimals: 2} }}x
+				{{??}}
+				{{=it.translation['gamehistory_table_lose']}}
+				{{?}}
+			</td>
+		</tr>
+		{{~}}
+		{{?}}
+		</tbody>
+	</table>
+</div>
+<div id="handheld-detection"></div>
+<!-- END PAGE CONTENT-->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/icheck/icheck.min.js"></script>
+
+<script type="text/javascript" src="/vendor/datepicker/bootstrap-datepicker.js"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
+
+<script src="/vendor/jspdf/dist/jspdf.debug.js"></script>
+<script src="/vendor/jspdf/plugins/canvas.js"></script>
+<script src="/vendor/jspdf/plugins/faker.min.js"></script>
+<script src="/vendor/jspdf/plugins/jspdf.plugin.autotable.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js" type="text/javascript"></script>
+<!-- END/vendor PAGE LEVEL PLUGINS -->
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+<script>
+jQuery(document).ready(function() {
+	Metronic.init();
+	Layout.init();
+
+    var timezone = jstz.determine();
+    $("#time_zone_name").val(timezone.name());
+
+    if (jQuery().datepicker) {
+        $('.date-picker').datepicker({
+            format: 'yyyy-mm-dd',
+            rtl: Metronic.isRTL(),
+            orientation: "left",
+            autoclose: true
+        });
+    }
+
+    $(document).on('click', '#id_btnView', function() {
+        $("#id_formDateRange").submit();
+    });
+
+
+
+
+});
+
+</script>
+<!-- END JAVASCRIPTS -->
+#}}
+{{#def.include('./template/main_admin')}}

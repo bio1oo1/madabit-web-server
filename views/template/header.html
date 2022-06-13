@@ -1,0 +1,276 @@
+{{##def.format:param:{{=(param.n/100).toFixed(param.decimals).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}}#}}
+
+{{##def.date_format:param:
+{{=param.created.getFullYear() + "-" +
+(((param.created.getMonth()+1<10)?"0":"")+(param.created.getMonth()+1)) + "-" +
+(((param.created.getDate()<10)?"0":"")+(param.created.getDate())) + " " +
+(((param.created.getHours()<10)?"0":"")+(param.created.getHours())) + ":" +
+(((param.created.getMinutes()<10)?"0":"")+(param.created.getMinutes())) + ":" +
+(((param.created.getSeconds()<10)?"0":"")+(param.created.getSeconds()))
+}}
+#}}
+<style>
+
+@media screen and (max-width: 480px) {
+    #id_setLangMobile {
+        display: inline-block;
+        text-decoration: none;
+        font-weight: 600;
+        margin: 8px 14px 0 6px;
+        float: right;
+    }
+}
+@media screen and (min-width: 481px) {
+    #id_setLangMobile {
+        display: none;
+        text-decoration: none;
+        font-weight: 600;
+        margin: 8px 14px 0 6px;
+        float: right;
+    }
+}
+</style>
+<div class="page-header navbar navbar-fixed-top">
+    <!-- BEGIN HEADER INNER -->
+    <div class="page-header-inner">
+        <!-- BEGIN LOGO -->
+        <div class="page-logo">
+            <a href="/?clang={{=it.translation['language_for']}}"><img src="/img/logo.png" alt="logo" class="logo-default"/></a>
+        </div>
+        <!-- END LOGO -->
+        <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+        </a>
+        <!-- END RESPONSIVE MENU TOGGLER -->
+        <!-- BEGIN Language Setting Button -->
+        <a
+            id = 'id_setLangMobile'
+            language_code="{{?it.translation.language_for=='en'}}zh{{??}}en{{?}}">
+            <img alt="" src="/img/24x24-icon_{{=it.translation['language']}}.svg" width = '20px' style="vertical-align: text-top;">
+            <span>{{?it.translation.language_for == 'en'}}EN{{??}}CN{{?}}</span>
+        </a>
+        <!-- END Language Setting Button -->
+
+        <!-- BEGIN PAGE TOP -->
+        <div class="page-top">
+            <div class="top-menu custom-top-menu">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown dropdown-language" id='id_liLanguage'>
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                        <img alt="" src="/img/24x24-icon_{{=it.translation['language']}}.svg" width = '20px'>
+                        <span class="langname">
+                        {{=it.translation['Language']}}</span>
+                        <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu" style='margin-left:60px;'>
+                            <li class='class_liLanguage' language_code = 'en'>
+                                <a href="javascript:;">
+                                <!-- <img alt="" src="/metronic/assets/global/img/flags/us.png">  -->
+                                    {{=it.translation['topbar_english']}} </a>
+                            </li>
+                            <li class='class_liLanguage' language_code = 'zh'>
+                                <a href="javascript:;">
+                                <!-- <img alt="" src="/metronic/assets/global/img/flags/cn.png">  -->
+                                    {{=it.translation['topbar_chinese']}} </a>
+                            </li>
+                        </ul>
+                        <form method= "post" action="/setLanguage" id='id_formSetLanguage' hidden = 'true'>
+                            <input type="hidden" name='current_url' value = ''>
+                            <input type="hidden" name='language_code' value = ''>
+                        </form>
+                    </li>
+                    {{?it.user && !it.user.admin}}
+                    <li class="dropdown" title = '{{=it.translation.profile_sidebar_deposit}}'>
+                        <a href="/deposit/?clang={{=it.translation['language_for']}}" class="dropdown-toggle">
+                            <i class="fab fa-btc fa-lg"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown" title = '{{=it.translation.profile_sidebar_withdraw}}'>
+                        <a href="/withdraw-request/?clang={{=it.translation['language_for']}}" class="dropdown-toggle">
+                            <i class="fas fa-dollar-sign fa-lg"></i>
+                        </a>
+                    </li>
+                    {{?}}
+                </ul>
+            </div>
+            <div class="top-menu custom-top-menu" style= 'float:right;'>
+                <ul class="nav navbar-nav" style = 'margin-right: -6px;'>
+                    {{?it.user}}
+                        {{?(!it.user.admin)}}
+                            <li class="dropdown class_satoshi_panel" style = 'margin-top:15px; margin-right:20px;'>
+                                <a href="javascript:;" class="dropdown-toggle custom-bitcoin-amount" style="cursor:default;" id='id_balanceSatoshis'>
+                                  {{=it.user.balance_satoshis_format}} bits
+                                </a>
+                            </li>
+
+                            {{?it.user.reply && it.user.reply.length>0}}
+                            <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_inbox_bar">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true" aria-expanded="true">
+                                    <i class="fas fa-envelope fa-lg" ></i>
+                                    <span class="badge badge-danger"> {{=it.user.reply.length}} </span>
+                                </a>
+                                <ul class="dropdown-menu" style="width: 250px;">
+                                    <li class="external">
+                                        <div><span class="bold">{{=it.user.reply.length}} {{=it.translation["topbar_notification_new"]}}</span>{{=it.translation["topbar_notification_messages"]}}</div>
+                                    </li>
+                                    <li>
+                                        <ul class="dropdown-menu-list scroller" data-handle-color="#637283" data-initialized="1">
+                                            {{~it.user.reply:element}}
+                                            <li>
+                                                <input type="hidden" value="{{=element.id}}"/>
+                                                <a class="message" style="border:none!important">
+                                                    <p style = 'word-wrap:break-word;'>
+                                                        {{?element.message_to_user.indexOf('welcome_free_bits:')>=0}}
+                                                            {{=it.translation.bonus_message0}}{{=element.message_to_user.substr(18)}}{{=it.translation.miscellaneous3}}
+                                                        {{??element.message_to_user.indexOf('tip_transfer:')>=0}}
+                                                            {{=element.message_to_user.split(' ')[1].substr(5)}}{{=it.translation.bonus_message2}}{{=element.message_to_user.split(' ')[0].substr(13)}}{{=it.translation.bonus_message3}}
+                                                        {{??element.message_to_user.indexOf('funding_bonus:')>=0}}
+                                                            {{=it.translation.bonus_message6}}{{=element.message_to_user.split(' ')[1].substr(5)}}{{=it.translation.bonus_message7}}{{=element.message_to_user.split(' ')[0].substr(14)}}{{=it.translation.bonus_message8}}
+                                                        {{??element.message_to_user.indexOf('login_bonus:')>=0}}
+                                                            {{=it.translation.bonus_message4}}{{=element.message_to_user.substr(12)}}{{=it.translation.bonus_message5}}
+                                                        {{??}}
+                                                            {{=element.message_to_user}}
+                                                        {{?}}
+                                                    </p>
+                                                </a>
+                                                <a class="delete" style="border:none !important">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </a>
+                                            </li>
+                                            {{~}}
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            {{?}}
+                        {{?}}
+                        <li class="dropdown dropdown-user">
+                            <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" style="cursor:default;">
+                                <img alt="" class="img-circle" src="/img/photos/{{=it.user.username}}.jpg?v={{=new Date()}}"/>
+                                <span class="username username-hide-on-mobile" style= 'font-weight:800; color: #eee; font-size:17px;'>
+                                    {{=it.user.username}}
+                                </span>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <form action="/logout" method="post" id='logout'></form>
+                            <a  href="javascript:;" class="dropdown-toggle open" onclick='logout();' alt='Logout'>
+                                <i class="fas fa-power-off fa-lg"></i>
+                            </a>
+                        </li>
+                    {{??}}
+                        <li class="dropdown" style="margin-top: 15px; margin-right: 20px">
+                            <a href="/?clang={{=it.translation['language_for']}}" class="btn btn-circle-3 btn-circle-custom green"
+                               style= " color: #fff;
+                                        background-color: #b92525;
+                                        width: 100px;
+                                        height: 40px;
+                                        vertical-align: middle;
+                                        border-radius: 8px !important;
+                                        border: 0;
+                                        font-size: 20px;
+                                        margin-left: 35px;
+                                        line-height: 9px;
+                                        outline: none;">
+                              {{=it.translation['topbar_login']}}
+                            </a>
+                        </li>
+                        <li class="dropdown" style="margin-top: 15px; margin-right: 20px">
+                            <a href="/?clang={{=it.translation['language_for']}}" class="btn btn-circle-3 btn-circle-custom green"
+                                style= " color: #fff;
+                                background-color: #b92525;
+                                width: 100px;
+                                height: 40px;
+                                vertical-align: middle;
+                                border-radius: 8px !important;
+                                border: 0;
+                                font-size: 18px;
+                                line-height: 9px;
+                                outline: none;
+                                display: none;">
+                              {{=it.translation['topbar_register']}}
+                            </a>
+                        </li>
+                    {{?}}
+                    <li class="dropdown" id = 'id_liFullscreen'>
+                        <a href="javascript:;" class="dropdown-toggle open" id='id_linkToggleFullScreen'>
+                            <i class="fas fa-expand-arrows-alt fa-lg"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- END PAGE TOP -->
+    </div>
+    <!-- END HEADER INNER -->
+</div>
+<script src = '/vendor/jquery-fullscreen/jquery.fullscreen.min.js'></script>
+<script type="text/javascript">
+
+    var selectedElement;
+    var badgeNumber;
+
+    $(document).ready(function() {
+        $(document).on('click', '.class_liLanguage', function() {
+            var current_url = window.location.href;
+            var language_code = $(this).attr('language_code');
+            $("#id_formSetLanguage").find("[name='current_url']").val(current_url);
+            $("#id_formSetLanguage").find("[name='language_code']").val(language_code);
+            $("#id_formSetLanguage").submit();
+        });
+
+        $("#id_linkToggleFullScreen").on('click', function() {
+            if($(this).hasClass('open')) {
+                $('body').fullscreen();
+                $(this).removeClass('open');
+                $(this).html('<i class="fas fa-compress fa-lg"></i>');
+            } else {
+                $.fullscreen.exit();
+                $(this).addClass('open');
+                $(this).html('<i class="fas fa-expand-arrows-alt fa-lg"></i>');
+            }
+            return;
+        });
+
+        $(".dropdown-menu-list.scroller").slimScroll({
+            height: '200px'
+        });
+
+        $(document).on('click', '.delete', function(){
+            selectedElement = $(this);
+            var mail_id = $(this).siblings().first().attr('value');
+            $.post('/delete-mail', {id: mail_id}, function(data, status){
+                if (status === 'success') {
+                    selectedElement.parent().remove();
+                    badgeNumber = $('.badge.badge-danger').text() - 1;
+                    $('.badge.badge-danger').text(badgeNumber);
+                    $('.bold').text((badgeNumber) + " " + "{{=it.translation.topbar_notification_new}}");
+                    if (badgeNumber > 0) {
+                        $('li#header_inbox_bar').addClass('open');
+                    }
+                    else {
+                        $('li#header_inbox_bar').removeClass('open');
+                        $('li#header_inbox_bar').hide();
+                    }
+                }
+                else {
+                    alert('{{=it.translation.gameplay_alert5}}' + status + '\n'+'{{=it.translation.gameplay_alert6}}' + data);
+                }
+            });
+        });
+
+        $(document).on('hover', '.dropdown-toggle', function() {}, function() {});
+
+        $(document).on('click', '#id_setLangMobile', function() {
+            var current_url = window.location.href;
+            var language_code = $(this).attr('language_code');
+            $("#id_formSetLanguage").find("[name='current_url']").val(current_url);
+            $("#id_formSetLanguage").find("[name='language_code']").val(language_code);
+            $("#id_formSetLanguage").submit();
+        });
+    });
+
+
+
+</script>
+

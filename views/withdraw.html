@@ -1,0 +1,560 @@
+{{##def.content_profile:
+<link href="/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css">
+<style>
+  .class_labelCoinType{
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 500;
+  }
+
+  .class_labelCoinType:hover{
+    color: rgba(255, 255, 255, 1);
+  }
+
+  .class_labelCoinType.active{
+    color: #e32b2b;
+    font-weight: 700;
+  }
+
+  .amount_inputbox {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+
+  .unit_panel {
+    min-width: 90px !important;
+    color: #3e3e3e;
+    border: none;
+    background: #bfbfbf;
+    border-bottom-right-radius: 3px !important;
+    border-top-right-radius: 3px !important;
+    font-size: 21px;
+  }
+
+  .fee_amount_inputbox {
+    background: 0 0 !important;
+    border: none;
+    cursor: default;
+    text-align: right;
+    border-bottom: 2px solid #e5e5e5;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+
+  table thead tr th, table tbody tr td {
+    text-align: right;
+  }
+
+  td a:active, td a:focus {
+    color:white;
+  }
+
+  @media screen and (min-width: 481px) {
+    .popup {
+      position: absolute;
+      width: 365px;
+      height: 175px;
+      z-index: 999999;
+      background: #fff;
+      top: 421px;
+      left: 20%;
+      border-radius: 10px !important;
+    }
+
+    .class_fee_totalAmount {
+      margin-top : -25px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .popup {
+      position: absolute;
+      width: 300px;
+      height: 175px;
+      z-index: 999999;
+      background: #fff;
+      top: 553px;
+      border-radius: 10px !important;
+    }
+
+    .table th, .table td {
+      text-align: center;
+      font-size:10px !important;
+      padding:0;
+    }
+
+    .table-parent-div {
+      padding:0;
+      width:107%;
+      margin-left:-8px;
+    }
+
+    .class_hiddenInMobile {
+      display: none;
+    }
+
+    .class_fee_totalAmount {
+      margin-top: 0;
+    }
+  }
+
+  .popup .closeButton {
+    position: absolute;
+    top:0px;
+    right: 10px;
+    font-size:20px;
+    font-weight: 700;
+    color: #b3aaaa;
+    cursor: pointer;
+  }
+
+  .popup .statement {
+    position: relative;
+    text-align: center;
+    top: 15%;
+    margin: 0 auto;
+    color: black;
+    font-size: 13px;
+  }
+
+
+</style>
+<div class="portlet light">
+  <div class="portlet-body">
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4" style="text-align: center;font-size:14px;">
+            1 {{=it.translation.miscellaneous0}} = {{=it.rate_USD_bit}} {{=it.translation.miscellaneous3}}
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4" style="text-align: center;font-size:14px;">
+            1 {{=it.translation.miscellaneous1}} = {{=it.rate_BTC_bit}} {{=it.translation.miscellaneous3}}
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4" style="text-align: center;font-size:14px;">
+            1 {{=it.translation.miscellaneous2}} = {{=it.rate_ETH_bit}} {{=it.translation.miscellaneous3}}
+          </div>
+        </div>
+
+        <hr style = 'margin-top:0'/>
+
+        <h2>{{=it.translation['withdraw_title_requestawithdrawal']}}</h2>
+        <div class = 'row'>
+          <div class = 'col-md-12'>
+            <form  action="/withdraw" method="post" id = 'id_formRequest'>
+              <input style="display:none" type="text" name="fakeusernameremembered"/>
+              <input style="display:none" type="password" name="fakepasswordremembere"/>
+              <div class="form-group">
+                <label class="control-label">{{=it.translation['withdraw_bitsamount']}} &nbsp;&nbsp;&nbsp;
+                  {{?it.user.ETHvsBTCRate}}
+                  ( {{=it.translation['withdraw_exchangerate']}}<strong><span style="color:#e2ddff;">{{=it.user.ETHvsBTCRate}}</span></strong> )
+                  {{??}}
+                  ( {{=it.translation['withdraw_cantgetexchangerate']}} )
+                  {{?}}
+                </label>
+
+                <div class = 'row' style="margin-bottom: 10px;">
+                  <div class = 'col-md-5 col-sm-5'>
+                    <div class="input-group">
+                      <input class="form-control amount_inputbox" name="amount_bit" id='id_inputAmountBITS'
+                             placeholder="{{= it.miningFeeBits + 100 }}" min="{{= it.miningFeeBits + 100 }}"
+                             required/>
+                      <span class="input-group-addon unit_panel">Bits</span>
+                    </div>
+                  </div>
+                  <div class = 'col-md-2 col-sm-2' align = 'center'>
+                    <label class="control-label" style = 'font-size: 30px; transform: scale(2.5, 2.5); margin-top: -8px;'> = </label>
+                  </div>
+                  <div class = 'col-md-5 col-sm-5'>
+                    <div class="input-group">
+                      <input class="form-control amount_inputbox" type="number" name="amount_btc" id='id_inputAmountBTC'
+                             step=".01" readonly style = 'background : 0 0'/>
+                      <span class="input-group-addon unit_panel">{{=it.translation.miscellaneous1}}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class = 'row' style="margin-bottom: 15px">
+                  <div class = 'col-md-7 col-sm-7'>
+                  </div>
+                  <div class = 'col-md-5 col-sm-5'>
+                    <div class="input-group">
+                      <input class="form-control amount_inputbox" type="number" name="amount_eth" id='id_inputAmountETH'
+                             step=".01" readonly style = 'background : 0 0'/>
+                      <span class="input-group-addon unit_panel">{{=it.translation.miscellaneous2}}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class = 'row' style="margin-bottom: 15px;">
+                  <div class = 'col-md-3 col-sm-3' class = 'class_fee_totalAmount'>
+                    <div class="form-group">
+                      <label class="control-label">{{=it.translation['transfer_transfertips_fee']}}</label>
+                      <input class="form-control fee_amount_inputbox" name="fee" type="text" id="fee" readonly required/>
+                    </div>
+                  </div>
+                  <div class = 'col-md-1 col-sm-1'></div>
+                  <div class = 'col-md-3 col-sm-3' class = 'class_fee_totalAmount'>
+                    <div class="form-group">
+                      <label class="control-label">{{=it.translation['transfer_transfertips_totalamount']}}</label>
+                      <input class="form-control fee_amount_inputbox" name="all" type="text" id="all" readonly required/>
+                    </div>
+                  </div>
+                  <div class = 'col-md-5 col-sm-5'>
+                    <div class="input-group">
+                      <input class="form-control amount_inputbox" type="number" name="amount_gp" id='id_inputAmountGP'
+                             step=".01" readonly style = 'background : 0 0'/>
+                      <span class="input-group-addon unit_panel">Madecoin</span>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class='form-group'>
+                <div class='row'>
+                  <div class = 'col-md-12'>
+                    <p style = 'margin-top : 8px; font-size:14px; color: #fff;'>
+                      {{=it.translation['withdraw_sentence_1_part_1']}}
+                      {{=it.translation['withdraw_sentence_1_part_2']}}
+                      {{=it.translation['withdraw_sentence_1_part_3']}}
+                      {{= it.miningFeeBits }}
+                      {{=it.translation['withdraw_sentence_1_part_4']}}
+                    </p><br>
+                    <p style= 'margin-top: -20px; font-size:14px; color: #c2c2c2;'> <strong>{{=it.translation['withdraw_sentence_2_part_1']}}</strong>{{=it.translation['withdraw_sentence_2_part_2']}}</p>
+
+                    <p style= 'font-size:14px; color: #fff;'> {{=it.translation['withdraw_sentence_3']}}&nbsp;&nbsp;
+                      <a id='id_otcLoginLink' style='color:#e32b2b; text-decoration: none;'>{{=it.translation.login_title}}</a>&nbsp;|
+                      <a id='id_otcRegisterLink' style='color:#e32b2b; text-decoration: none;'> {{=it.translation.login_register}}</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class = 'row'>
+                  <div class = 'col-md-4'>
+                    <label class="control-label" id="id_labelAddressTitle">{{=it.translation['withdraw_destinationaddress']}}({{=it.translation.miscellaneous1}})</label>
+                  </div>
+                  <div class = 'col-md-5' align = 'right'>
+                    <div class="clearfix">
+                      <div class="btn-group btn-group" data-toggle="buttons">
+                        <label class="btn class_labelCoinType" style="background: none;" id="id_gpLabelType">
+                          <input type="radio" class="toggle" value = 'Madecoin'> Madecoin
+                        </label>
+                        <label class="btn class_labelCoinType active" style="background: none;">
+                          <input type="radio" class="toggle" value = 'BTC'> {{=it.translation.miscellaneous1}}
+                        </label>
+                        <label class="btn class_labelCoinType" style="background: none;">
+                          <input type="radio" class="toggle" value = 'ETH'> {{=it.translation.miscellaneous2}}
+                        </label>
+                      </div>
+                      <input type = 'hidden' name='cointype' value = 'BTC' id='id_hiddenCoinType'/>
+                    </div>
+                  </div>
+                  <div class = 'col-md-9'>
+                    <input class="form-control"  type="text" id="destination" name="destination" required/>
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 25px;">
+                  <div class = 'col-md-9' style= 'margin-bottom: 10px;'>
+                    <label class="control-label">{{=it.translation['withdraw_yourpassword']}}</label>
+                  </div>
+                  <div class = 'col-md-9'>
+                    <input class="form-control" type="password" id="password" name="password" autocomplete="off"/>
+                  </div>
+                </div>
+                {{?it.user.mfa_secret}}
+                <div class="row">
+                  <div clas="col-md-9">
+                    <label for="otp" class="control-label">{{=it.translation['withdraw_2facode']}}</label>
+                    <input class="form-control" type="text" id="otp" name="otp" autocomplete="off" pattern="[0-9]{6}" required/>
+                  </div>
+                </div>
+                {{?}}
+                <div class="row" style= 'margin-top:10px; '>
+                  <div class="col-md-9" align='right'>
+                    <button class="btn btn-primary" type = 'button' style='min-width: 120px;' id = 'id_btnSubmit'>{{=it.translation['withdraw_submit']}}</button>
+                  </div>
+                </div>
+              </div>
+              <input type="hidden" name="withdrawal_id" value="{{= it.id}}" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{?it.warning}}
+    <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close-alert" data-dismiss="alert" aria-hidden="true"></button>
+      <strong>{{=it.translation['account_warning']}}&nbsp;&nbsp;&nbsp;&nbsp;</strong>{{!it.translation[it.warning]}}
+    </div>
+    {{?}}
+
+    {{?it.success}}
+    <div class="alert alert-success alert-dismissable">
+      <button type="button" class="close-alert" data-dismiss="alert" aria-hidden="true"></button>
+      <strong>{{=it.translation['account_success']}}&nbsp;&nbsp;&nbsp;&nbsp;</strong>{{!it.translation[it.success]}}
+    </div>
+    {{?}}
+
+    <hr style = 'margin-top:0'/>
+
+    <div class = 'row'>
+      <div class = 'col-md-8'>
+        <h2>{{=it.translation['withdraw_example']}}</h2>
+      </div>
+    </div>
+    <hr>
+    <div class = 'row'>
+      <div class = 'col-md-12 table-parent-div'>
+        <table class="table table-hover">
+          <thead style = 'color:#fefefe;'>
+          <tr>
+            <th>{{=it.translation['withdraw_table_header_bits']}}</th>
+            <th>{{=it.translation['withdraw_table_header_amounts']}}</th>
+            <th>{{=it.translation['withdraw_table_header_fee']}}</th>
+            <th style="text-align: center;">{{=it.translation['withdraw_table_currency']}}</th>
+            <th style="text-align: center;">{{=it.translation['withdraw_table_destination']}}</th>
+            <th class = 'class_hiddenInMobile' style="text-align: center;">{{=it.translation['withdraw_table_status']}}</th>
+            <th class = 'class_hiddenInMobile' style="text-align: center;">{{=it.translation['withdraw_table_created']}}</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>200</td>
+            <td>0.0002</td>
+            <td>2</td>
+            <td style="text-align: center;">{{=it.translation.miscellaneous1}}</td>
+            <td style="text-align: center;">muhjKoVw58Az7eb3RSM3wS8v2xriErmdJP</td>
+            <td class='class_hiddenInMobile' style="text-align: center;">{{=it.translation['withdraw_table_transferred']}}</td>
+            <td class='class_hiddenInMobile' style="text-align: center;">2018:03:14 01:46:38</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <hr style = 'margin-top:0'/>
+
+    <div class = 'row'>
+      <div class = 'col-md-8'>
+        <h2>{{=it.translation['withdraw_title_withdrawhistory']}}</h2>
+      </div>
+    </div>
+    <div class = 'row'>
+      <div class = 'col-md-12 table-parent-div'>
+        {{?it.user.withdrawals && it.user.withdrawals.length > 0}}
+        <table class="table table-hover">
+          <thead style = 'color:#fefefe;'>
+          <tr>
+            <th>{{=it.translation['withdraw_table_header_bits']}}</th>
+            <th>{{=it.translation['withdraw_table_header_amounts']}}</th>
+            <th>{{=it.translation['withdraw_table_header_fee']}}</th>
+            <th style="text-align: center;">{{=it.translation['withdraw_table_currency']}}</th>
+            <th style="text-align: center;">{{=it.translation['withdraw_table_destination']}}</th>
+            <th class = 'class_hiddenInMobile' style="text-align: center;">{{=it.translation['withdraw_table_status']}}</th>
+            <th class = 'class_hiddenInMobile' style="text-align: center;">{{=it.translation['withdraw_table_created']}}</th>
+          </tr>
+          </thead>
+          <tbody>
+          {{~it.user.withdrawals :withdrawal:index}}
+          <tr>
+            <td>{{=withdrawal.amount}}</td>
+            <td>{{=-withdrawal.baseunit}}</td>
+            <td>{{=withdrawal.fee}}</td>
+            <td style="text-align: center;">{{?withdrawal.currency}}{{=withdrawal.currency}}{{?}}</td>
+            <td style="text-align: center;">
+              {{?withdrawal.destination}}{{=withdrawal.destination}}{{?}}
+            </td>
+            <td class = 'class_hiddenInMobile' style="text-align: center;">
+              {{?withdrawal.status}}
+                {{?it.testnet == false && withdrawal.currency == 'BTC'}}
+                  <a href="https://blockchain.info/tx/{{=withdrawal.status}}" target="_blank">{{=it.translation['withdraw_table_transferred']}}</a>
+                {{??it.testnet == false && withdrawal.currency == 'ETH'}}
+                  <a href="https://etherscan.io/tx/{{=withdrawal.status}}" target="_blank">{{=it.translation['withdraw_table_transferred']}}</a>
+                {{??it.testnet == true && withdrawal.currency == 'BTC'}}
+                  <a href="https://testnet.blockexplorer.com/tx/{{=withdrawal.status}}" target="_blank">{{=it.translation['withdraw_table_transferred']}}</a>
+                {{??it.testnet == true && withdrawal.currency == 'ETH'}}
+                  <a href="https://ropsten.etherscan.io/tx/{{=withdrawal.status}}" target="_blank">{{=it.translation['withdraw_table_transferred']}}</a>
+                {{?}}
+              {{??}}
+                {{?withdrawal.currency == 'MDC' || withdrawal.currency == 'Madecoin'}}
+                  {{=it.translation['withdraw_table_transferred']}}
+                {{??}}
+                  {{=it.translation['withdraw_table_inprogress']}}
+                {{?}}
+              {{?}}
+            </td>
+            <td class = 'class_hiddenInMobile' style="text-align: center;">{{#def.date_format:{created:withdrawal.created} }}</td>
+          </tr>
+          {{~}}
+          </tbody>
+        </table>
+        {{??}}
+        <br>
+        <br>
+        <br>
+        <p style = 'margin-left : 15px; font-size:18px;'>{{=it.translation['withdraw_nowithdraw']}}</p>
+        {{?}}
+      </div>
+    </div>
+
+  </div>
+</div>
+<!--<div class = 'popup' style = 'display: none;' id = 'id_divPopup'>-->
+  <!--<span class='closeButton' id='id_popupCloseButton'>x</span>-->
+  <!--<div class='statement' id="id_divPopup_statement">-->
+    <!--{{=it.translation.withdraw_sentence_4_1}}-->
+    <!--<a href='https://www.otcmode.com/register?playerid={{=it.user.id}}' target='_blank' style='color:#e32b2b; text-decoration: none;'>{{=it.translation.withdraw_sentence_4_2}}</a>-->
+    <!--{{=it.translation.withdraw_sentence_4_3}} <br>-->
+    <!--<form method = 'post' action='https://www.otcmode.com/loginFromMadabit' target="_blank">-->
+      <!--<div class='row' align='center' style = 'margin-top:15px;'>-->
+        <!--<label for='username' style = 'width:90px;'>Username  &nbsp;</label>-->
+        <!--<input type = 'hidden' name ='playerid' value = '{{=it.user.id}}' style = 'padding-left: 5px; outline: none; border: 1px solid #3e3e3e;'>-->
+        <!--<input type = 'text' name ='username' style = 'padding-left: 5px; outline: none; border: 1px solid #3e3e3e;'><br>-->
+      <!--</div>-->
+      <!--<div class='row'>-->
+        <!--<label for='password' style = 'width:90px;'>Password  &nbsp;</label>-->
+        <!--<input type = 'password' name ='password' style = 'padding-left: 5px; outline: none; border: 1px solid #3e3e3e;'><br>-->
+      <!--</div>-->
+      <!--<button class="btn btn-primary" type="submit" style="height: 27px;min-width: 96px;line-height: 14px;">Submit</button>-->
+    <!--</form>-->
+  <!--</div>-->
+<!--</div>-->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script src="/vendor/input-mask/jquery.inputmask.bundle.js" type="text/javascript"></script>
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<!-- END CORE PLUGINS -->
+<script src="/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/pages/scripts/ui-toastr.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+
+
+<script>
+    $(document).ready(function() {
+        Metronic.init();
+        Layout.init();
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "positionClass": "toast-top-right",
+            "onclick": null,
+            "showDuration": "1000",
+            "hideDuration": "1000",
+            "timeOut": "10000",
+            "extendedTimeOut": "2000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        Inputmask("(9){+|0}0", {
+            numericInput: true,
+            placeholder: "0"
+        }).mask("#id_inputAmountBITS");
+
+        $('.class_labelCoinType').click(function() {
+            var prevType =  $("#id_hiddenCoinType").val();
+            var type= $(this).children().first().val();
+            $("#id_hiddenCoinType").val(type);
+            if(type == 'Madecoin')
+                ;
+            else if(type == 'BTC')
+                type = '{{=it.translation.miscellaneous1}}';
+            else if(type == 'ETH')
+                type = '{{=it.translation.miscellaneous2}}';
+            $("#id_labelAddressTitle").text("{{=it.translation['withdraw_destinationaddress']}}  (" + type + ")");
+        });
+
+        $('#id_inputAmountBITS').keyup(function() {
+            var nBits = $(this).val();
+            var fBTC = nBits/ {{=it.BTCvsBitRate}};
+            var fETH = fBTC / {{=it.user.ETHvsBTCRate}};
+            var fGP = nBits / 10;
+            var nFee = parseInt(nBits / 100);
+            if (nFee > 500) nFee = 500;
+            var nTotalAmount = parseInt(nBits) + parseInt(nFee);
+            $("#id_inputAmountETH").val(fETH);
+            $("#id_inputAmountBTC").val(fBTC);
+            $("#id_inputAmountGP").val(fGP);
+            $("#fee").val(nFee);
+            $("#all").val(nTotalAmount);
+        });
+        $('#id_inputAmountBITS').focusout(function() {
+            var nBits = $(this).val();
+            var fBTC = nBits/ {{=it.BTCvsBitRate}};
+            var fETH = fBTC / {{=it.user.ETHvsBTCRate}};
+            var fGP = nBits / 10;
+            var nFee = parseInt(nBits / 100);
+            if (nFee > 500) nFee = 500;
+            var nTotalAmount = parseInt(nBits) + parseInt(nFee);
+            $("#id_inputAmountETH").val(fETH);
+            $("#id_inputAmountBTC").val(fBTC);
+            $("#id_inputAmountGP").val(fGP);
+            $("#fee").val(nFee);
+            $("#all").val(nTotalAmount);
+        });
+
+        $('#id_inputAmountBITS').change(function() {
+            var nBits = $(this).val();
+
+            var fBTC = nBits/ {{=it.BTCvsBitRate}};
+            var fETH = fBTC / {{=it.user.ETHvsBTCRate}};
+            var fGP = nBits / 10;
+            $("#id_inputAmountETH").val(fETH);
+            $("#id_inputAmountBTC").val(fBTC);
+            $("#id_inputAmountGP").val(fGP);
+        });
+
+        $(".popup .closeButton").click(function() {
+            $(".popup").fadeOut();
+            $(".class_labelCoinType").eq(0).removeClass("active");
+            $(".class_labelCoinType").eq(1).click();
+        });
+
+        $(document).on('click', '#id_otcRegisterLink', function() {
+            {{?(it.game_close == true && (new Date()).getHours() >= 2 && (new Date()).getHours() < 6 )}}
+            toastr['info']('{{=it.translation.deposit_close2to6message}}');
+            {{??}}
+            var url = '{{=it.otc_url}}register?playerid={{=it.user.id}}';
+            var win = window.open(url, '_blank');
+            win.focus();
+            {{?}}
+
+        });
+        $(document).on('click', '#id_otcLoginLink', function() {
+            {{?(it.game_close == true && (new Date()).getHours() >= 2 && (new Date()).getHours() < 6 )}}
+            toastr['info']('{{=it.translation.deposit_close2to6message}}');
+            {{??}}
+            var url = '{{=it.otc_url}}login';
+            var win = window.open(url, '_blank');
+            win.focus();
+            {{?}}
+        });
+
+        $(document).on('click', '#id_btnSubmit', function() {
+            $(this).closest('form').submit();
+            $(this).blur();
+        });
+
+    })
+
+</script>
+#}}
+{{#def.include('./template/main_profile')}}

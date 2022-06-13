@@ -1,0 +1,238 @@
+
+{{##def.content:
+<style>
+	.no-control {
+		border: none;
+		text-align: center;
+		cursor: default !important;
+		background: none !important;
+	}
+
+	.class_divLine {
+		margin: 1px;
+	}
+
+	.class_selectAgentList option {
+		background-color : #363c46;
+	}
+</style>
+<!-- BEGIN PAGE HEADER-->
+<h1 style="text-align: center; margin-bottom: 30px;">
+	{{=it.translation['admin_menu_ib_ranking']}}
+</h1>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+	<div class="col-md-2" ></div>
+	<div class="col-md-8" >
+		<div class="portlet box blue">
+			<div class="portlet-body" style="background-color: #3e3e3e;color: #fff;">
+				<div class = 'row class_controlHeader' align = 'center'>
+					<div class='col-md-12'>
+						<input type = 'text' class = 'form-control input-inline input-small no-control' readonly value = "{{=it.translation['admin_ib_ranking_rank']}}" placeholder = '{{=it.translation["admin_ib_ranking_rank"]}}'/>
+						<input type = 'text' class = 'form-control input-inline input-small no-control' readonly value = "{{=it.translation['global_username']}}" placeholder="{{=it.translation['admin_ib_ranking_username']}}"/>
+						<input type = 'text' class = 'form-control input-inline input-small no-control' readonly value = "{{=it.translation['admin_ib_ranking_amount']}}" placeholder="{{=it.translation['admin_ib_ranking_amount']}}({{=it.translation.miscellaneous3}})"/>
+						<input type = 'button' class = 'btn blue input-inline input-small' style = 'width:100px !important; margin-left:10px; margin-top:-1px; background: none; -webkit-box-shadow: none; -moz-box-shadow: none ;box-shadow: none;' value = "" />
+					</div>
+				</div>
+				<div class = 'row class_controlHeader' align = 'center'>
+					<div class='col-md-12'>
+						<input type = 'text' class = 'form-control input-inline input-small' value = "1" placeholder = {{=it.translation['admin_ib_ranking_rank']}}/>
+						<select class = 'form-control input-inline input-small class_selectAgentList' style = 'margin-top:-1px;'></select>
+						<input type = 'text' class = 'form-control input-inline input-small' value = "123" placeholder="{{=it.translation['admin_ib_ranking_amount']}}({{=it.translation.miscellaneous3}})"/>
+						<input type = 'button' class = 'btn blue input-inline input-small' style = 'width:100px !important; margin-left:10px; maring-top: -1px;' id='id_btnAdd' value = "{{=it.translation['admin_ib_ranking_add']}}" />
+					</div>
+					<div class='col-md-12 class_divLine' style = 'display: none; margin-top:2px;'>
+						<input type = 'text' class = 'form-control input-inline input-small class_numRank no-control' readonly value = "" />
+						<input type = 'text' class = 'form-control input-inline input-small class_numUsername no-control' readonly value = "" />
+						<input type = 'text' class = 'form-control input-inline input-small class_numAmount no-control' readonly value = ""/>
+						<input type = 'button' class = 'btn green input-inline input-small class_btnRemove ' style = 'width:100px !important; margin-left:10px; margin-top:-1px;' value = "{{=it.translation['admin_ib_ranking_remove']}}" />
+					</div>
+				</div>
+				<hr style = 'margin: 5px;'/>
+				<div class = 'row' id='id_divContent' align = 'center'>
+					{{~it.rankings:ranking:index}}
+					<div class='col-md-12 class_divLine' style = 'display: block; margin-top:2px;'>
+						<input type = 'text' class = 'form-control input-inline input-small class_numRank no-control' readonly value = "{{=ranking.rank}}" />
+						<input type = 'text' class = 'form-control input-inline input-small class_numUsername no-control' readonly value = "{{=ranking.username}}" user_id = "{{=ranking.user_id}}"/>
+						<input type = 'text' class = 'form-control input-inline input-small class_numAmount no-control' readonly value = "{{=ranking.amount}}"/>
+						<input type = 'button' class = 'btn green input-inline input-small class_btnRemove' style = 'width:100px !important; margin-left:10px; margin-top:-1px;' value = "{{=it.translation['admin_ib_ranking_remove']}}" />
+					</div>
+					{{~}}
+				</div>
+				<div class = 'row' align = 'center' style = 'margin-top: 10px;'>
+					<div class='col-md-12'>
+						<input type = 'button' class = 'btn blue input-inline input-small' style = 'width:100px !important; margin-left:10px;' id='id_btnReset' value = "{{=it.translation['admin_ib_ranking_reset']}}" />
+						<input type = 'button' class = 'btn purple input-inline input-small ' style = 'width:100px !important; margin-left:10px;' id='id_btnSave' value = "{{=it.translation['global_save']}}" />
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="col-md-2" ></div>
+</div>
+<div id="handheld-detection"></div>
+
+{{?it.enginehost}}
+<div id="id_divEngineHost" hidden="true">{{=it.enginehost}}</div>
+{{?}}
+
+<!-- BEGIN TOASTR -->
+<script src="/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/pages/scripts/ui-toastr.js" type="text/javascript"></script>
+<!-- END TOASTR -->
+
+<!-- END PAGE CONTENT-->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/metronic/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+<script>
+jQuery(document).ready(function() {
+	Metronic.init();
+	Layout.init();
+
+	toastr.options = {
+		"closeButton": true,
+		"debug": false,
+		"positionClass": "toast-top-right",
+		"onclick": null,
+		"showDuration": "1000",
+		"hideDuration": "1000",
+		"timeOut": "5000",
+		"extendedTimeOut": "2000",
+		"showEasing": "swing",
+		"hideEasing": "linear",
+		"showMethod": "fadeIn",
+		"hideMethod": "fadeOut"
+	};
+
+	getAgentUserList();
+
+    $(document).on('click', '#id_btnAdd', function() {
+        addLine(this);
+    });
+
+	$(document).on('click', '.class_btnRemove', function() {
+        removeLine(this);
+	});
+
+    $(document).on('click', '#id_btnSave', function() {
+        saveIBRanking();
+    });
+
+    $(document).on('click', '#id_btnReset', function() {
+        location.reload();
+    });
+
+
+});
+var agentUserListMap = {};
+var agentUserLit = [];
+var historyUserMap = {};
+function getAgentUserList() {
+	$.post("/getAgentUserList", function(data) {
+        agentUserList = data;
+		var str = "";
+		for(var i = 0; i < data.length; i++) {
+			str += "<option value = '" + data[i].id + "'>" + data[i].username + "</option>";
+            agentUserListMap[data[i].id + ""] = data[i].username;
+		}
+		if(str == "") str = "<option value = ''>No Agent</option>";
+		$(str).appendTo(".class_controlHeader .class_selectAgentList");
+    });
+}
+
+function addLine(element) {
+	var newLine = $(element).parent().next().clone();
+
+	var rank = $(element).siblings().eq(0).val();
+    var user_id = $(element).siblings().eq(1).val();
+    var username = agentUserListMap[user_id + ""];
+    var amount = $(element).siblings().eq(2).val();
+
+    if(!(isNumber(rank) && rank > 0 && isNumber(amount) && user_id != '')) {
+        return false;
+    }
+
+    if(historyUserMap[user_id + ""] == "") {
+        return;
+	}
+
+	$(newLine).css('display', 'block');
+
+    $(newLine).children().eq(0).val(rank);
+    $(newLine).children().eq(1).val(username);
+    $(newLine).children().eq(1).attr("user_id", user_id);
+    $(newLine).children().eq(2).val(amount);
+	$(newLine).appendTo("#id_divContent");
+
+	historyUserMap[user_id + ""] = "";
+}
+
+function removeLine(element) {
+	var parentElement = $(element).parent();
+	var user_id = $(element).siblings().eq(1).attr('user_id');
+	delete historyUserMap[user_id + ""];
+	parentElement.empty();
+	parentElement.remove();
+
+}
+
+function saveIBRanking() {
+    var data = [];
+    var k = 0;
+
+    $("#id_divContent .class_divLine").each(function(index) {
+        data[k]={};
+
+        var rank = $(this).find('.class_numRank').val();
+        var user_id = $(this).find('.class_numUsername').attr("user_id");
+        var amount = $(this).find('.class_numAmount').val();
+
+        data[k]['rank'] = rank;
+        data[k]['user_id'] = user_id;
+        data[k]['amount'] = amount;
+        k++;
+    });
+
+    if(data.length == 0)
+        return;
+
+    $.post("/saveIBRanking", { ib_ranking : data }, function(data) {
+	});
+
+}
+
+function isNumber(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+</script>
+<!-- END JAVASCRIPTS -->
+#}}
+{{#def.include('./template/main_admin')}}

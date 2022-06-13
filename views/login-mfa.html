@@ -1,0 +1,48 @@
+{{##def.content:
+<!--<script src='https://www.google.com/recaptcha/api.js?hl={{=it.translation.language_for}}'></script>-->
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<script>
+	var submitEnabled = false;
+	function enableSubmit() {
+		submitEnabled = true;
+    var s = document.getElementById('loginSubmit');
+    s.style.display = 'block';
+  }
+</script>
+
+<style>
+    .content {
+        max-width:334px;
+        margin:auto;
+        background-color: #c7d2e2;
+        color: #000;
+    }
+    input {
+        color: #000 !important;
+        border-radius: 3px !important;
+    }
+</style>
+
+<div class="content" style="padding: 15px;">
+    <div class="portlet-body">
+    <form action="/login" method="post"> <!--onsubmit="return submitEnabled;"-->
+        <input type="hidden" name="username" value="{{!it.username}}" />
+        <input type="hidden" name="password" value="{{!it.password}}" />
+        <div class="form-group">
+            <h1>{{=it.translation['login_2fa_token']}}</h1>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" pattern="[0-9]{6}" name="otp" required />
+        </div>
+        <!--<div class="form-group" style='display:none;'>-->
+            <!--<div class="g-recaptcha" data-sitekey="{{=it.recaptchaKey}}" data-callback="enableSubmit"></div>-->
+        <!--</div>-->
+        <div class="form-group">
+            <input type="submit" value="Submit" id="loginSubmit" class="btn btn-primary btn-block uppercase" style="display: none">
+        </div>
+    </form>
+    </div>
+</div>
+
+#}}
+{{#def.include('./template/main')}}

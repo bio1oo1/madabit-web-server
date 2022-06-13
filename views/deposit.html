@@ -1,0 +1,278 @@
+{{##def.content_profile:
+
+<link rel="stylesheet" type="text/css" href="/metronic/assets/global/plugins/font-awesome/css/font-awesome.min.css">
+<link href="/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css">
+<style>
+#id_linkTopup888 {
+    text-decoration: none;
+    font-size: 20px;
+    color: #fff;
+    font-weight: 600;
+    border: 1px solid #b92525;
+    background: #b92525;
+    padding: 3px 10px;
+    border-radius: 4px !important;
+}
+
+#id_linkTopup888:hover, #id_linkTopup888:active, #id_linkTopup888:focus {
+    font-size: 20px;
+    color: #fff;
+    background: #b10909;
+    border: 1px solid #b10909;
+}
+
+table thead tr th, table tbody tr td {
+    text-align: right;
+    font-size: 14px;
+}
+
+td a:active, td a:focus {
+    color:white;
+}
+
+@media screen and (max-width: 480px) {
+    .table th, .table td {
+        text-align: center;
+        font-size: 10px !important;
+        padding: 0;
+    }
+
+    .table-parent-div {
+        padding: 0;
+        width: 107%;
+        margin-left: -8px;
+    }
+
+    .class_hiddenInMobile {
+        display: block;
+    }
+}
+</style>
+
+<div class="portlet light">
+  <div class="portlet-body">
+    <div class="tab-content">
+        <div class="row">
+            <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4" style="text-align: center;font-size:14px;">
+                1USD = {{=it.rate_USD_bit}}bits
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4" style="text-align: center;font-size:14px;">
+                1BTC = {{=it.rate_BTC_bit}}bits
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4" style="text-align: center;font-size:14px;">
+                1ETH = {{=it.rate_ETH_bit}}bits
+            </div>
+        </div>
+        <hr style = 'margin-top:0'/>
+        <div class = 'row' style = 'margin-top: 40px; margin-bottom: 25px;  display: block;'>
+            <div class = 'col-md-12'>
+                <h2 style='display: inline'>{{=it.translation['deposit_title_depositaddress']}}</h2>
+                <label class='control-label' style='display: inline; color:red;'>
+                    {{?it.user.ETHvsBTCRate}}
+                    ( {{=it.translation['deposit_exchangerate']}} <strong><span >{{=it.user.ETHvsBTCRate}}</span></strong> )
+                    {{??}}
+                    ( {{=it.translation['deposit_cantgetexchangerate']}} )
+                    {{?}}
+                </label>
+            </div>
+        </div>
+
+        <div class = 'row' style="display: block;">
+            <div class = 'col-md-3' style="text-align:right;">
+                <label class="control-label">{{=it.translation['deposit_bitcoin_depositaddress']}}</label>
+            </div>
+            <div class='col-md-9'>
+                <input type="text" placeholder="" class="form-control" id="btc-address" value = "{{=it.user.deposit_address['BTC']}}" readonly/>
+                {{=it.translation['deposit_bitcoin_sentence_1']}}<br>
+                <a href="bitcoin:{{=it.user.deposit_address['BTC']}}?message=deposit" style='font-size:18px;'>{{=it.translation['deposit_bitcoin_link']}}</a>
+            </div>
+        </div>
+        <div class = 'row' style="margin-top: 40px; display: block;">
+            <div class = 'col-md-3' style="text-align:right;">
+                <label class="control-label" style="margin-top: 6px;">{{=it.translation['deposit_ethereum_depositaddress']}}&nbsp;&nbsp;</label>
+            </div>
+            <div class='col-md-9'>
+                <input type="text" placeholder="" class="form-control" id="eth-address" value = "{{=it.user.deposit_address['ETH']}}" readonly/>
+                {{=it.translation['deposit_ethereum_sentence_part_1']}}<br>
+                <a href="ethereum:{{=it.user.deposit_address['ETH']}}?message=deposit" style="font-size:18px;">{{=it.translation['deposit_ethereum_link']}}</a>
+            </div>
+        </div>
+        <div class = 'row' style="margin-top: 40px; display: block;">
+            <div class = 'col-md-3' style="text-align:right;">
+                <label class="control-label" style="margin-top: 6px;">{{=it.translation['deposit_ethereum_yourdepositaddress']}}</label>
+            </div>
+            <div class='col-md-7 col-xs-9'>
+                <input type="text" placeholder="" class="form-control" id="eth-src" value = "{{?it.user.deposit_src}}{{=it.user.deposit_src}}{{?}}" />
+            </div>
+            <div class='col-md-2 col-xs-3' align='center'>
+                <input type="button" class="btn btn-primary" id="save" value="{{=it.translation['global_save']}}" onclick="onSave();">
+            </div>
+        </div>
+        <div class = 'row' style="margin-top: 40px; display: block;">
+            <div class = 'col-md-3' style="text-align:right;">
+                    <label class="control-label" style="margin-top: 6px;">{{=it.translation['deposit_madecoin_depositaddress']}}&nbsp;&nbsp;</label>
+            </div>
+            <div class='col-md-9'>
+                <input type="text" placeholder="" class="form-control" id="eth-address" value = "{{=it.user.token_address}}" readonly/>
+            </div>
+        </div>
+
+        <div class = 'row' style="margin-top: 40px;">
+            <div class = 'col-md-3'>
+            </div>
+
+            <div class='col-md-9 col-xs-12' style="font-size:16px;">
+                <p style="font-size:15px;">
+                    <form action = 'http://www.topup888.com/login'
+                          method='post' target= '_blank' id= 'id_formTopup888' style="display: block">
+                        <input type = 'hidden' name = 'user_id' value = '{{=it.user.id}}' id = 'id_userIdForTopup'>
+                        <input type = 'hidden' name = 'username' value = '{{=it.user.username}}' id = 'id_usernameForTopup'>
+                        <input type = 'hidden' name = 'balance' value = '{{=it.user.balance_satoshis}}' id = 'id_balanceForTopup'>
+                        <input type = 'hidden' name = 'clang' value = '{{=it.translation.language_for}}'>
+                    </form>
+                    {{=it.translation.deposit_fundingsite}}
+                    <a style="color:#b92525" id = 'link_topup888'>
+                        {{=it.translation.deposit_clickhere}}
+                    </a>
+                </p>
+            </div>
+
+        </div>
+        <hr style="margin-top: 60px;">
+
+      <h2 style = 'margin-top:30px;margin-bottom: 40px;'>{{=it.translation['deposit_title_deposithistory']}}</h2>
+      {{?it.user.deposits.length > 0}}
+      <table class="table table-hover">
+          <thead style = 'color:#fefefe;'>
+              <tr>
+                  <th>{{=it.translation['deposit_table_header_bits']}}</th>
+                  <th>{{=it.translation['deposit_table_header_amounts']}}</th>
+                  <th style="text-align: center;">{{=it.translation['deposit_table_header_currency']}}</th>
+                  <th style="text-align: center;">{{=it.translation['deposit_table_header_transaction']}}</th>
+                  <th style="text-align: center;">{{=it.translation['deposit_table_header_created']}}</th>
+              </tr>
+          </thead>
+            <tbody>
+                {{~it.user.deposits :deposit:index}}
+                <tr>
+                    <td>{{#def.format: {n: deposit.amount, decimals: 2 } }}</td>
+                    <td>{{=deposit.baseunit}}</td>
+                    <td style="text-align: center;">{{=deposit.currency}}</td>
+                    <td style="text-align: center;">
+                        {{?it.testnet == false && deposit.currency == 'BTC'}}
+                        <a href="https://blockchain.info/tx/{{=deposit.txid}}" target="_blank">{{=it.translation['deposit_table_link']}}</a>
+                        {{??it.testnet == false && deposit.currency == 'ETH'}}
+                        <a href="https://etherscan.io/tx/{{=deposit.txid}}" target="_blank">{{=it.translation['deposit_table_link']}}</a>
+                        {{??it.testnet == true && deposit.currency == 'BTC'}}
+                        <a href="https://testnet.blockexplorer.com/tx/{{=deposit.txid}}" target="_blank">{{=it.translation['deposit_table_link']}}</a>
+                        {{??it.testnet == true && deposit.currency == 'ETH'}}
+                        <a href="https://ropsten.etherscan.io/tx/{{=deposit.txid}}" target="_blank">{{=it.translation['deposit_table_link']}}</a>
+                        {{?}}
+                    </td>
+                    <td class="show-for-medium-up" style="text-align: center;">
+                    {{#def.date_format:{created:deposit.created} }}
+                    </td>
+                </tr>
+                {{~}}
+            </tbody>
+      </table>
+      {{??}}
+        <br />
+        <p style = 'margin-left : 15px; font-size:18px;'>{{=it.translation['deposit_nodeposit']}}</p>
+      {{?}}
+    </div>
+  </div>
+</div>
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<script src="/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/pages/scripts/ui-toastr.js" type="text/javascript"></script>
+<script defer src="/fonts/font-awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+<script src="/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="/metronic/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+
+<script>
+$(document).ready(function() {
+    Metronic.init();
+    Layout.init();
+
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "positionClass": "toast-top-right",
+        "onclick": null,
+        "showDuration": "1000",
+        "hideDuration": "1000",
+        "timeOut": "10000",
+        "extendedTimeOut": "2000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+
+    var balance_satoshis_text = $("#id_balanceSatoshis").text();
+    balance_satoshis_text = balance_satoshis_text.replace(/,/g, '');
+    balance_satoshis_text = balance_satoshis_text.replace(/e/g, 'ttt');
+    var balance_satoshis = parseFloat(balance_satoshis_text);
+    $("#id_balanceForTopup").val(balance_satoshis);
+    $(document).on('click', '#link_topup888', function() {
+
+        $('#id_formTopup888').submit();
+        return;
+
+        {{?(it.game_close == true && (new Date()).getHours() >= 2 && (new Date()).getHours() < 6 )}}
+        toastr['info']('{{=it.translation.deposit_close2to6message}}');
+        {{??}}
+        var user_id = $("#id_userIdForTopup").val();
+        var username = $("#id_usernameForTopup").val();
+        var balance = $("#id_balanceForTopup").val();
+        if(user_id == undefined || user_id == '' || username == undefined || username == '' || balance == undefined || balance == '')
+            return;
+        $('#id_formTopup888').submit();
+        {{?}}
+
+    });
+});
+
+function onSave(){
+    var eth_src = document.getElementById('eth-src').value;
+    if (eth_src.length != 42) {
+        toastr['error']('{{=it.translation.deposit_ethereum_alert_1}}');
+        return;
+    }
+    var re = /[0-9A-Fa-f]{40}/g;
+    var t = eth_src.substring(2, 42);
+    if (!re.test(t)) {
+        toastr['error']('{{=it.translation.deposit_ethereum_alert_2}}');
+        return;
+    }
+    $.post("/saveETHUserAddress", {eth_src: eth_src}, function(data, status){
+        if (status == "success")
+        {
+            toastr['success']('{{=it.translation.deposit_ethereum_alert_3}}');
+        }
+        else
+        {
+            toastr['success']('{{=it.translation.deposit_ethereum_alert_4}}  : ' + status);
+        }
+    })
+}
+</script>
+#}}
+{{#def.include('./template/main_profile')}}
